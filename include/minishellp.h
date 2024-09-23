@@ -6,11 +6,11 @@
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:16 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/23 17:48:47 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/23 18:41:15 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef MINISHELLP_H
+#ifndef MINISHELLP_H
 # define MINISHELLP_H
 
 typedef enum e_tokens

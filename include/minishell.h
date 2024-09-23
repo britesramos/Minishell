@@ -6,14 +6,14 @@
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:16:41 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/23 17:51:17 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/23 18:41:15 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// #include "minishellp.h"
+#include "minishellp.h"
 // #include "minishelle.h"
 
 # include <unistd.h>
