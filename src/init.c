@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishelle.h                                       :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/24 11:12:59 by mstencel          #+#    #+#             */
-/*   Updated: 2024/09/24 11:22:14 by mstencel         ###   ########.fr       */
+/*   Created: 2024/09/24 10:29:43 by sramos            #+#    #+#             */
+/*   Updated: 2024/09/24 10:48:45 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELLE_H
-# define MINISHELLE_H
+#include "../include/minishell.h"
 
-# include "minishell.h"
-
-#endif
+/*Function to initialize main struct.*/
+void	init_main_struct(t_data *data)
+{
+	data->cmd_head = NULL;
+	data->cmd_current = NULL;
+}
