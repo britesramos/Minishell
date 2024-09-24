@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:13 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/23 17:50:10 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/24 10:25:51 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char *rl;
+	t_data *data;
 	(void)envp;
 	if (argc > 1)
 	{
 		write(1, "Invalid number of arguments. Type: minishell\n", 45);
 		return(1);
 	}
-	rl = readline(argv[1]);
+	init_main_struct();
+	data->line = readline(argv[1]);
+	parsing(data);
 	// 1) Readline function. (Malloc every time and also dont forget to free.)
 	// 2) Parsing.
 		// 2.1) Invalid inputs (syntax errors).
