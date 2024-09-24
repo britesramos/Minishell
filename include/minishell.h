@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:16:41 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/24 10:47:46 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/24 11:19:41 by mstencel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 #include "minishellp.h"
-// #include "minishelle.h"
+#include "minishelle.h"
 
 # include <unistd.h>
 # include <stdio.h>
