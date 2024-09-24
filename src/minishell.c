@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:13 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/24 11:26:36 by mstencel         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:28:58 by mstencel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int	main(int argc, char **argv, char **envp)
 	// 3) History. ???
 	// 4) Expansion. (echo $USER) ???
 	// 5) Execution.
-		//5.1.)Built ins.
-		//5.2.)Execve.
-		//5.3.)...
-	// parsing();
+		//5.1.)Built-ins.
+		//5.2.)Pipes.
+		//5.3.)Redirections
+		//5.4.)Signals
 	free(data);
 	return (0);
 }
