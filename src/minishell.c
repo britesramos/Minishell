@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:13 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/24 10:48:47 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/24 11:01:32 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data *data;
 
 	(void)envp; /*temp*/
+	// (void)argv;
 	data = malloc(sizeof(t_data));
 	init_main_struct(data);
 	if (argc > 1)
@@ -41,5 +42,6 @@ int	main(int argc, char **argv, char **envp)
 		//5.2.)Execve.
 		//5.3.)...
 	// parsing();
+	free(data);
 	return (0);
 }
