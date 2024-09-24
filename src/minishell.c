@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:13 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/24 11:01:32 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/24 11:07:48 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 		write(1, "Invalid number of arguments. Type: minishell\n", 45);
 		return(1);
 	}
-	data->line = readline(argv[1]);
+	data->line = readline(argv[1]); /*There are leaks here from readline, but I dont know if it is fixable.*/
 	parsing(data);
 	// 1) Readline function. (Malloc every time and also dont forget to free.)
 	// 2) Parsing.
