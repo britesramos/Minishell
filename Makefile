@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+         #
+#    By: sramos <sramos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/23 17:07:32 by sramos            #+#    #+#              #
-#    Updated: 2024/09/25 14:18:24 by mstencel         ###   ########.fr        #
+#    Updated: 2024/09/25 16:12:50 by sramos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,11 @@ NAME = minishell
 SRC_PATH = src
 
 SRC_FILES = src/minishell.c\
-			src/parsing.c\
+			src/clean_up.c\
 			src/init.c\
+			src/parsing/parsing.c\
+			src/parsing/parsing_utils.c\
+			src/parsing/error_p.c\
 			src/execution/built_ins/echo.c\
 
 OBJ_PATH = obj

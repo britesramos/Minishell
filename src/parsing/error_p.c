@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   error_p.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/24 10:29:43 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/25 15:40:05 by sramos           ###   ########.fr       */
+/*   Created: 2024/09/25 16:00:05 by sramos            #+#    #+#             */
+/*   Updated: 2024/09/25 16:33:55 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-/*Function to initialize main struct.*/
-void	init_main_struct(t_data *data)
+void	error_exit(char *str, int seo)
 {
-	data->line = NULL;
-	data->cmd_head = NULL;
-	data->cmd_current = NULL;
-	// data->envp_head = NULL;
+	int	len;
+
+	len = ft_strlen(str);
+	write(1, str, len);
+	//TODO:Clean_up;
+	exit(seo);
 }

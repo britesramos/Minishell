@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/24 10:29:43 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/25 15:40:05 by sramos           ###   ########.fr       */
+/*   Created: 2024/09/25 16:12:05 by sramos            #+#    #+#             */
+/*   Updated: 2024/09/25 16:33:56 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-/*Function to initialize main struct.*/
-void	init_main_struct(t_data *data)
+/*Replace with lifbt*/
+int	ft_strlen(char *str)
 {
-	data->line = NULL;
-	data->cmd_head = NULL;
-	data->cmd_current = NULL;
-	// data->envp_head = NULL;
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	is_space(char c)
+{
+	return((c >= '\t' && c <= '\r') || c == ' ');
 }
