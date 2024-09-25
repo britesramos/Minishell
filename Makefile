@@ -3,20 +3,30 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sramos <sramos@student.42.fr>              +#+  +:+       +#+         #
+#    By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/23 17:07:32 by sramos            #+#    #+#              #
-#    Updated: 2024/09/24 10:35:41 by sramos           ###   ########.fr        #
+#    Updated: 2024/09/25 14:18:24 by mstencel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SRC_PATH = ./src
-SRC_FILES = $(SRC_PATH)/minishell.c\
-			$(SRC_PATH)/parsing.c\
-			$(SRC_PATH)/init.c
-OBJ_PATH = ./obj
-OBJ_FILES = $(patsubst $(SRC_PATH)/%.c, $(OBJ_PATH)/%.o, $(SRC_FILES))
+
+SRC_PATH = src
+
+SRC_FILES = src/minishell.c\
+			src/parsing.c\
+			src/init.c\
+			src/execution/built_ins/echo.c\
+
+OBJ_PATH = obj
+
+# this is a pattern substitution:
+# the SRC_FILES will have a list with their full paths
+# the SRC_PATH/%.c are the source of the files that will be replaced
+# the OBJ_PATH/%.o are the replacement of the /%.c
+OBJ_FILES = $(SRC_FILES:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
+
 HEADER = include/minishell.h
 
 CC = cc
@@ -26,13 +36,20 @@ OFLAGS = -lreadline -g
 RM = rm -f
 RD = rm -rf
 
+info-%:
+	$(info $($*))
+
 all: $(NAME)
 
-$(NAME): $(OBJ_FILES) $(HEADER) #$(LIBFT) 
-	$(CC) $(SRC_FILES) $(CFLAGS) $(OFLAGS) -o $(NAME)
+$(NAME): $(OBJ_FILES) $(HEADER)
+	$(CC) $(OBJ_FILES) $(CFLAGS) $(OFLAGS) -o $(NAME)
 
-$(OBJ_PATH)/%.o:$(SRC_PATH)/%.c $(HEADER)
-	mkdir -p $(OBJ_PATH)
+# the $(@D) - The directory part of the file name of the target,
+# with the trailing slash removed. 
+# If the value of ‘$@’ is dir/foo.o then ‘$(@D)’ is dir. 
+# This value is . if ‘$@’ does not contain a slash.
+$(OBJ_PATH)/%.o:$(SRC_PATH)/%.c
+	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:
@@ -44,5 +61,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY = all, clean, fclean, re
-
+.PHONY = all, clean, fclean, re, info
