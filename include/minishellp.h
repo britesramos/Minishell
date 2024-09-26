@@ -6,12 +6,15 @@
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:16 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/23 18:41:15 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/26 14:43:09 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELLP_H
 # define MINISHELLP_H
+
+# include <stdbool.h>
+# include "minishell.h"
 
 typedef enum e_tokens
 {
@@ -31,5 +34,18 @@ typedef struct s_token
     int     lenght;
     t_token_t type;
 }   t_token;
+
+/*Parsing_utils*/
+int	ft_strlen(char *str);
+int	is_space(char c);
+
+/*Invalid input checker*/
+void	invalid_input(t_data *data);
+
+/*Parsing envp*/
+void	parse_envp(t_data *data, char **envp);
+
+/*Error handling and exit error std.*/
+void    error_exit(char *str, int seo);
 
 # endif

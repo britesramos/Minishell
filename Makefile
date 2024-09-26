@@ -6,7 +6,7 @@
 #    By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/23 17:07:32 by sramos            #+#    #+#              #
-#    Updated: 2024/09/26 11:51:09 by mstencel         ###   ########.fr        #
+#    Updated: 2024/09/26 15:00:11 by mstencel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,15 @@ NAME = minishell
 SRC_PATH = src
 
 SRC_FILES = src/minishell.c\
-			src/parsing.c\
+			src/clean_up.c\
 			src/init.c\
 			src/execution/token/token.c\
 			src/execution/token/token_check.c\
+			src/parsing/parsing.c\
+			src/parsing/invalid_input.c\
+			src/parsing/parse_envp.c\
+			src/parsing/parsing_utils.c\
+			src/parsing/error_p.c\
 			src/execution/built_ins/echo.c\
 			src/execution/built_ins/pwd.c
 

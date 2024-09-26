@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/24 10:29:43 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/25 15:40:05 by sramos           ###   ########.fr       */
+/*   Created: 2024/09/23 11:59:18 by sramos            #+#    #+#             */
+/*   Updated: 2024/09/26 14:42:07 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-/*Function to initialize main struct.*/
-void	init_main_struct(t_data *data)
+void	parsing(t_data *data, char **envp)
 {
-	data->line = NULL;
-	data->cmd_head = NULL;
-	data->cmd_current = NULL;
-	// data->envp_head = NULL;
+	invalid_input(data);
+	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
+
+
+	//3 - Tokenization
+	//4 - Parsed input
 }
