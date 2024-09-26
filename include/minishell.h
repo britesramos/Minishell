@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:16:41 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/24 11:19:41 by mstencel         ###   ########.fr       */
+/*   Updated: 2024/09/26 10:51:07 by mstencel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
+ 
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
 {

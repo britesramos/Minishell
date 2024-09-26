@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:13 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/24 11:28:58 by mstencel         ###   ########.fr       */
+/*   Updated: 2024/09/26 10:56:15 by mstencel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)envp; /*temp*/
 	// (void)argv;
+	ft_t_check(argv);
+	return (0);
 	data = malloc(sizeof(t_data));
 	init_main_struct(data);
 	if (argc > 1)
@@ -26,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 		return(1);
 	}
 	data->line = readline(argv[1]); /*There are leaks here from readline, but I dont know if it is fixable.*/
-	parsing(data);
+	// parsing(data);
 	// 1) Readline function. (Malloc every time and also dont forget to free.)
 	// 2) Parsing.
 		// 2.1) Invalid inputs (syntax errors).
