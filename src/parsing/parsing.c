@@ -6,12 +6,11 @@
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:18 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/25 18:47:07 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/26 12:12:13 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/minishellp.h"
 
 static int	start_with_pipe(char *str)
 {
@@ -47,51 +46,59 @@ static void	invalid_input(t_data *data)
 	// if (missing_q_marks(data->line) == 1)
 	// 	error_exit();
 }
-
-static t_envp	*create_node(char *envp)
+static	char	*init_key(char *envp)
 {
 	int	i;
-	int	j;
-	t_envp	*node;
+	int	key_len;
 	char *key;
-	char *value;
-	
-	key = NULL;
-	value = NULL;
+
 	i = 0;
-	j = 0;
+	key_len = 0;
+	key = NULL;
+	while(envp[key_len] != '=')
+		key_len++;
+	key = malloc(key_len + 1);
+	if(!key)
+		error_exit("Memory allocation failed! [key | env parsing]", 1);
+	while(i < key_len)
+	{
+		key[i] = envp[i];
+		i++;
+	}
+	return (key);
+}
+
+static char	*init_value(char *envp)
+{
+	int		i;
+	int		key_len;
+	char	*value;
+
+	i = 0;
+	key_len = 0;
+	value = NULL;
+	while (envp[key_len] != '=')
+		key_len++;
+	value = malloc(strlen(envp) - key_len + 1);
+	if(!value)
+		error_exit("Memory allocation failed! [value | env parsing]", 1);
+	while ((i + key_len) < ft_strlen(envp))
+	{
+		value[i] = envp[key_len + i];
+		i++;
+	}
+	return(value);
+}
+
+static t_envp	*create_node_envp(char *envp)
+{
+	t_envp	*node;
+
 	node = (t_envp *)malloc(sizeof(t_envp));
 	if (!node)
-		error_exit("Memory allocation failed! [Node creation | envp parsing]\n", 1);
-	printf("envp: %s\n", envp);
-	while(envp[i] != '=')
-	{
-		i++;
-	}
-	key = malloc(i + 1);
-	if (key == NULL)
-		printf("Smack my B*tch up!!\n");
-	for (int copy_i = 0; copy_i < i; copy_i++)
-	{
-		key[copy_i] = envp[copy_i];
-		printf("key: %c\n", key[copy_i]);
-	}
-	node->key = key;
-	j = i;
-	while(envp[i])
-	{
-		i++;
-	}
-	value = malloc(i + 1);
-	if (value == NULL)
-		printf("Smack my B*tch up!!\n");
-	for (int copy_j = 0; copy_j < i; copy_j++)
-	{
-		value[copy_j] = envp[j];
-		printf("value: %c\n", value[copy_j]);
-		j++;
-	}
-	node->value = value;
+		error_exit("Memory allocation failed! [Node creation | env parsing]\n", 1);
+	node->key = init_key(envp);
+	node->value = init_value(envp);
 	node->next = NULL;
 	return (node);
 }
@@ -107,9 +114,7 @@ static void	parse_envp(t_data *data, char **envp)
 	new_node = NULL;
 	while(envp[i])
 	{
-		// printf("here1\n");
-		new_node = create_node(envp[i]);
-		printf("This is envp[%i]: %s, %p\n", i, envp[i], new_node);
+		new_node = create_node_envp(envp[i]);
 		if (data->envp_head == NULL)
 		{
 			data->envp_head = new_node;
@@ -120,7 +125,6 @@ static void	parse_envp(t_data *data, char **envp)
 			current->next = new_node;
 			current = current->next;
 		}
-		// printf("here2\n");
 		i++;
 	}
 }
@@ -128,20 +132,9 @@ static void	parse_envp(t_data *data, char **envp)
 void	parsing(t_data *data, char **envp)
 {
 	invalid_input(data);
-	parse_envp(data, envp);
+	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
 
-	t_envp *current;
-	t_envp *next;
-	int i = 0;
-	current = data->envp_head;
-	next = current->next;
-	while(current->next != NULL)
-	{
-		printf("[%i], key: [%s], value: [%s]\n\n", i, current->key, current->value);
-		current = current->next;
-		next = current->next;
-		i++;
-	}
+
 	//3 - Tokenization
 	//4 - Parsed input
 }

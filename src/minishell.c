@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:13 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/25 18:36:29 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/26 11:48:59 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	main(int argc, char **argv, char **envp)
 	}
 	data->line = readline(argv[1]); /*There are leaks here from readline, but I dont know if it is fixable.*/
 	parsing(data, envp);
+
+	
 	// 1) Readline function. (Malloc every time and also dont forget to free.)
 	// 2) Parsing.
 		// 2.1) Invalid inputs (syntax errors).
