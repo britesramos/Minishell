@@ -6,7 +6,7 @@
 #    By: sramos <sramos@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/23 17:07:32 by sramos            #+#    #+#              #
-#    Updated: 2024/09/25 16:12:50 by sramos           ###   ########.fr        #
+#    Updated: 2024/09/26 14:41:55 by sramos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ SRC_FILES = src/minishell.c\
 			src/clean_up.c\
 			src/init.c\
 			src/parsing/parsing.c\
+			src/parsing/invalid_input.c\
+			src/parsing/parse_envp.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\
 			src/execution/built_ins/echo.c\
