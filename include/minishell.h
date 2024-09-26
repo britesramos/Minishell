@@ -6,15 +6,15 @@
 /*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:16:41 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/25 17:34:32 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/26 19:16:32 by sramos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "minishellp.h"
-#include "minishelle.h"
+# include "minishellp.h"
+# include "minishelle.h"
 
 # include <unistd.h>
 # include <stdio.h>
@@ -25,8 +25,8 @@
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
 {
-	char *cmd;
-	char **argv;
+	char **cmd;
+	// char **argv;
 	char **here_doc;
 	struct s_cmd *pipe; /*Pointer to the next node*/
 	// char *infile; /*int*/ /*Opening fds should be done in execution.*/
@@ -54,8 +54,24 @@ typedef struct s_data
 /*Initialize main struct t_data data.*/
 void	init_main_struct(t_data *data);
 
+
+/*-----------------------------------PARSING-----------------------------------*/
 /*Parsing input*/
 void	parsing(t_data *data, char **envp);
+
+/*Parsing_utils*/
+int	ft_strlen(char *str);
+int	is_space(char c);
+
+/*Invalid input checker*/
+void	invalid_input(t_data *data);
+
+/*Parsing envp*/
+void	parse_envp(t_data *data, char **envp);
+
+/*Error handling and exit error std.*/
+void    error_exit(char *str, int seo);
+/*-----------------------------------PARSING-----------------------------------*/
 
 /*Ending program and clean up.*/
 void	clean_up(t_data *data);
