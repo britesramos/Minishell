@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:16:41 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/26 15:00:25 by mstencel         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:17:20 by mstencel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
 {
-	char *cmd;
-	char **argv;
+	char **cmd;
+	// char **argv;
 	char **here_doc;
 	struct s_cmd *pipe; /*Pointer to the next node*/
 	// char *infile; /*int*/ /*Opening fds should be done in execution.*/
@@ -56,8 +56,37 @@ void	init_main_struct(t_data *data);
 
 /*Parsing input*/
 void	parsing(t_data *data, char **envp);
+/*Invalid input checker*/
+void	invalid_input(t_data *data);
+
+/*Parsing envp*/
+void	parse_envp(t_data *data, char **envp);
 
 /*Ending program and clean up.*/
 void	clean_up(t_data *data);
+
+// EXECUTION
+
+// to be deleted!!!
+#include <stdio.h>
+
+
+// headers for external functions
+// getcwd(char *buf, size_t size) -> unistd.h
+// PATH_MAX -> limits.h
+
+# include <unistd.h>
+# include <linux/limits.h>
+
+void	exec(t_data *data);
+// tokens
+// void	line_tok(char *line);
+int		ft_t_check(char **cmd, t_envp *env);
+
+// built-in funtions:
+void	ft_echo(char **cmd);
+int		ft_pwd(char **cmd);
+int		ft_exit(char **cmd);
+void	ft_cd(char **cmd, t_envp *env);
 
 #endif

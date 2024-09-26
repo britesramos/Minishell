@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:10:27 by mstencel          #+#    #+#             */
-/*   Updated: 2024/09/26 12:16:32 by mstencel         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:44:03 by mstencel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ echo -rrrrr 'Hello World that's why
 // delete it once libft in live!!!!
 #include <stdio.h>
 
-int	ft_strlen(char *s)
-{
-	int	i;
+// int	ft_strlength(char *s)
+// {
+// 	int	i;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (s[i])
+// 		i++;
+// 	return (i);
+// }
 
 /*
 checks if the echo should print the new line at the end
@@ -83,7 +83,7 @@ void	ft_echo(char **argv)
 	// int	is_env; -> for writing the env values
 
 	i = 0;
-	flag = 2;
+	flag = 1;
 	nl = has_new_line(argv[flag]);
 	while (argv[flag])
 	{
@@ -110,8 +110,7 @@ void	ft_echo(char **argv)
 		write(1, "\n", 1);
 }
 
-//my arguments can be
-// -nnnn (or incorrect flags)
-// $PWD (or incorrect env)
-// regular words
-// quotations - to deal with the 'quote>' ???
+// from bash man
+// Output the args, separated by spaces, terminated with a newline.
+// The return status is 0 unless a write error occurs. 
+// If -n is specified, the trailing newline is suppressed. I

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishellp.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:59:16 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/26 14:43:09 by sramos           ###   ########.fr       */
+/*   Updated: 2024/09/26 15:04:45 by mstencel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ typedef struct s_token
 int	ft_strlen(char *str);
 int	is_space(char c);
 
-/*Invalid input checker*/
-void	invalid_input(t_data *data);
+// /*Invalid input checker*/
+// void	invalid_input(t_data *data);
 
-/*Parsing envp*/
-void	parse_envp(t_data *data, char **envp);
+// /*Parsing envp*/
+// void	parse_envp(t_data *data, char **envp);
 
 /*Error handling and exit error std.*/
 void    error_exit(char *str, int seo);

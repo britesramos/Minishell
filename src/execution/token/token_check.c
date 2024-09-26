@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 16:05:25 by mstencel          #+#    #+#             */
-/*   Updated: 2024/09/26 14:49:06 by mstencel         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:59:14 by mstencel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,16 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-int	ft_t_check(char **cmd)
+int	ft_t_check(char **cmd, t_envp *env)
 {
 	//change the index & text once you get the proper input from the program
-	if (ft_strcmp(cmd[1], "my_echo") == 0)
+	if (ft_strcmp(cmd[0], "my_echo") == 0)
 		return (ft_echo(cmd), 0);
-	else if (ft_strcmp(cmd[1], "my_pwd") == 0)
+	else if (ft_strcmp(cmd[0], "my_pwd") == 0)
 		return (ft_pwd(cmd), 0);
+	else if (ft_strcmp(cmd[0], "my_exit") == 0)
+		return (ft_exit(cmd), 0);
+	else if (ft_strcmp(cmd[0], "my_cd") == 0)
+		return (ft_cd(cmd, env), 0);
 	return (0);
 }

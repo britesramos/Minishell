@@ -6,7 +6,7 @@
 #    By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/23 17:07:32 by sramos            #+#    #+#              #
-#    Updated: 2024/09/26 15:00:11 by mstencel         ###   ########.fr        #
+#    Updated: 2024/09/26 19:02:25 by mstencel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,17 @@ SRC_PATH = src
 SRC_FILES = src/minishell.c\
 			src/clean_up.c\
 			src/init.c\
-			src/execution/token/token.c\
-			src/execution/token/token_check.c\
 			src/parsing/parsing.c\
 			src/parsing/invalid_input.c\
 			src/parsing/parse_envp.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\
+			src/execution/exec.c\
+			src/execution/token/token.c\
+			src/execution/token/token_check.c\
+			src/execution/built_ins/cd.c\
 			src/execution/built_ins/echo.c\
+			src/execution/built_ins/exit.c\
 			src/execution/built_ins/pwd.c
 
 OBJ_PATH = obj

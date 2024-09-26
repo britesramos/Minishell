@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:37:21 by mstencel          #+#    #+#             */
-/*   Updated: 2024/09/26 14:48:21 by mstencel         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:44:24 by mstencel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ int	ft_pwd(char **argv)
 
 	i = 0;
 	//redundant???
-	// if (argv[2] && argv[2][0] == '-')
-	// {
-	// 	write(2, "bash: pwd: -", 13);
-	// 	write(2, &argv[2][1], 1);
-	// 	write(2, ": invalid option", 17);
-	// 	write(2, "\n", 1);
-	// 	write(2, "pwd: usage: pwd",16);
-	// 	write(2, "\n", 1);
-	// 	return (2);
-	// }
+	if (argv[1] && argv[1][0] == '-')
+	{
+		write(2, "bash: pwd: -", 13);
+		write(2, &argv[1][1], 1);
+		write(2, ": invalid option", 17);
+		write(2, "\n", 1);
+		write(2, "pwd: usage: pwd",16);
+		write(2, "\n", 1);
+		return (2);
+	}
 	if (getcwd(path, sizeof(path)) != NULL)
 	{
 		while (path[i])
@@ -69,3 +69,9 @@ int	ft_pwd(char **argv)
 	return (0);
 	
 }
+
+// from the bash man:
+// Print the absolute pathname of the current working directory.
+// The return status is zero unless an error is encountered while 
+// determining the name of the current directory or an invalid 
+// option is supplied.
