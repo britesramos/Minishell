@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   exec.c                                             :+:    :+:            */
+/*   ft_free.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/07 08:05:49 by mstencel      ########   odam.nl         */
+/*   Created: 2024/05/31 11:21:27 by mstencel      #+#    #+#                 */
+/*   Updated: 2024/08/06 11:44:11 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	exec(t_data *data)
+char	*ft_free(char **str)
 {
-	char	**args;
-	
-	args = ft_split(data->line, ' ');
-	ft_t_check(args, data->envp_head);
-	int i = 0;
-	while (args[i])
+	if (*str)
 	{
-		free(args[i]);
-		args[i] = NULL;
-		i++;
+		free (*str);
+		*str = NULL;
 	}
-	free(args);
+	return (NULL);
 }

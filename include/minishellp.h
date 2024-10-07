@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishellp.h                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 11:59:16 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/26 15:04:45 by mstencel         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishellp.h                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/23 11:59:16 by sramos        #+#    #+#                 */
+/*   Updated: 2024/10/07 08:03:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_token
 }   t_token;
 
 /*Parsing_utils*/
-int	ft_strlen(char *str);
+// int	ft_strlen(char *str);
 int	is_space(char c);
 
 // /*Invalid input checker*/

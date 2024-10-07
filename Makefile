@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/23 17:07:32 by sramos            #+#    #+#              #
-#    Updated: 2024/09/26 19:02:25 by mstencel         ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: mstencel <mstencel@student.42.fr>            +#+                      #
+#                                                    +#+                       #
+#    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
+#    Updated: 2024/10/07 08:13:02 by mstencel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,9 @@ OBJ_FILES = $(SRC_FILES:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 
 HEADER = include/minishell.h
 
+LIBFT_PATH = libft
+LIBFT = $(LIBFT_PATH)/libft.a
+
 CC = cc
 CFLAGS = -Wall -Werror -Wextra 
 OFLAGS = -lreadline -g
@@ -53,7 +56,8 @@ info-%:
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(HEADER)
-	$(CC) $(OBJ_FILES) $(CFLAGS) $(OFLAGS) -o $(NAME)
+	make -C $(LIBFT_PATH)
+	$(CC) $(OBJ_FILES) $(CFLAGS) $(OFLAGS) -o $(NAME) $(LIBFT)
 
 # the $(@D) - The directory part of the file name of the target,
 # with the trailing slash removed. 

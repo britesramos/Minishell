@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 12:16:41 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/26 19:17:20 by mstencel         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
+/*   Updated: 2024/10/07 08:19:00 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "minishellp.h"
 #include "minishelle.h"
+#include "../libft/libft.h"
 
 # include <unistd.h>
 # include <stdio.h>

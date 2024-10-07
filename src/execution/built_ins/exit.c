@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 17:39:24 by mstencel          #+#    #+#             */
-/*   Updated: 2024/09/26 19:25:16 by mstencel         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   exit.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
+/*   Updated: 2024/10/07 08:07:09 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-// void	ft_exit(char **argv)
-// {
-// 	//how to get the status code of the previous functions?save in the struct?
-// }
+int		ft_exit(char **cmd)
+{
+	if (cmd)
+		ft_printf("hello\n");
+	//how to get the status code of the previous functions?save in the struct?
+	return (0);
+}
 
 // from the bash man:
 // Exit the shell, returning a status of n to the shell’s parent. 

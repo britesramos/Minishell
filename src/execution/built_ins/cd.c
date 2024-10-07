@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 18:01:06 by mstencel          #+#    #+#             */
-/*   Updated: 2024/09/26 19:24:50 by mstencel         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   cd.c                                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
+/*   Updated: 2024/10/07 08:02:38 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-// void	ft_cd(char **cmd, t_envp *env)
-// {
-// 	if (strcmp(cmd[1], "..") == 0)
-// 	{
-// 		printf("hello\n");
-// 		//remove the preceding path back to a slash or the beginning of dir
+void	ft_cd(char **cmd, t_envp *env)
+{
+	if (strcmp(cmd[1], "..") == 0)
+	{
+		printf("hello\n");
+		//remove the preceding path back to a slash or the beginning of dir
 		
-// 		//go through the list and find the OLDPATH
-// 	}
-// 	if (!cmd[1])
-// 	{
-// 		printf("hi: *s\n", env->value);
-// 	}
-// }
+		//go through the list and find the OLDPATH
+	}
+	if (env)
+	{
+		ft_printf("hello here\n");
+	}
+	// if (!cmd[1])
+	// {
+	// 	printf("hi: *s\n", env->value);
+	// }
+}
 
 // cd with only a relative or absolute path (starting with /)
 // All relative names are treated by the kernel as relative to the current
