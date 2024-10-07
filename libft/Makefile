@@ -51,15 +51,23 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJFILES)
+	@echo "CREATING LIBFT"
 	ar $(ARFLAGS) $(NAME) $(OBJFILES)
+	@echo "LIBFT CREATED"
 
 %.o: %.c $(HEADER)
+	@echo "COMPILING SOURCE FILES"
 	$(CC) $(CFLAGS) -c $< -o $@
+	@echo "SOURCE FILES COMPILED"
 
 clean:
+	@echo "REMOVING OBJECT FILES"
 	$(RM) $(OBJFILES)
+	@echo "OBJECT FILES REMOVED"
 
 fclean: clean
+	@echo "REMOVING LIBFT"
 	$(RM) $(NAME)
+	@echo "LIBFT REMOVED"
 
 re: fclean all

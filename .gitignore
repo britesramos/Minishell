@@ -1,5 +1,8 @@
 #object files
-.o
+*.o
 
 #library
-.a
+*.a
+
+#program
+minishell

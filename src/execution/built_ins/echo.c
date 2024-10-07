@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 12:10:27 by mstencel          #+#    #+#             */
-/*   Updated: 2024/09/26 18:44:03 by mstencel         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   echo.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/25 12:10:27 by mstencel      #+#    #+#                 */
+/*   Updated: 2024/10/07 09:35:51 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,19 @@ echo -rrrrr 'Hello World that's why
 // 	return (i);
 // }
 
-/*
-checks if the echo should print the new line at the end
-returns 0 when there is no new line (flag -n)
-returns 1 when there is the new line
-*/
-int	has_new_line(char *argv)
+/// @brief checks if the echo should print the new line at the end
+	//returns 0 when there is no new line (flag -n)
+	//returns 1 when there is the new line
+int	has_new_line(char *cmd)
 {
 	int	i;
 	int	len;
 
 	i = 0;
-	len = ft_strlen(argv);
-	if (argv[i] == '-')
+	len = ft_strlen(cmd);
+	if (cmd[i] == '-')
 		i++;
-	while (argv[i] == 'n')
+	while (cmd[i] == 'n')
 		i++;
 	if (i == len)
 		return (0);
@@ -59,7 +57,7 @@ int	has_new_line(char *argv)
 		return (1);
 }
 
-//adjust the num [argv[num]] when Sara gives the input - it will be 1 less
+//adjust the num [cmd[num]] when Sara gives the input - it will be 1 less
 /***
  * i = index
  * nl = new_line check
@@ -72,42 +70,43 @@ int	has_new_line(char *argv)
  * writes the 
 */
 
-void	ft_echo(char **argv)
+void	ft_echo(char **cmd, t_data *data)
 {
 	//TODO? - create an array of ints?
 	int		i;
 	int		nl;
 	int		flag;
 	int		check;
+	// int		fd = data->cmd_current->fd_out;
+	int		fd = 1;
 	// char	*env;
 	// int	is_env; -> for writing the env values
 
 	i = 0;
 	flag = 1;
-	nl = has_new_line(argv[flag]);
-	while (argv[flag])
+	nl = has_new_line(cmd[flag]);
+	while (cmd[flag])
 	{
-		check = has_new_line(argv[flag]);
-		if (argv[flag][i] == '-' && check == 0)
+		check = has_new_line(cmd[flag]);
+		if (cmd[flag][i] == '-' && check == 0)
 			flag++;
 		else
 			break ;
 	}
 	//use libft functions below
-	while (argv[flag])
+	while (cmd[flag])
 	{
 		i = 0;
-		while (argv[flag][i])
-		{
-			write(1, &argv[flag][i], 1); //how to go about the different fd's when redirecting...
-			i++;
-		}
+		while (cmd[flag][i])
+			ft_putstr_fd(cmd[flag], fd);
 		flag++;
-		if (argv[flag])
+		if (cmd[flag])
 			write(1, " ", 1);
 	}
 	if (nl == 1)
 		write(1, "\n", 1);
+	if (data)
+		ft_printf("hello\n");
 }
 
 // from bash man

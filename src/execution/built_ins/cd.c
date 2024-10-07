@@ -6,13 +6,13 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/07 08:02:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/07 09:34:26 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-void	ft_cd(char **cmd, t_envp *env)
+void	ft_cd(char **cmd, t_data *data)
 {
 	if (strcmp(cmd[1], "..") == 0)
 	{
@@ -21,7 +21,7 @@ void	ft_cd(char **cmd, t_envp *env)
 		
 		//go through the list and find the OLDPATH
 	}
-	if (env)
+	if (data)
 	{
 		ft_printf("hello here\n");
 	}

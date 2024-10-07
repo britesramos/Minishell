@@ -6,7 +6,7 @@
 #    By: mstencel <mstencel@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/10/07 08:13:02 by mstencel      ########   odam.nl          #
+#    Updated: 2024/10/07 09:48:08 by mstencel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(HEADER)
 	make -C $(LIBFT_PATH)
+	@echo "CREATING MINISHELL"
 	$(CC) $(OBJ_FILES) $(CFLAGS) $(OFLAGS) -o $(NAME) $(LIBFT)
+	@echo "MINISHELL CREATED"
 
 # the $(@D) - The directory part of the file name of the target,
 # with the trailing slash removed. 
@@ -65,14 +67,18 @@ $(NAME): $(OBJ_FILES) $(HEADER)
 # This value is . if ‘$@’ does not contain a slash.
 $(OBJ_PATH)/%.o:$(SRC_PATH)/%.c
 	mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	@echo "REMOVING OBJECT FILES"
 	$(RM) $(OBJ_FILES)
 	$(RD) $(OBJ_PATH)
+	@echo "OBJECT FILES REMOVED"
 
 fclean: clean
+	@echo "REMOVING MINISHELL"
 	$(RM) $(NAME)
+	@echo "MINISHELL REMOVED"
 
 re: fclean all
 

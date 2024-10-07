@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/07 08:19:00 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/07 09:35:21 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_cmd
 	// char **argv;
 	char **here_doc;
 	struct s_cmd *pipe; /*Pointer to the next node*/
+	int	fd_in;
+	int	fd_out;
 	// char *infile; /*int*/ /*Opening fds should be done in execution.*/
 	// char *outfile; /*int*/
 }	t_cmd;
@@ -82,12 +84,12 @@ void	clean_up(t_data *data);
 void	exec(t_data *data);
 // tokens
 // void	line_tok(char *line);
-int		ft_t_check(char **cmd, t_envp *env);
+int	ft_t_check(char **cmd, t_data *data);
 
 // built-in funtions:
-void	ft_echo(char **cmd);
+void	ft_echo(char **cmd, t_data *data);
 int		ft_pwd(char **cmd);
 int		ft_exit(char **cmd);
-void	ft_cd(char **cmd, t_envp *env);
+void	ft_cd(char **cmd, t_data *data);
 
 #endif
