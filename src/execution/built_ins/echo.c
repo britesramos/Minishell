@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 12:10:27 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/07 09:35:51 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/09 12:28:05 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,28 @@ testing on:
 echo -nnnn "Hello    that's what    needs to " be checked...
 echo -nnn -nnna
 echo Hello -nnn
-echo $PWDDDD
-echo -rrrrr "Hello World that's why ->waiting for the double quote to close
-echo -nnnn 'Hello    that's what    needs to ' be checked... ->waiting for the single quote to close
 echo -rrrrr 'Hello World that's why
+
+TODO:
+echo $? -> prints the exit code from the last program - do we store it as a global variable or keep in the 
+echo "$PWD"   ->  /home/mstencel/Documents/Minishell_sara_git/sara_git
+echo '$PWD'   -> $PWD
+echo "'$PWD'" -> '/home/mstencel/Documents/Minishell_sara_git/sara_git'
+echo '"$PWD"' -> "$PWD"
+echo $PWDDDD / echo "$PWDDDD"  ->returns an empty new line
+echo "'$PWDDDDDDD'" -> ''
+
+TODO - add the quotes handling
+TODO - add the envp's
+TODO - handle errors - here or in ft_putchar_fd?
+TODO - for fd_out - pass the cmd_current in the previous function?
 */
 
-
-// delete it once libft in live!!!!
 #include <stdio.h>
 
-// int	ft_strlength(char *s)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s[i])
-// 		i++;
-// 	return (i);
-// }
-
-/// @brief checks if the echo should print the new line at the end
-	//returns 0 when there is no new line (flag -n)
-	//returns 1 when there is the new line
+/// @brief
+//returns 0 when there is no new line at the end (flag -n is used);
+//returns 1 when there is the new line at the end
 int	has_new_line(char *cmd)
 {
 	int	i;
@@ -57,59 +56,39 @@ int	has_new_line(char *cmd)
 		return (1);
 }
 
-//adjust the num [cmd[num]] when Sara gives the input - it will be 1 less
-/***
- * i = index
- * nl = new_line check
- * flag = will serve as the index number of the argument that needs to be 
- * 		printed
- * check = checks when the function should start printing (so it's not the flag -n anymore)
- * 
- * sets the new_line flag on 1 if there is new line or 0 if the -n is used
- * writes the arguments that should be out
- * writes the 
-*/
-
-void	ft_echo(char **cmd, t_data *data)
+///@brief from the bash man: Output the args, separated by spaces, 
+// terminated with a newline.
+// The return status is 0 unless a write error occurs. 
+// If -n is specified, the trailing newline is suppressed.
+// 	nl = new_line check (1 when there is a new line and 0 when there is the flag -n)
+int	ft_echo(char **cmd, t_data *data)
 {
-	//TODO? - create an array of ints?
-	int		i;
-	int		nl;
-	int		flag;
-	int		check;
-	// int		fd = data->cmd_current->fd_out;
-	int		fd = 1;
-	// char	*env;
-	// int	is_env; -> for writing the env values
+	int	nl;
+	int	i;
 
-	i = 0;
-	flag = 1;
-	nl = has_new_line(cmd[flag]);
-	while (cmd[flag])
+	i = 1;
+	if (cmd[i] == NULL)
 	{
-		check = has_new_line(cmd[flag]);
-		if (cmd[flag][i] == '-' && check == 0)
-			flag++;
-		else
-			break ;
+		ft_putstr_fd("", data->cmd_current->fd_out);
+		data->exit_code = 1;
 	}
-	//use libft functions below
-	while (cmd[flag])
+	nl = has_new_line(cmd[i]);
+	if (nl == 0)
+		i++;
+	while (cmd[i])
 	{
-		i = 0;
-		while (cmd[flag][i])
-			ft_putstr_fd(cmd[flag], fd);
-		flag++;
-		if (cmd[flag])
-			write(1, " ", 1);
+		ft_putstr_fd(cmd[i], data->cmd_current->fd_out);
+		i++;
+		if (cmd[i])
+			ft_putchar_fd(' ', data->cmd_current->fd_out);
 	}
 	if (nl == 1)
-		write(1, "\n", 1);
-	if (data)
-		ft_printf("hello\n");
+		ft_putchar_fd('\n', data->cmd_current->fd_out);
+	data->exit_code = 0;
+	return (0);
 }
 
-// from bash man
+// from the bash man
 // Output the args, separated by spaces, terminated with a newline.
 // The return status is 0 unless a write error occurs. 
-// If -n is specified, the trailing newline is suppressed. I
+// If -n is specified, the trailing newline is suppressed.

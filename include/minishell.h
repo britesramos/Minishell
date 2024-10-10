@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/07 09:35:21 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/10 08:04:57 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ typedef struct s_envp
 /*If add any new value, do not forget to init in init.c - init_main_struct*/
 typedef struct s_data
 {
-	char *line; /*Line from Readline function - user input from the terminal. - to be parsed*/
-	t_cmd *cmd_head;
-	t_cmd *cmd_current;
-	t_envp *envp_head; /*Pointer to linked list header | Parsed envp*/
+	char	*line; /*Line from Readline function - user input from the terminal. - to be parsed*/
+	int		exit_code; 
+	t_cmd	*cmd_head;
+	t_cmd	*cmd_current;
+	t_envp	*envp_head; /*Pointer to linked list header | Parsed envp*/
 }	t_data;
 
 /*Initialize main struct t_data data.*/
@@ -80,16 +81,17 @@ void	clean_up(t_data *data);
 
 # include <unistd.h>
 # include <linux/limits.h>
+# include <errno.h>
 
 void	exec(t_data *data);
 // tokens
 // void	line_tok(char *line);
-int	ft_t_check(char **cmd, t_data *data);
+int	ft_built_in_check(char **cmd, t_data *data);
 
 // built-in funtions:
-void	ft_echo(char **cmd, t_data *data);
-int		ft_pwd(char **cmd);
-int		ft_exit(char **cmd);
+int		ft_echo(char **cmd, t_data *data);
+int		ft_pwd(char **cmd, t_data *data);
+int		ft_exit(char **cmd, t_data *data);
 void	ft_cd(char **cmd, t_data *data);
 
 #endif

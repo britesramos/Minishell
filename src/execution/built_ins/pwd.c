@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mstencel <mstencel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 18:37:21 by mstencel          #+#    #+#             */
-/*   Updated: 2024/09/26 18:44:24 by mstencel         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   pwd.c                                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/25 18:37:21 by mstencel      #+#    #+#                 */
+/*   Updated: 2024/10/10 08:13:04 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,28 @@
 // 				mstencel@c2r2s8:~/Documents/test/test1/test2/../..$ cd ..
 // 				mstencel@c2r2s8:~/Documents$
 
-int	ft_pwd(char **argv)
+int	ft_pwd(char **argv, t_data *data)
 {
 	char	path[PATH_MAX + 1];
 	int		i;
-
+	
 	i = 0;
-	//redundant???
 	if (argv[1] && argv[1][0] == '-')
 	{
-		write(2, "bash: pwd: -", 13);
-		write(2, &argv[1][1], 1);
-		write(2, ": invalid option", 17);
-		write(2, "\n", 1);
-		write(2, "pwd: usage: pwd",16);
-		write(2, "\n", 1);
+		ft_putstr_fd("bash: pwd: -", STDERR_FILENO);
+		ft_putchar_fd(argv[1][1], STDERR_FILENO);
+		ft_putstr_fd(": invalid option\npwd: usage: pwd [no options allowed]\n", STDERR_FILENO);
 		return (2);
 	}
 	if (getcwd(path, sizeof(path)) != NULL)
 	{
-		while (path[i])
-		{
-			write(1, &path[i], 1);
-			i++;
-		}
-		write(1, "\n", 1);
+		ft_putstr_fd(path, data->cmd_current->fd_out);
+		ft_putchar_fd('\n', data->cmd_current->fd_out);
 	}
 	else
 	{
-		write(2, "pwd: getcwd() error\n", 21);
-		return (1);
+		ft_putstr_fd("pwd: getcwd() failed\n", STDERR_FILENO);
+		return (2);
 	}
 	return (0);
 	
