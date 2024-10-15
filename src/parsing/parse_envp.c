@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_envp.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 14:38:59 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/26 14:40:31 by sramos           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse_envp.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/26 14:38:59 by sramos        #+#    #+#                 */
+/*   Updated: 2024/10/07 08:04:59 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static	char	*init_key(char *envp)
 static char	*init_value(char *envp)
 {
 	int		i;
-	int		key_len;
+	size_t	key_len;
 	char	*value;
 
 	i = 0;

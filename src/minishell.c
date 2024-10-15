@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 11:59:13 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/26 14:03:37 by sramos           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
+/*   Updated: 2024/10/10 08:21:13 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_data *data;
+	int		exit_code;
 
 	data = malloc(sizeof(t_data));
 	init_main_struct(data);
@@ -25,7 +26,8 @@ int	main(int argc, char **argv, char **envp)
 	}
 	data->line = readline(argv[1]); /*There are leaks here from readline, but I dont know if it is fixable.*/
 	parsing(data, envp);
-
+	exec(data);
+	
 	// 1) Readline function. (Malloc every time and also dont forget to free.)
 	// 2) Parsing.
 		// 2.1) Invalid inputs (syntax errors).
@@ -41,6 +43,11 @@ int	main(int argc, char **argv, char **envp)
 		//5.2.)Pipes.
 		//5.3.)Redirections
 		//5.4.)Signals
+	if (data->exit_code > 255)
+		exit_code = data->exit_code % 256;
+	else
+		exit_code = data->exit_code;
+	ft_printf("exit_code in main: %d\n", exit_code);
 	clean_up(data);
-	return (0);
+	return (exit_code);
 }

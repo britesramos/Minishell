@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parsing_utils.c                                    :+:    :+:            */
+/*   ft_free.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/09/25 16:12:05 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/07 08:05:11 by mstencel      ########   odam.nl         */
+/*   Created: 2024/05/31 11:21:27 by mstencel      #+#    #+#                 */
+/*   Updated: 2024/08/06 11:44:11 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-
-
-/*Replace with lifbt*/
-// int	ft_strlen(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (str[i])
-// 		i++;
-// 	return (i);
-// }
-
-int	is_space(char c)
+char	*ft_free(char **str)
 {
-	return((c >= '\t' && c <= '\r') || c == ' ');
+	if (*str)
+	{
+		free (*str);
+		*str = NULL;
+	}
+	return (NULL);
 }

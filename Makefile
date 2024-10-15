@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: sramos <sramos@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/23 17:07:32 by sramos            #+#    #+#              #
-#    Updated: 2024/09/26 14:41:55 by sramos           ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: mstencel <mstencel@student.42.fr>            +#+                      #
+#                                                    +#+                       #
+#    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
+#    Updated: 2024/10/10 08:39:00 by mstencel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,13 @@ SRC_FILES = src/minishell.c\
 			src/parsing/parse_envp.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\
+			src/execution/exec.c\
+			src/execution/token/token.c\
+			src/execution/built_ins/built_ins_check.c\
+			src/execution/built_ins/cd.c\
 			src/execution/built_ins/echo.c\
+			src/execution/built_ins/exit.c\
+			src/execution/built_ins/pwd.c
 
 OBJ_PATH = obj
 
@@ -33,6 +39,9 @@ OBJ_PATH = obj
 OBJ_FILES = $(SRC_FILES:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 
 HEADER = include/minishell.h
+
+LIBFT_PATH = libft
+LIBFT = $(LIBFT_PATH)/libft.a
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra 
@@ -47,7 +56,10 @@ info-%:
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(HEADER)
-	$(CC) $(OBJ_FILES) $(CFLAGS) $(OFLAGS) -o $(NAME)
+	make -C $(LIBFT_PATH)
+	@echo "CREATING MINISHELL"
+	$(CC) $(OBJ_FILES) $(CFLAGS) $(OFLAGS) -o $(NAME) $(LIBFT)
+	@echo "MINISHELL CREATED"
 
 # the $(@D) - The directory part of the file name of the target,
 # with the trailing slash removed. 
@@ -55,14 +67,18 @@ $(NAME): $(OBJ_FILES) $(HEADER)
 # This value is . if ‘$@’ does not contain a slash.
 $(OBJ_PATH)/%.o:$(SRC_PATH)/%.c
 	mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	@echo "REMOVING OBJECT FILES"
 	$(RM) $(OBJ_FILES)
 	$(RD) $(OBJ_PATH)
+	@echo "OBJECT FILES REMOVED"
 
 fclean: clean
+	@echo "REMOVING MINISHELL"
 	$(RM) $(NAME)
+	@echo "MINISHELL REMOVED"
 
 re: fclean all
 
