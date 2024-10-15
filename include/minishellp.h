@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishellp.h                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:16 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/07 08:03:58 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/15 15:27:24 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
