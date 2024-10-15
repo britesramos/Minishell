@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/15 15:34:06 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/15 15:38:49 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "minishellp.h"
 # include "minishelle.h"
+# include "../libft/libft.h"
 
 # include <unistd.h>
 # include <stdio.h>
@@ -68,21 +69,6 @@ void	invalid_input(t_data *data);
 void	parse_envp(t_data *data, char **envp);
 
 /*Parsing_utils*/
-int	ft_strlen(char *str);
-int	is_space(char c);
-
-/*Invalid input checker*/
-void	invalid_input(t_data *data);
-
-/*Parsing envp*/
-void	parse_envp(t_data *data, char **envp);
-
-/*Error handling and exit error std.*/
-void    error_exit(char *str, int seo);
-/*-----------------------------------PARSING-----------------------------------*/
-
-/*Parsing_utils*/
-int	ft_strlen(char *str);
 int	is_space(char c);
 
 /*Invalid input checker*/
