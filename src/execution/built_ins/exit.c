@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/10 10:35:23 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/10 11:45:50 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,37 @@
 
 // ->	exit $
 // 		exit
-// 		bash: exit: $: numeric argument required		(when you run echo $? -> 2)
+// 		bash: exit: $: numeric argument required	(when you run echo $? -> 2)
 
-//Sara will kill me
-//NOTE $# stands for 0 -->edge case for parsing? to replace $# with 0 
-//(cause it works well including the exit codes)
 
+//undefined behaviour: $# (sometimes replaced by 0)
+// ->	exit 1$#
+// 		exit		(when you run echo $? -> 10)
 // ->	exit 32$#
 // 		exit		(when you run echo $? -> 64)
-
+// ->	exit 31$#
+//		exit		(when you run echo $? -> 54)
+// ->	exit 29$#
+//		exit		(when you run echo $? -> 34)
 // ->	exit 25$#
 // 		exit		(when you run echo $? -> 250)
+// ->	exit 654$#
+// 		exit		(when you run echo $? -> 140)
 
 
 //EXIT DOESN'T WORK
 // ->	exit 24 53
 // 		exit
-// 		bash: exit: too many arguments			(when you run echo $?  -> 1)
+// 		bash: exit: too many arguments
+//			(when you run echo $?  -> 1)
 
 // ->	exit (
-// 		bash: syntax error near unexpected token `newline'   (when you run echo $?  -> 2)
+// 		bash: syntax error near unexpected token `newline'   
+// 			(when you run echo $?  -> 2)
 
 // ->	exit )
-// 		bash: syntax error near unexpected token `)'		(when you run echo $?  -> 2)
+// 		bash: syntax error near unexpected token `)'
+// 			(when you run echo $?  -> 2)
 
 
 /// @brief checks if there are any non-digit chars in cmd & 
@@ -72,7 +80,8 @@ int	digit_check(char *cmd)
 	{
 		if (cmd[i] == '(' || cmd[i] == ')')
 		{
-			ft_putstr_fd("minishell : syntax error near unexpected token ", STDERR_FILENO);
+			ft_putstr_fd("minishell : ", STDERR_FILENO);
+			ft_putstr_fd("syntax error near unexpected token ", STDERR_FILENO);
 			if (cmd[i] == '(')
 				ft_putendl_fd("`)'", STDERR_FILENO);
 			else
@@ -146,5 +155,3 @@ int	ft_exit(char **cmd, t_data *data)
 	data->exit_code = ft_atol(cmd[1]);
 	return (0);
 }
-
-// 

@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/10 08:59:40 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/11 13:34:56 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ void	exec(t_data *data)
 		return ; //TODO -> only if there are no other cmds
 	}
 	i = 0;
-	// ft_free(args);
+	ft_free(args);
 	while (args[i])
 	{
+		ft_printf("to free arg[%d] %s\n", i, args[i]);
 		free(args[i]);
 		args[i] = NULL;
 		i++;
+		ft_printf("2. to free arg[%d] %s\n", i, args[i]);
 	}
 	free(args);
 }

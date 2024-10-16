@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/10 08:21:13 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/16 10:41:27 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ int	main(int argc, char **argv, char **envp)
 
 	data = malloc(sizeof(t_data));
 	init_main_struct(data);
-	if (argc > 1)
+	
+	// if (argc > 1)
+	if (argc < 1) //for execution testing only, to be deleted!
 	{
-		write(1, "Invalid number of arguments. Type: minishell\n", 45);
+		write(2, "Invalid number of arguments. Type: minishell\n", 45);
 		return(1);
 	}
 	data->line = readline(argv[1]); /*There are leaks here from readline, but I dont know if it is fixable.*/

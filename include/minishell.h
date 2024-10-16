@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/10 08:04:57 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/16 12:24:50 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,20 @@ void	clean_up(t_data *data);
 
 // EXECUTION
 
-// to be deleted!!!
-#include <stdio.h>
-
-
 // headers for external functions
-// getcwd(char *buf, size_t size) -> unistd.h
-// PATH_MAX -> limits.h
-
-# include <unistd.h>
-# include <linux/limits.h>
 # include <errno.h>
 
+// for PATH_MAX
+# include <linux/limits.h>
+
+// for getcwd()
+# include <unistd.h>
+
+// for the opendir()
+# include <sys/types.h>
+# include <dirent.h>
+
+// void	exec(t_data *data);
 void	exec(t_data *data);
 // tokens
 // void	line_tok(char *line);
@@ -93,5 +95,10 @@ int		ft_echo(char **cmd, t_data *data);
 int		ft_pwd(char **cmd, t_data *data);
 int		ft_exit(char **cmd, t_data *data);
 void	ft_cd(char **cmd, t_data *data);
+
+//envp utils
+char	*find_value(t_data *data, char *key);
+void	replace_value(t_data *data, char *key, char *new_value);
+
 
 #endif

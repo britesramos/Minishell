@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 15:18:51 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/09 08:25:44 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/11 13:35:14 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	free_envp(t_envp *envp_head)
 
 	current = envp_head;
 	next = envp_head->next;
-	while(current->next != NULL)
+	while (current->next != NULL)
 	{
 		free(current->key);
 		free(current->value);

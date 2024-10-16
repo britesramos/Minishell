@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 12:10:27 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/09 12:28:05 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/16 11:08:05 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ echo -nnn -nnna
 echo Hello -nnn
 echo -rrrrr 'Hello World that's why
 
-TODO:
+TODO: //or is it in parsing-expansion?
 echo $? -> prints the exit code from the last program - do we store it as a global variable or keep in the 
+echo $$ -> prints the ppid
 echo "$PWD"   ->  /home/mstencel/Documents/Minishell_sara_git/sara_git
 echo '$PWD'   -> $PWD
 echo "'$PWD'" -> '/home/mstencel/Documents/Minishell_sara_git/sara_git'
@@ -28,7 +29,7 @@ echo '"$PWD"' -> "$PWD"
 echo $PWDDDD / echo "$PWDDDD"  ->returns an empty new line
 echo "'$PWDDDDDDD'" -> ''
 
-TODO - add the quotes handling
+TODO - add the quotes handling ->for parsing?
 TODO - add the envp's
 TODO - handle errors - here or in ft_putchar_fd?
 TODO - for fd_out - pass the cmd_current in the previous function?
@@ -75,6 +76,7 @@ int	ft_echo(char **cmd, t_data *data)
 	nl = has_new_line(cmd[i]);
 	if (nl == 0)
 		i++;
+	// ft_echo_work(data);
 	while (cmd[i])
 	{
 		ft_putstr_fd(cmd[i], data->cmd_current->fd_out);
