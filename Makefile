@@ -6,7 +6,7 @@
 #    By: mstencel <mstencel@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/10/11 09:58:18 by mstencel      ########   odam.nl          #
+#    Updated: 2024/10/17 09:31:59 by mstencel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ info-%:
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(HEADER)
+	@echo "SOURCE FILES COMPILED"
 	make -C $(LIBFT_PATH)
 	@echo "CREATING MINISHELL"
 	$(CC) $(OBJ_FILES) $(CFLAGS) $(OFLAGS) -o $(NAME) $(LIBFT)
@@ -65,8 +66,9 @@ $(NAME): $(OBJ_FILES) $(HEADER)
 # with the trailing slash removed. 
 # If the value of ‘$@’ is dir/foo.o then ‘$(@D)’ is dir. 
 # This value is . if ‘$@’ does not contain a slash.
+
 $(OBJ_PATH)/%.o:$(SRC_PATH)/%.c
-	mkdir -p $(@D)
+	@if [ ! -d "$(@D)" ]; then mkdir $(@D) && echo "$(@D) MADE"; fi
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
