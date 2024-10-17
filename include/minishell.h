@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/16 12:24:50 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/17 13:34:27 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ typedef struct s_cmd
 	char **cmd;
 	// char **argv;
 	char **here_doc;
-	struct s_cmd *pipe; /*Pointer to the next node*/
+	int append;
+	
 	int	fd_in;
 	int	fd_out;
 	// char *infile; /*int*/ /*Opening fds should be done in execution.*/
 	// char *outfile; /*int*/
+	struct s_cmd *pipe; /*Pointer to the next node*/
 }	t_cmd;
 
 /*Parsed env node (linked list)*/
@@ -91,10 +93,13 @@ void	exec(t_data *data);
 int	ft_built_in_check(char **cmd, t_data *data);
 
 // built-in funtions:
-int		ft_echo(char **cmd, t_data *data);
-int		ft_pwd(char **cmd, t_data *data);
-int		ft_exit(char **cmd, t_data *data);
 void	ft_cd(char **cmd, t_data *data);
+void	ft_echo(char **cmd, t_data *data);
+void	ft_env(char **cmd, t_data *data);
+int		ft_exit(char **cmd, t_data *data);
+void	ft_pwd(char **argv, t_data *data);
+
+
 
 //envp utils
 char	*find_value(t_data *data, char *key);

@@ -1,8 +1,11 @@
-#object files
+# object files
 *.o
 
-#library
+# library
 *.a
 
-#program
+# program
 minishell
+
+# test files
+test
