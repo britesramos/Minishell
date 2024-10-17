@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   invalid_input.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sramos <sramos@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 14:41:06 by sramos            #+#    #+#             */
-/*   Updated: 2024/09/26 14:42:39 by sramos           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   input_checker.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/26 14:41:06 by sramos        #+#    #+#                 */
+/*   Updated: 2024/10/15 18:21:34 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	missing_closing_q_marks(char *str)
 	return (0);
 }
 
-void	invalid_input(t_data *data)
+void	input_checker(t_data *data)
 {
 	if (start_with_pipe(data->line) == 1 || multiple_pipes(data->line) == 1)
 		error_exit("minishell: syntax error near unexpected token `||'", 2);

@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/10 08:21:13 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/15 17:59:50 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data *data;
 	int		exit_code;
-
+	
+	(void)argv; //Not going to use this. Waiting for user prompt.
 	data = malloc(sizeof(t_data));
 	init_main_struct(data);
 	if (argc > 1)
@@ -24,7 +25,6 @@ int	main(int argc, char **argv, char **envp)
 		write(1, "Invalid number of arguments. Type: minishell\n", 45);
 		return(1);
 	}
-	data->line = readline(argv[1]); /*There are leaks here from readline, but I dont know if it is fixable.*/
 	parsing(data, envp);
 	exec(data);
 	

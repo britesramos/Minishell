@@ -6,7 +6,7 @@
 #    By: mstencel <mstencel@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/10/10 08:39:00 by mstencel      ########   odam.nl          #
+#    Updated: 2024/10/15 18:24:41 by sramos        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ SRC_FILES = src/minishell.c\
 			src/clean_up.c\
 			src/init.c\
 			src/parsing/parsing.c\
-			src/parsing/invalid_input.c\
+			src/parsing/input_checker.c\
 			src/parsing/parse_envp.c\
+			src/parsing/parse_input.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\
 			src/execution/exec.c\

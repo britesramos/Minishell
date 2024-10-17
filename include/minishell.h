@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/15 15:38:49 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/17 14:10:32 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
 {
-	char **cmd;
-	// char **argv;
-	char **here_doc;
+	char	**cmd; /*Commands arguments and flags*/
+	bool	flag;
+	bool	append;
+	int		fd_in; /*STIN*/
+	int		fd_out; /*STOUT*/
+	char	*infile; /*Init as NULL if not exists. Or name of file.*/
+	char	*outfile; /*Init as NULL if not exists. Or name of file.*/
 	struct s_cmd *pipe; /*Pointer to the next node*/
-	int	fd_in;
-	int	fd_out;
-	// char *infile; /*int*/ /*Opening fds should be done in execution.*/
-	// char *outfile; /*int*/
 }	t_cmd;
 
 /*Parsed env node (linked list)*/
@@ -50,6 +50,7 @@ typedef struct s_data
 {
 	char	*line; /*Line from Readline function - user input from the terminal. - to be parsed*/
 	int		exit_code; 
+	int		nbr_pipes;
 	t_cmd	*cmd_head;
 	t_cmd	*cmd_current;
 	t_envp	*envp_head; /*Pointer to linked list header | Parsed envp*/
@@ -62,8 +63,10 @@ void	init_main_struct(t_data *data);
 /*-----------------------------------PARSING-----------------------------------*/
 /*Parsing input*/
 void	parsing(t_data *data, char **envp);
+void	parse_input(t_data *data);
+
 /*Invalid input checker*/
-void	invalid_input(t_data *data);
+void	input_checker(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
@@ -79,16 +82,13 @@ void	parse_envp(t_data *data, char **envp);
 
 /*Error handling and exit error std.*/
 void    error_exit(char *str, int seo);
+
 /*-----------------------------------PARSING-----------------------------------*/
 
 /*Ending program and clean up.*/
 void	clean_up(t_data *data);
 
 // EXECUTION
-
-// to be deleted!!!
-#include <stdio.h>
-
 
 // headers for external functions
 // getcwd(char *buf, size_t size) -> unistd.h

@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/24 10:29:43 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/09 08:23:44 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/17 14:11:44 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_main_struct(t_data *data)
 	if (!data->cmd_current)
 		ft_printf("malloc error\n");
 	data->cmd_current->cmd = NULL;
-	data->cmd_current->here_doc = NULL;
+	// data->cmd_current->here_doc = NULL;
 	data->cmd_current->pipe = NULL;
 	data->cmd_current->fd_in = 0;
 	data->cmd_current->fd_out = 1;
