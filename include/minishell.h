@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/17 14:10:32 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/18 20:07:27 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 typedef struct s_cmd
 {
 	char	**cmd; /*Commands arguments and flags*/
-	bool	flag;
-	bool	append;
+	// bool	flag;
+	// bool	append;
 	int		fd_in; /*STIN*/
 	int		fd_out; /*STOUT*/
 	char	*infile; /*Init as NULL if not exists. Or name of file.*/
@@ -87,6 +87,7 @@ void    error_exit(char *str, int seo);
 
 /*Ending program and clean up.*/
 void	clean_up(t_data *data);
+void	free_split(char **array);
 
 // EXECUTION
 

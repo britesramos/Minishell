@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:16 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/17 14:51:13 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/18 14:32:10 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ typedef enum e_tokens
 	T_REIN,
 	T_REOUT,
 	T_APPEND,
-	// T_HEREDOC,
-	// T_EOF,
+	T_HEREDOC,
+	// T_EOF, ???
 	// TOKEN_ERROR, ???
 }	t_token_t;
 
 typedef struct s_token
 {
 	char		*str;
-	int			lenght;
+	int			lenght; // I don't need this.
 	t_token_t	type;
 	t_token		*next;
 }	t_token;
