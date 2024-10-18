@@ -9,3 +9,6 @@ minishell
 
 # test files
 test
+
+# any other
+.vscode/

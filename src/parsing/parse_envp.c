@@ -6,13 +6,13 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:38:59 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/07 08:04:59 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/18 13:29:32 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static	char	*init_key(char *envp)
+static char	*init_key(char *envp)
 {
 	int	i;
 	int	key_len;
@@ -56,7 +56,7 @@ static char	*init_value(char *envp)
 	return(value);
 }
 
-static t_envp	*create_node_envp(char *envp)
+t_envp	*create_node_envp(char *envp)
 {
 	t_envp	*node;
 

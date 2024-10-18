@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 12:10:27 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/17 14:26:04 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/18 11:14:17 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_echo(char **cmd, t_data *data)
 
 	nl = 1;
 	i = 1;
-	if (cmd[i] == NULL)
+	if (cmd[i] == NULL) //TODO -> check the $ after parsing
 	{
 		ft_putstr_fd("\n", data->cmd_current->fd_out);
 		data->exit_code = 0;

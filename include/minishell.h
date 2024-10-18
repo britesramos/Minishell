@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/17 13:34:27 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/18 14:31:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ void	parse_envp(t_data *data, char **envp);
 /*Ending program and clean up.*/
 void	clean_up(t_data *data);
 
+
+
+
+//COMMON FUNCTIONS
+t_envp	*create_node_envp(char *envp);
+
 // EXECUTION
 
 // headers for external functions
@@ -97,13 +103,18 @@ void	ft_cd(char **cmd, t_data *data);
 void	ft_echo(char **cmd, t_data *data);
 void	ft_env(char **cmd, t_data *data);
 int		ft_exit(char **cmd, t_data *data);
+void	ft_export(char **cmd, t_data *data);
+void	ft_print_export(t_data *data);
 void	ft_pwd(char **argv, t_data *data);
+
 
 
 
 //envp utils
 char	*find_value(t_data *data, char *key);
 void	replace_value(t_data *data, char *key, char *new_value);
+// void	add_node(char *cmd, t_data *data);
+void	add_node(char *cmd, t_envp **env);
 
 
 #endif

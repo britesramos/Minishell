@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/17 14:29:26 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/18 11:15:51 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ TESTING ON:
 cd		->goes to home dir
 cd ~		->goes to home dir
 cd #		->goes to home dir
-cd ..	->goes to the parent dir
+cd ..		->goes to the parent dir
 cd -		->goes to the OLDPWD and writes the absolute path to fd_out
 cd /		->goes to the root (PWD = /)
 cd /home/bocal -> error check :)

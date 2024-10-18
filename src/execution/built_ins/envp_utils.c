@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/11 13:36:21 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/18 14:48:22 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,23 @@ void	replace_value(t_data *data, char *key, char *new_value)
 		}
 		env = env->next;
 	}
+}
+
+void	add_node(char *cmd, t_envp **env)
+{
+	t_envp	*current;
+	t_envp	*new_node;
+	// t_envp	*check;
+	
+	current = *env;
+	while (current->next != NULL)
+		current = current->next;
+	new_node = create_node_envp(cmd);
+	current->next = new_node;
+	// check = *env;
+	// while (check != NULL)
+	// {
+	// 	ft_printf("%s%s\n", check->key, check->value);
+	// 	check = check->next;
+	// }
 }
