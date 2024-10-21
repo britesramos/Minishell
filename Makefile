@@ -6,7 +6,7 @@
 #    By: mstencel <mstencel@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/10/21 08:43:52 by mstencel      ########   odam.nl          #
+#    Updated: 2024/10/21 10:33:03 by mstencel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC_FILES = src/minishell.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\
 			src/execution/exec.c\
-			src/execution/built_ins/built_ins_check.c\
+			src/execution/built_ins/builtins_manager.c\
 			src/execution/built_ins/cd.c\
 			src/execution/built_ins/echo.c\
 			src/execution/built_ins/env.c\

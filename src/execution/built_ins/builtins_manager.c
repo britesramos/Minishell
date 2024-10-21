@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   built_ins_check.c                                  :+:    :+:            */
+/*   builtins_manager.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:05:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/21 08:44:41 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/21 10:32:53 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 //once the data->cmd's are populated, delete the char **cmd + 
 // change the names of the commands and len values!
 //pass only data? see how the structs are working
-int	ft_built_in_check(char **cmd, t_data *data)
+
+int	ft_builtin_manager(char **cmd, t_data *data)
 {
 	int	len;
 

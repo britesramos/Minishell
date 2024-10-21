@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/21 08:44:11 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/21 10:33:21 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_envp	*create_node_envp(char *envp);
 void	exec(t_data *data);
 // tokens
 // void	line_tok(char *line);
-int	ft_built_in_check(char **cmd, t_data *data);
+int	ft_builtin_manager(char **cmd, t_data *data);
 
 // built-in funtions:
 void	ft_cd(char **cmd, t_data *data);
