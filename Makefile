@@ -6,7 +6,7 @@
 #    By: mstencel <mstencel@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/10/18 09:10:28 by mstencel      ########   odam.nl          #
+#    Updated: 2024/10/21 08:43:52 by mstencel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRC_FILES = src/minishell.c\
 			src/execution/built_ins/exit.c\
 			src/execution/built_ins/export.c\
 			src/execution/built_ins/export_print.c\
-			src/execution/built_ins/pwd.c
+			src/execution/built_ins/pwd.c\
+			src/execution/built_ins/unset.c
 
 OBJ_PATH = obj
 

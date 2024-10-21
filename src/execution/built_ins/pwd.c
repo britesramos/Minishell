@@ -6,22 +6,22 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 18:37:21 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/17 10:22:32 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/21 08:02:12 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-void	ft_pwd(char **argv, t_data *data)
+void	ft_pwd(char **cmd, t_data *data)
 {
 	char	path[PATH_MAX + 1];
 	int		i;
 	
 	i = 0;
-	if (argv[1] && argv[1][0] == '-')
+	if (cmd[1] && cmd[1][0] == '-')
 	{
 		ft_putstr_fd("bash: pwd: -", STDERR_FILENO);
-		ft_putchar_fd(argv[1][1], STDERR_FILENO);
+		ft_putchar_fd(cmd[1][1], STDERR_FILENO);
 		ft_putendl_fd(": invalid option", STDERR_FILENO);
 		ft_putendl_fd(": usage: pwd	[no options allowed]", STDERR_FILENO);
 		data->exit_code = 2;

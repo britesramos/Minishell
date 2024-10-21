@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:05:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/17 14:58:35 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/21 08:44:41 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_built_in_check(char **cmd, t_data *data)
 		return (ft_export(cmd, data), 0);
 	else if (len == 6 && ft_strncmp(cmd[0], "my_pwd", 7) == 0)
 		return(ft_pwd(cmd, data), 0);
-	// else if (len == 8 && ft_strcmp(cmd[0], "my_unset", 8) == 0)
-	// 	return (ft_unset(data), 0);
+	else if (len == 8 && ft_strncmp(cmd[0], "my_unset", 8) == 0)
+		return (ft_unset(cmd, data), 0);
 	return (0);
 }

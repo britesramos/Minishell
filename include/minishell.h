@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/18 14:31:33 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/21 08:44:11 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int		ft_exit(char **cmd, t_data *data);
 void	ft_export(char **cmd, t_data *data);
 void	ft_print_export(t_data *data);
 void	ft_pwd(char **argv, t_data *data);
-
+void	ft_unset(char **cmd, t_data *data);
 
 
 

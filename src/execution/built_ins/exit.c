@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/17 10:16:39 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/21 07:20:50 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,8 @@ static int	digit_check(char *cmd)
 /// 2 when it should (but there is an error)
 static int	is_digit_only(char *cmd, t_data *data)
 {
-	int	i;
 	int	check;
 
-	i = 0;
 	check = digit_check(cmd);
 	if (check == 1)
 	{
