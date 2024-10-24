@@ -3,10 +3,10 @@
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: mstencel <mstencel@student.42.fr>            +#+                      #
+#    By: marvin <marvin@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/10/15 18:24:41 by sramos        ########   odam.nl          #
+#    Updated: 2024/10/24 23:12:46 by anonymous     ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRC_FILES = src/minishell.c\
 			src/parsing/parsing.c\
 			src/parsing/input_checker.c\
 			src/parsing/parse_envp.c\
+			src/parsing/tokenization.c\
+			src/parsing/tokenization_utils.c\
 			src/parsing/parse_input.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\

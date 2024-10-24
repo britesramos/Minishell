@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishell.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/18 20:07:27 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/25 00:23:44 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <limits.h>
  
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
@@ -65,8 +66,14 @@ void	init_main_struct(t_data *data);
 void	parsing(t_data *data, char **envp);
 void	parse_input(t_data *data);
 
+/*Tokenization*/
+void tokenization(t_data *data, t_token *token_list);
+int	ms_isspace(char c);
+t_token *create_new_node(t_data *data, t_token_t type, char *str);
+void	create_token_list(t_data *data, t_token **token_list, char *str, t_token_t type);
+
 /*Invalid input checker*/
-void	input_checker(t_data *data);
+int	input_checker(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
@@ -81,7 +88,7 @@ void	invalid_input(t_data *data);
 void	parse_envp(t_data *data, char **envp);
 
 /*Error handling and exit error std.*/
-void    error_exit(char *str, int seo);
+int	error_exit(t_data *data, char *str, int type);
 
 /*-----------------------------------PARSING-----------------------------------*/
 
@@ -96,7 +103,7 @@ void	free_split(char **array);
 // PATH_MAX -> limits.h
 
 # include <unistd.h>
-# include <linux/limits.h>
+// # include <linux/limits.h> //Uncoment back! Not recognize by windows.
 # include <errno.h>
 
 void	exec(t_data *data);

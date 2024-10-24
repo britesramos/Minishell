@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishellp.h                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:16 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/18 14:32:10 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/24 22:42:06 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef enum e_tokens
 	T_APPEND,
 	T_HEREDOC,
 	// T_EOF, ???
-	// TOKEN_ERROR, ???
+	T_ERROR,
 }	t_token_t;
 
 typedef struct s_token
