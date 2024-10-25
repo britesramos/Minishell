@@ -17,6 +17,24 @@ int	ms_isspace(char c)
 	return (c == ' ' || (c >= '\b' && c <= '\v'));
 }
 
+
+/*Fix and Replace this with ft_isalnum for the tokenization. Bash accept file names that include _ = - etc.*/
+// int	ms_isword(char c)
+// {
+// 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
+// }
+
+void free_token_list(t_token *token_list)
+{
+	t_token *to_free;
+	to_free = token_list;
+	while(to_free)
+	{
+		free (to_free);
+		to_free = to_free->next;
+	}
+}
+
 t_token *create_new_node(t_data *data, t_token_t type, char *str)
 {
 	t_token	*node;

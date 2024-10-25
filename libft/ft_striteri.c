@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_striteri.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/21 14:13:36 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/02/04 13:33:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/20 13:44:10 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 void	f(unsigned int i, char *a)
 {
 	i = 0;
+	i++; //temp (to silence windows)
 	*a = *a + 1;
 }
 

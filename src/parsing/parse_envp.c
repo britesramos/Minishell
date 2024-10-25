@@ -3,16 +3,16 @@
 /*                                                        ::::::::            */
 /*   parse_envp.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:38:59 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/07 08:04:59 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/25 16:40:34 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static	char	*init_key(char *envp)
+static	char	*init_key(t_data *data, char *envp)
 {
 	int	i;
 	int	key_len;
@@ -25,7 +25,7 @@ static	char	*init_key(char *envp)
 		key_len++;
 	key = malloc(key_len + 1);
 	if(!key)
-		error_exit("Memory allocation failed! [key | env parsing]", 1);
+		error_exit(data, "Memory allocation failed! [key | env parsing]", 1);
 	while(i < key_len)
 	{
 		key[i] = envp[i];
@@ -34,7 +34,7 @@ static	char	*init_key(char *envp)
 	return (key);
 }
 
-static char	*init_value(char *envp)
+static char	*init_value(t_data *data, char *envp)
 {
 	int		i;
 	size_t	key_len;
@@ -47,7 +47,7 @@ static char	*init_value(char *envp)
 		key_len++;
 	value = malloc(strlen(envp) - key_len + 1);
 	if(!value)
-		error_exit("Memory allocation failed! [value | env parsing]", 1);
+		error_exit(data, "Memory allocation failed! [value | env parsing]", 1);
 	while ((i + key_len) < ft_strlen(envp))
 	{
 		value[i] = envp[key_len + i];
@@ -56,15 +56,15 @@ static char	*init_value(char *envp)
 	return(value);
 }
 
-static t_envp	*create_node_envp(char *envp)
+static t_envp	*create_node_envp(t_data *data, char *envp)
 {
 	t_envp	*node;
 
 	node = (t_envp *)malloc(sizeof(t_envp));
 	if (!node)
-		error_exit("Memory allocation failed! [Node creation | env parsing]\n", 1);
-	node->key = init_key(envp);
-	node->value = init_value(envp);
+		error_exit(data, "Memory allocation failed! [Node creation | env parsing]\n", 1);
+	node->key = init_key(data, envp);
+	node->value = init_value(data, envp);
 	node->next = NULL;
 	return (node);
 }
@@ -80,7 +80,7 @@ void	parse_envp(t_data *data, char **envp)
 	new_node = NULL;
 	while(envp[i])
 	{
-		new_node = create_node_envp(envp[i]);
+		new_node = create_node_envp(data, envp[i]);
 		if (data->envp_head == NULL)
 		{
 			data->envp_head = new_node;

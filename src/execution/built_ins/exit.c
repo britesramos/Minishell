@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   exit.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/10 10:35:23 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/20 13:36:45 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ int	digit_check(char *cmd)
 /// 2 when it should (but there is an error)
 int	is_digit_only(char *cmd, t_data *data)
 {
-	int	i;
+	// int	i;
 	int	check;
 
-	i = 0;
+	// i = 0;
 	check = digit_check(cmd);
 	if (check == 1)
 	{

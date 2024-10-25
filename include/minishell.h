@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/25 00:23:44 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/10/25 17:14:27 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ void	parsing(t_data *data, char **envp);
 void	parse_input(t_data *data);
 
 /*Tokenization*/
-void tokenization(t_data *data, t_token *token_list);
+t_token *tokenization(t_data *data, t_token *token_list);
 int	ms_isspace(char c);
 t_token *create_new_node(t_data *data, t_token_t type, char *str);
 void	create_token_list(t_data *data, t_token **token_list, char *str, t_token_t type);
+void free_token_list(t_token *token_list);
 
 /*Invalid input checker*/
 int	input_checker(t_data *data);
@@ -80,9 +81,6 @@ void	parse_envp(t_data *data, char **envp);
 
 /*Parsing_utils*/
 int	is_space(char c);
-
-/*Invalid input checker*/
-void	invalid_input(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
