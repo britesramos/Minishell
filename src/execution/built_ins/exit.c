@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   exit.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/22 10:45:30 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:19:30 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

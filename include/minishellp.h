@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishellp.h                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:16 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/15 15:27:24 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/24 22:42:06 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,26 @@
 # include <stdbool.h>
 # include "minishell.h"
 
+typedef struct s_token t_token;
+
 typedef enum e_tokens
 {
-    TOKEN_WORD,
-    TOKEN_PIPE,
-    TOKEN_REIN,
-    TOKEN_REOUT,
-    TOKEN_APPEND,
-    TOKEN_HEREDOC,
-    TOKEN_EOF,
-    // TOKEN_ERROR, ???
-}   t_token_t;
+	T_WORD,
+	T_PIPE,
+	T_REIN,
+	T_REOUT,
+	T_APPEND,
+	T_HEREDOC,
+	// T_EOF, ???
+	T_ERROR,
+}	t_token_t;
 
 typedef struct s_token
 {
-    char    *start;
-    int     lenght;
-    t_token_t type;
-}   t_token;
-
-/*Parsing_utils*/
-// int	ft_strlen(char *str);
-int	is_space(char c);
-
-// /*Invalid input checker*/
-// void	invalid_input(t_data *data);
-
-// /*Parsing envp*/
-// void	parse_envp(t_data *data, char **envp);
-
-/*Error handling and exit error std.*/
-void    error_exit(char *str, int seo);
+	char		*str;
+	int			lenght; // I don't need this.
+	t_token_t	type;
+	t_token		*next;
+}	t_token;
 
 # endif

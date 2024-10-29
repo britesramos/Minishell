@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishell.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 12:09:36 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:16:40 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,26 @@
 
 # include "minishellp.h"
 # include "minishelle.h"
+# include "../libft/libft.h"
 
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <linux/limits.h>
  
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
 {
-	char 			**cmd;
-	char 			**here_doc;
-	// int append;
-	int				fd_in;
-	int				fd_out;
-	char			*infile;
-	char			*outfile;
-	struct s_cmd	*pipe; /*Pointer to the next node*/
+	char	**cmd; /*Commands arguments and flags*/
+	// bool	flag;
+	// bool	append;
+	int		fd_in; /*STIN*/
+	int		fd_out; /*STOUT*/
+	char	*infile; /*Init as NULL if not exists. Or name of file.*/
+	char	*outfile; /*Init as NULL if not exists. Or name of file.*/
+	struct s_cmd *pipe; /*Pointer to the next node*/
 }	t_cmd;
 
 /*Parsed env node (linked list)*/
@@ -62,28 +64,35 @@ void	init_main_struct(t_data *data, char **envp);
 
 /*Parsing input*/
 void	parsing(t_data *data, char **envp);
+void	parse_input(t_data *data, t_token *token_list);
+
+/*Tokenization*/
+t_token *tokenization(t_data *data, t_token *token_list);
+int	ms_isspace(char c);
+t_token *create_new_node(t_data *data, t_token_t type, char *str);
+void	create_token_list(t_data *data, t_token **token_list, char *str, t_token_t type);
+void free_token_list(t_token *token_list);
+
 /*Invalid input checker*/
-void	invalid_input(t_data *data);
+int	input_checker(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
 
 /*Parsing_utils*/
-int	ft_strlen(char *str);
 int	is_space(char c);
-
-/*Invalid input checker*/
-void	invalid_input(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
 
 /*Error handling and exit error std.*/
-void    error_exit(char *str, int seo);
+int	error_exit(t_data *data, char *str, int type);
+
 /*-----------------------------------PARSING-----------------------------------*/
 
 /*Ending program and clean up.*/
 void	clean_up(t_data *data);
+void	free_split(char **array);
 
 
 

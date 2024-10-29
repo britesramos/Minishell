@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_itoa.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/17 11:49:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/07/26 09:05:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/20 13:43:13 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,10 @@ static char	*ft_reverse(char *s, long my_n)
 char	*ft_itoa(int n)
 {
 	char	*s;
-	int		i;
 	long	my_n;
 	int		count;
 
 	s = NULL;
-	i = 0;
 	my_n = n;
 	count = ft_count(my_n) + 1;
 	s = malloc(sizeof(char) * count);

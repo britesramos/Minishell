@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   pwd.c                                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 18:37:21 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/28 11:57:57 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:25:30 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	ft_pwd(char **cmd, t_data *data, int fd)
 {
 	char	path[PATH_MAX + 1];
-	int		i;
-	
-	i = 0;
+
 	if (cmd[1] && cmd[1][0] == '-')
 	{
 		ft_putstr_fd("bash: pwd: -", STDERR_FILENO);

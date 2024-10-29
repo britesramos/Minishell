@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/11 09:29:42 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:22:47 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,33 @@
 
 void	parsing(t_data *data, char **envp)
 {
-	// invalid_input(data);
-	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
+	t_token	*token_list;
 
+	while (1)
+	{
+		token_list = NULL;
+		if (data->line)
+			free(data->line);
+		data->line = NULL;
+		data->line = readline("minishell:~$ ");
+		if(data->line[0])
+			add_history(data->line);
+		if (input_checker(data) == 0)
+		{
+			token_list = tokenization(data, token_list); /*I think tokenization is basically done. Just need to make sure it accepts all types of words.*/
+			parse_input(data, token_list);
+			exec(data);
+			// t_token *current = token_list;
+			// while (current)
+			// {
+			// 	printf("%i\n", current->lenght);
+			// 	printf("%s\n", current->str);
+			// 	printf("%i\n\n\n", current->type);
+			// 	current = current->next;
+			// }
+			free_token_list(token_list);
+		}
 
-	//3 - Tokenization
-	//4 - Parsed input
+	}
+	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c 
 }
