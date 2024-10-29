@@ -6,13 +6,13 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 12:10:27 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 07:30:42 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:39:19 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-void	ft_echo_print(int i, char **cmd, t_data *data, int fd)
+void	ft_echo_print(int i, char **cmd, int fd)
 {
 	while (cmd[i])
 	{
@@ -67,7 +67,7 @@ void	ft_echo(char **cmd, t_data *data, int fd)
 		i++;
 	if (i != 1)
 		nl = 0;
-	ft_echo_print(i, cmd, data, fd);
+	ft_echo_print(i, cmd, fd);
 	if (nl == 1)
 		ft_putchar_fd('\n', fd);
 	data->exit_code = 0;

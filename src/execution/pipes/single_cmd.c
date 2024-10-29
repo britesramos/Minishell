@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 09:22:30 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:49:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	single_cmd(t_data *data, t_cmd *current, char **cmd)
 		else
 			path = get_path(data, cmd[0]);
 		if (path != NULL)
-			data->exit_code = execve(path, cmd[0], data->envp);
+			data->exit_code = execve(path, &cmd[0], data->envp);
 		ft_putstr_fd(cmd[0], STDERR_FILENO); //TODO -> check if exit_code=127
 		ft_putendl_fd(": Command not found", STDERR_FILENO);
 		if (path)

@@ -6,13 +6,13 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/25 10:33:46 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:48:37 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static char	**ft_env_path(t_data *data)
+char	**ft_env_path(t_data *data)
 {
 	char	*path;
 	char	**split_path;
@@ -35,7 +35,7 @@ static char	**ft_env_path(t_data *data)
 	return (split_path);
 }
 
-static char	*find_path(char **paths, char *cmd)
+char	*find_path(char **paths, char *cmd)
 {
 	char	*right_path;
 	int		i;
@@ -60,15 +60,14 @@ char	*get_path(t_data *data, char *cmd)
 	char	**all_paths;
 	char	*path;
 	char	*slash_cmd;
-	int		i;
 
 	all_paths = ft_env_path(data);
 	if (all_paths == NULL)
 		return (NULL);
-	slash_cmd = ft_strjoin('/', cmd);
+	slash_cmd = ft_strjoin("/", cmd);
 	if (slash_cmd == NULL)
 	{
-		ft_putendl_fd("error: strjoin('/', cmd)", STDERR_FILENO);
+		ft_putendl_fd("error: strjoin(/, cmd)", STDERR_FILENO);
 		ft_free(all_paths);
 		return (NULL);
 	}

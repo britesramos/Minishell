@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:38:59 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 12:22:14 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:56:28 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*init_value(t_data *data, char *envp)
 	return(value);
 }
 
-static t_envp	*create_node_envp(t_data *data, char *envp)
+t_envp	*create_node_envp(t_data *data, char *envp)
 {
 	t_envp	*node;
 

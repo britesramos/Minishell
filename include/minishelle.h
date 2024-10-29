@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/24 11:12:59 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 08:34:51 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:36:19 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@
 # define PIPE_READ 0
 # define PIPE_WRITE 1
 
-
-typedef struct s_ex
-{
-	pid_t	pid;
-	int		current_pipe;
-	int		p_fd[2];
-}	t_ex;
 
 
 

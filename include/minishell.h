@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 12:16:40 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 12:56:48 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,13 @@ typedef struct s_data
 	t_envp	*envp_head; /*Pointer to linked list header | Parsed envp*/
 }	t_data;
 
+typedef struct s_ex
+{
+	pid_t	pid;
+	int		current_pipe;
+	int		p_fd[2];
+}	t_ex;
+
 /*Initialize main struct t_data data.*/
 void	init_main_struct(t_data *data, char **envp);
 
@@ -68,25 +75,25 @@ void	parse_input(t_data *data, t_token *token_list);
 
 /*Tokenization*/
 t_token *tokenization(t_data *data, t_token *token_list);
-int	ms_isspace(char c);
+int		ms_isspace(char c);
 t_token *create_new_node(t_data *data, t_token_t type, char *str);
 void	create_token_list(t_data *data, t_token **token_list, char *str, t_token_t type);
-void free_token_list(t_token *token_list);
+void 	free_token_list(t_token *token_list);
 
 /*Invalid input checker*/
-int	input_checker(t_data *data);
+int		input_checker(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
 
 /*Parsing_utils*/
-int	is_space(char c);
+int		is_space(char c);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
 
 /*Error handling and exit error std.*/
-int	error_exit(t_data *data, char *str, int type);
+int		error_exit(t_data *data, char *str, int type);
 
 /*-----------------------------------PARSING-----------------------------------*/
 
@@ -98,7 +105,8 @@ void	free_split(char **array);
 
 
 //COMMON FUNCTIONS
-t_envp	*create_node_envp(char *envp);
+t_envp	*create_node_envp(t_data *data, char *envp);
+
 
 // EXECUTION
 
@@ -122,10 +130,7 @@ t_envp	*create_node_envp(char *envp);
 #define READ 0
 #define WRITE 1
 
-// void	exec(t_data *data);
 int	exec(t_data *data);
-// tokens
-// void	line_tok(char *line);
 int	ft_builtin_manager(t_data *data, t_cmd *current);
 
 // built-in funtions:
@@ -139,10 +144,10 @@ void	ft_pwd(char **cmd, t_data *data, int fd);
 void	ft_unset(char **cmd, t_data *data);
 
 // pipes functions:
-
 void	single_cmd(t_data *data, t_cmd *current, char **cmd);
 int		mltpl_cmd(t_data *data);
-char	*ft_env_path(t_data *data);
+char	*get_path(t_data *data, char *cmd);
+char	**ft_env_path(t_data *data);
 
 // fd_utils
 int	fds_first_cmd(t_cmd *current, t_ex *ex);
@@ -152,7 +157,7 @@ int	fds_last_cmd(t_cmd *current, t_ex *ex);
 //envp utils
 char	*find_value(t_data *data, char *key);
 void	replace_value(t_data *data, char *key, char *new_value);
-void	add_node(char *cmd, t_envp **env);
+void	add_node(t_data *data, char *cmd, t_envp **env);
 
 
 #endif
