@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/17 09:58:47 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/17 12:01:28 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 07:30:53 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_env_arg_option(char *cmd, t_data *data)
 	data->exit_code = 127;
 }
 
-void	ft_env(char **cmd, t_data *data)
+void	ft_env(char **cmd, t_data *data, int fd)
 {
 	t_envp	*current;
 	
@@ -50,8 +50,8 @@ void	ft_env(char **cmd, t_data *data)
 	{
 		if (ft_strncmp(current->value, "", 1) != 0)
 		{
-			ft_putstr_fd(current->key, data->cmd_current->fd_out);
-			ft_putendl_fd(current->value, data->cmd_current->fd_out);
+			ft_putstr_fd(current->key, fd);
+			ft_putendl_fd(current->value, fd);
 		}
 		current = current->next;
 	}

@@ -6,40 +6,38 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/21 10:36:24 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 09:58:05 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-//temporary function until I have the cmd filled in data from Sara
-void	exec(t_data *data)
+int	exec(t_data *data)
 {
-	char	**cmds;
-	
-	int	i = 0;
-	cmds = ft_split(data->line, ' ');
-	if (ft_builtin_manager(cmds, data) == 9)
-	{
-		i = 0;
-		while (cmds[i])
-		{
-			free(cmds[i]);
-			cmds[i] = NULL;
-			i++;
-		}
-		free(cmds);
-		return ; //TODO -> only if there are no other cmds
-	}
+	int		i;
+	char	**cmd;
+	t_cmd	*current;
+
 	i = 0;
-	// ft_free(cmds);
-	while (cmds[i])
+	
+	if (data->nbr_pipes == 0)
 	{
-		// ft_printf("to free cmd[%d] %s\n", i, cmds[i]);
-		free(cmds[i]);
-		cmds[i] = NULL;
-		i++;
-		// ft_printf("2. to free cmd[%d] %s\n", i, cmds[i]);
+		current = data->cmd_current;
+		cmd = current->cmd;
+		if (ft_builtin_manager(data, current) == 9)
+			return (9);
+		else
+			single_cmd(data, current, cmd);
 	}
-	free(cmds);
+	else 
+		mltpl_cmd(data);
+	return (0);
 }
+
+/*
+TESTING ON
+cat | exit | cat | ls
+cat | cat | cat ls
+cat | exit | cat test | ls
+ls -l >test | wc -l < test > test2 | pwd
+*/

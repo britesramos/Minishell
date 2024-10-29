@@ -6,13 +6,13 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 18:37:21 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/21 08:02:12 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/28 11:57:57 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-void	ft_pwd(char **cmd, t_data *data)
+void	ft_pwd(char **cmd, t_data *data, int fd)
 {
 	char	path[PATH_MAX + 1];
 	int		i;
@@ -28,7 +28,7 @@ void	ft_pwd(char **cmd, t_data *data)
 		return ;
 	}
 	if (getcwd(path, sizeof(path)) != NULL)
-		ft_putendl_fd(path, data->cmd_current->fd_out);
+		ft_putendl_fd(path, fd);
 	else
 	{
 		ft_putendl_fd("pwd: getcwd() failed", STDERR_FILENO);

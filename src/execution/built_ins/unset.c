@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/21 07:31:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/21 10:59:34 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/22 11:03:05 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	do_unset(char *cmd, t_data *data, int len)
 
 void	ft_unset(char **cmd, t_data *data)
 {
-	t_envp	*previous;
 	int		len;
 	int		i;
 	

@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_free.c                                          :+:    :+:            */
+/*   mltpl_cmd.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/05/31 11:21:27 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/25 08:30:42 by mstencel      ########   odam.nl         */
+/*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
+/*   Updated: 2024/10/29 11:56:12 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../../include/minishell.h"
 
-void	ft_free(char **str)
+
+// check if the cmd is first middle last
+// based on that, perform the fd's assignment
+// run the cmd (should be the single one)
+int	mltpl_cmd(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		str[i] = NULL;
-		i++;
-	}
-	free(*str);
-	*str = NULL;
+	//check if it's a first or middle or last cmd
 }

@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/21 07:20:50 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/22 10:45:30 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	digit_check(char *cmd)
 	non_digit = 0;
 	while(cmd[i])
 	{
+		// if to be deleted when ( ) handled by Sara?
 		if (cmd[i] == '(' || cmd[i] == ')')
 		{
 			ft_putstr_fd("minishell : ", STDERR_FILENO);
@@ -35,6 +36,7 @@ static int	digit_check(char *cmd)
 				ft_putendl_fd("`('", STDERR_FILENO);
 			return (1);
 		}
+		//only this statement would stay
 		else if (!ft_isdigit(cmd[i]))
 			non_digit = 1;
 		i++;
@@ -75,7 +77,7 @@ static int	is_digit_only(char *cmd, t_data *data)
 /// from the bash man:
 /// Exit the shell, returning a status of n to the shell’s parent. 
 /// If n is omitted, the exit status is that of the last command executed.
-/// @return returns 0, it, exit should work
+/// @return returns 0 when exit should work and 9 when it shouldn't
 int	ft_exit(char **cmd, t_data *data)
 {
 	int	digit_check;
@@ -89,7 +91,7 @@ int	ft_exit(char **cmd, t_data *data)
 	if (digit_check == 1)
 		return (9);
 	else if (digit_check == 2)
-		return (0);
+		return (9);
 	if (cmd[2])
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);

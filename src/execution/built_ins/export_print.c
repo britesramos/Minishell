@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 09:09:23 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/18 10:46:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/28 11:57:29 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@ static int	ft_size(t_envp *current)
 	return (i);
 }
 
-static void	ft_print_key_value(char *key, char *value, t_data *data)
+static void	ft_print_key_value(char *key, char *value, t_data *data, int fd)
 {
-	int	fd;
-
-	fd = data->cmd_current->fd_out;
 	ft_putstr_fd("declare -x ",fd);
 	ft_putstr_fd(key, fd);
 	if (ft_strncmp(value, "=", 2) == 0)
@@ -66,7 +63,7 @@ static t_envp	*find_to_print(t_envp *last_p, t_envp *env)
 	return (to_p);
 }
 
-void	ft_print_export(t_data *data)
+void	ft_print_export(t_data *data, int fd)
 {
 	t_envp	*current;
 	t_envp	*last_p;
@@ -80,7 +77,7 @@ void	ft_print_export(t_data *data)
 	{
 		current = data->envp_head;
 		last_p = find_to_print(last_p, current);
-		ft_print_key_value(last_p->key, last_p->value, data);
+		ft_print_key_value(last_p->key, last_p->value, data, fd);
 		printed++;
 	}
 }

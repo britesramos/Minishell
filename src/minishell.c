@@ -6,11 +6,24 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/16 10:41:27 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/25 08:31:27 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	bye(t_data *data)
+{
+	int	exit_code;
+
+	if (data->exit_code > 255)
+		exit_code = data->exit_code % 256;
+	else
+		exit_code = data->exit_code;
+	ft_printf("exit_code in main: %d\n", exit_code);
+	clean_up(data);
+	return (exit_code);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -18,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	int		exit_code;
 
 	data = malloc(sizeof(t_data));
-	init_main_struct(data);
+	init_main_struct(data, envp);
 	
 	// if (argc > 1)
 	if (argc < 1) //for execution testing only, to be deleted!
@@ -28,7 +41,8 @@ int	main(int argc, char **argv, char **envp)
 	}
 	data->line = readline(argv[1]); /*There are leaks here from readline, but I dont know if it is fixable.*/
 	parsing(data, envp);
-	exec(data);
+	if (exec(data) == 9)
+		return (bye(data));
 	
 	// 1) Readline function. (Malloc every time and also dont forget to free.)
 	// 2) Parsing.
@@ -45,11 +59,13 @@ int	main(int argc, char **argv, char **envp)
 		//5.2.)Pipes.
 		//5.3.)Redirections
 		//5.4.)Signals
+
+	//bye part
 	if (data->exit_code > 255)
 		exit_code = data->exit_code % 256;
 	else
 		exit_code = data->exit_code;
 	ft_printf("exit_code in main: %d\n", exit_code);
 	clean_up(data);
-	return (exit_code);
+	return (bye(data));
 }

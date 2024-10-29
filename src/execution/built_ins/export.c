@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/18 14:47:21 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/28 11:56:52 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,21 +99,21 @@ static int	ft_export_check(char *cmd, t_data *data)
 
 static void	ft_export_error(char *cmd, t_data *data)
 {
-	ft_putstr_fd("minishell: export: `", data->cmd_current->fd_out);
-	ft_putstr_fd(cmd, data->cmd_current->fd_out);
-	ft_putendl_fd("': not a valid identifier ", data->cmd_current->fd_out);
+	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putendl_fd("': not a valid identifier ", STDERR_FILENO);
 	data->exit_code = 1;
 }
 
 /// @brief prints the env, adds the key & value, changes the value 
-void	ft_export(char **cmd, t_data *data)
+void	ft_export(char **cmd, t_data *data, int fd)
 {
 	int	i;
 	int	check;
 	
 	i = 1;
 	if (!cmd[i])
-		ft_print_export(data);
+		ft_print_export(data, fd);
 	else
 	{
 		while (cmd[i])

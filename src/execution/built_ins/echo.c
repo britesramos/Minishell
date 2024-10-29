@@ -6,20 +6,20 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 12:10:27 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/18 11:14:17 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 07:30:42 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-void	ft_echo_print(int i, char **cmd, t_data *data)
+void	ft_echo_print(int i, char **cmd, t_data *data, int fd)
 {
 	while (cmd[i])
 	{
-		ft_putstr_fd(cmd[i], data->cmd_current->fd_out);
+		ft_putstr_fd(cmd[i], fd);
 			i++;
 		if (cmd[i])
-			ft_putchar_fd(' ', data->cmd_current->fd_out);
+			ft_putchar_fd(' ', fd);
 	}
 }
 
@@ -50,7 +50,7 @@ static int	has_new_line(char *cmd)
 // The return status is 0 unless a write error occurs. 
 // If -n is specified, the trailing newline is suppressed.
 // nl = new_line check (1 there is a new line and 0 no new line - flag -n)
-void	ft_echo(char **cmd, t_data *data)
+void	ft_echo(char **cmd, t_data *data, int fd)
 {
 	int	nl;
 	int	i;
@@ -59,7 +59,7 @@ void	ft_echo(char **cmd, t_data *data)
 	i = 1;
 	if (cmd[i] == NULL) //TODO -> check the $ after parsing
 	{
-		ft_putstr_fd("\n", data->cmd_current->fd_out);
+		ft_putstr_fd("\n", fd);
 		data->exit_code = 0;
 		return ;
 	}
@@ -67,9 +67,9 @@ void	ft_echo(char **cmd, t_data *data)
 		i++;
 	if (i != 1)
 		nl = 0;
-	ft_echo_print(i, cmd, data);
+	ft_echo_print(i, cmd, data, fd);
 	if (nl == 1)
-		ft_putchar_fd('\n', data->cmd_current->fd_out);
+		ft_putchar_fd('\n', fd);
 	data->exit_code = 0;
 }
 
