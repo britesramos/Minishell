@@ -19,6 +19,7 @@ static int	token_word(t_data *data, int end, t_token **token_list)
 
 	len = 0;
 	new = NULL;
+	
 	while(ft_isalnum(data->line[end]))
 	{
 		len++;
@@ -54,7 +55,7 @@ t_token	*tokenization(t_data *data, t_token *token_list)
 			create_token_list(data, &token_list, "<", T_REIN);
 		else if (data->line[i] == '|')
 			create_token_list(data, &token_list, "|", T_PIPE);
-		else if (ft_isalnum(data->line[i])) //This doesnt work. We should also accept characters like =.
+		else if (ft_isalnum(data->line[i])) //This doesnt work. We should also accept characters like =_.
 			i = token_word(data, i, &token_list);
 		i++;
 	}

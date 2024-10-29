@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/10/29 12:57:34 by mstencel      ########   odam.nl          #
+#    Updated: 2024/10/29 14:27:40 by sramos        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_FILES = src/minishell.c\
 			src/parsing/tokenization.c\
 			src/parsing/tokenization_utils.c\
 			src/parsing/parse_input.c\
+			src/parsing/parse_input_utils.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\
 			src/execution/exec.c\
