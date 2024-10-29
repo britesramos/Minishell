@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 11:09:04 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/29 12:01:26 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static void	parse_input2(t_data *data, t_token *token_list)
 	while(current_token)
 	{
 		newnode = create_new_node_cmd(data);
+		printf("ANOTHER PIPE!\n");
 		if(current_cmd == NULL)
 		{
 			current_cmd = newnode;
@@ -122,11 +123,9 @@ static void	parse_input2(t_data *data, t_token *token_list)
 					close(current_cmd->fd_out);
 				}
 				current_cmd->fd_out = open(current_token->str, O_CREAT | O_TRUNC | O_RDWR);
-				printf("This is token str: %s\n", current_token->str);
 				// if (current_cmd->fd_out == -1)
 				// 	//do something
 				current_cmd->outfile = ft_strdup(current_token->str);
-				printf("This is token str: %s\n", current_token->str);
 				if(!current_cmd->outfile)
 					error_exit(data, "Outfile red allocation failed!\n", 1); //Free memory.
 				// printf("RED OUT: %s\n", current_cmd->outfile);
@@ -142,19 +141,16 @@ static void	parse_input2(t_data *data, t_token *token_list)
 				}
 				current_cmd->fd_out = open(current_token->str, O_CREAT | O_APPEND | O_RDWR);
 				current_cmd->outfile = ft_strdup(current_token->str);
-				if (current_cmd->fd_out == -1)
-					//do something
+				// if (current_cmd->fd_out == -1)
+				// 	//do something
 				if(!current_cmd->outfile)
 					error_exit(data, "Outfile Append allocation failed!\n", 1); //Free memory.
 				// printf("APPEND\n");
 			}	
 			else if (current_token->type == T_WORD)
 			{
-				// printf("HERE6!\n");
 				if (current_cmd->cmd == NULL)
-				{
 					current_cmd->cmd = (char **)ft_calloc(number_of_times_you_have_allocated + 1, sizeof(char *));
-				}
 				if (number_of_times_you_have_allocated <= 0)
 				{
 					current_cmd->cmd = ft_realloc(data, 2 + i, current_cmd->cmd);
@@ -162,19 +158,19 @@ static void	parse_input2(t_data *data, t_token *token_list)
 				}
 				if (number_of_times_you_have_allocated > 0)
 				{
-					// printf("%i\n", i);
 					current_cmd->cmd[i] = ft_strdup(current_token->str);
-					// printf("current_cmd->cmd[%i]: %s\n", i, current_cmd->cmd[i]);
-					i++;
 					number_of_times_you_have_allocated--;
+					i++;
 				}
-				// current_token = current_token->next;
 			}
 			current_token = current_token->next;
 		}
 		if (current_token && current_token->type == T_PIPE)
+		{
 			current_token = current_token->next;
-		// printf("ANOTHER PIPE!\n");
+			data->nbr_pipes++;
+		}
+		printf("This is cmd[0]: %s\n", current_cmd->cmd[i]);
 	}
 }
 
