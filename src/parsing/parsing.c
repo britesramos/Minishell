@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/25 18:09:35 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/10/29 11:14:16 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ void	parsing(t_data *data, char **envp)
 		if (input_checker(data) == 0)
 		{
 			token_list = tokenization(data, token_list); /*I think tokenization is basically done. Just need to make sure it accepts all types of words.*/
-
-			t_token *current = token_list;
-			while (current)
-			{
-				printf("%i\n", current->lenght);
-				printf("%s\n", current->str);
-				printf("%i\n\n\n", current->type);
-				current = current->next;
-			}
+			parse_input(data, token_list);
+			exec(data);
+			// t_token *current = token_list;
+			// while (current)
+			// {
+			// 	printf("%i\n", current->lenght);
+			// 	printf("%s\n", current->str);
+			// 	printf("%i\n\n\n", current->type);
+			// 	current = current->next;
+			// }
 			free_token_list(token_list);
-			// parse_input(data);
 		}
 
 	}

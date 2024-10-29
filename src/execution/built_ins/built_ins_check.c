@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:05:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/10 10:26:58 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 11:21:24 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_built_in_check(char **cmd, t_data *data)
 	// if (ft_strcmp(cmd[0], "my_cd") == 0)
 	// 	return (ft_cd(cmd, data), 0);
 	// else 
-	if (len == 7 && ft_strncmp(cmd[0], "my_echo", 7) == 0)
+	if (ft_strncmp(cmd[0], "echo", 5) == 0)
 		return (ft_echo(cmd, data));
 	// else if (len == 6 && ft_strncmp(cmd[0], "my_env", 6) == 0)
 	// 	return (ft_env(data), 0);

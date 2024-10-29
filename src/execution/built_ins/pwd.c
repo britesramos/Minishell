@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 18:37:21 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/20 13:38:19 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/10/29 11:09:50 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@
 int	ft_pwd(char **argv, t_data *data)
 {
 	char	path[PATH_MAX + 1];
-	// int		i;
-	
-	// i = 0;
+
 	if (argv[1] && argv[1][0] == '-')
 	{
 		ft_putstr_fd("bash: pwd: -", STDERR_FILENO);

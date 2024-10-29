@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/15 17:59:50 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/29 11:17:33 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 		return(1);
 	}
 	parsing(data, envp);
-	exec(data);
+	// exec(data);
 	
 	// 1) Readline function. (Malloc every time and also dont forget to free.)
 	// 2) Parsing.

@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/10 08:59:40 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 11:20:52 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	exec(t_data *data)
 	
 	int	i = 0;
 	args = ft_split(data->line, ' ');
+	printf("%s\n", args[0]);
 	if (ft_built_in_check(args, data) == 9)
 	{
 		i = 0;

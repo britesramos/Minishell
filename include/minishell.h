@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/25 17:14:27 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/10/29 11:11:26 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <limits.h>
+# include <linux/limits.h>
  
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
@@ -64,7 +64,7 @@ void	init_main_struct(t_data *data);
 /*-----------------------------------PARSING-----------------------------------*/
 /*Parsing input*/
 void	parsing(t_data *data, char **envp);
-void	parse_input(t_data *data);
+void	parse_input(t_data *data, t_token *token_list);
 
 /*Tokenization*/
 t_token *tokenization(t_data *data, t_token *token_list);
@@ -101,7 +101,6 @@ void	free_split(char **array);
 // PATH_MAX -> limits.h
 
 # include <unistd.h>
-// # include <linux/limits.h> //Uncoment back! Not recognize by windows.
 # include <errno.h>
 
 void	exec(t_data *data);
