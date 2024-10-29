@@ -6,40 +6,38 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 11:20:52 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/29 12:20:38 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-
-//temporary function until I have the cmd filled in data from Sara
-void	exec(t_data *data)
+int	exec(t_data *data)
 {
-	char	**args;
-	
-	int	i = 0;
-	args = ft_split(data->line, ' ');
-	printf("%s\n", args[0]);
-	if (ft_built_in_check(args, data) == 9)
-	{
-		i = 0;
-		while (args[i])
-		{
-			free(args[i]);
-			args[i] = NULL;
-			i++;
-		}
-		free(args);
-		return ; //TODO -> only if there are no other cmds
-	}
+	int		i;
+	char	**cmd;
+	t_cmd	*current;
+
 	i = 0;
-	// ft_free(args);
-	while (args[i])
+	
+	if (data->nbr_pipes == 0)
 	{
-		free(args[i]);
-		args[i] = NULL;
-		i++;
+		current = data->cmd_current;
+		cmd = current->cmd;
+		if (ft_builtin_manager(data, current) == 9)
+			return (9);
+		else
+			single_cmd(data, current, cmd);
 	}
-	free(args);
+	else 
+		mltpl_cmd(data);
+	return (0);
 }
+
+/*
+TESTING ON
+cat | exit | cat | ls
+cat | cat | cat ls
+cat | exit | cat test | ls
+ls -l >test | wc -l < test > test2 | pwd
+*/

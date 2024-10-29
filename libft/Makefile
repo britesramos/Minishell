@@ -51,14 +51,15 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJFILES)
+	@echo "SOURCE FILES COMPILED"
 	@echo "CREATING LIBFT"
 	ar $(ARFLAGS) $(NAME) $(OBJFILES)
 	@echo "LIBFT CREATED"
 
+# `$<' is the automatic variable that holds the name of the dependency and
+# `$@' is the automatic variable that holds the name of the target
 %.o: %.c $(HEADER)
-	@echo "COMPILING SOURCE FILES"
 	$(CC) $(CFLAGS) -c $< -o $@
-	@echo "SOURCE FILES COMPILED"
 
 clean:
 	@echo "REMOVING OBJECT FILES"

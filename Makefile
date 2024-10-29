@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/10/24 23:12:46 by anonymous     ########   odam.nl          #
+#    Updated: 2024/10/29 12:57:34 by mstencel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,20 @@ SRC_FILES = src/minishell.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\
 			src/execution/exec.c\
-			src/execution/token/token.c\
-			src/execution/built_ins/built_ins_check.c\
+			src/execution/built_ins/builtins_manager.c\
 			src/execution/built_ins/cd.c\
 			src/execution/built_ins/echo.c\
+			src/execution/built_ins/env.c\
+			src/execution/built_ins/envp_utils.c\
 			src/execution/built_ins/exit.c\
-			src/execution/built_ins/pwd.c
+			src/execution/built_ins/export.c\
+			src/execution/built_ins/export_print.c\
+			src/execution/built_ins/pwd.c\
+			src/execution/built_ins/unset.c\
+			src/execution/pipes/fd_utils.c\
+			src/execution/pipes/mltpl_cmd.c\
+			src/execution/pipes/path.c\
+			src/execution/pipes/single_cmd.c
 
 OBJ_PATH = obj
 
@@ -59,6 +67,7 @@ info-%:
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(HEADER)
+	@echo "SOURCE FILES COMPILED"
 	make -C $(LIBFT_PATH)
 	@echo "CREATING MINISHELL"
 	$(CC) $(OBJ_FILES) $(CFLAGS) $(OFLAGS) -o $(NAME) $(LIBFT)
@@ -68,8 +77,9 @@ $(NAME): $(OBJ_FILES) $(HEADER)
 # with the trailing slash removed. 
 # If the value of ‘$@’ is dir/foo.o then ‘$(@D)’ is dir. 
 # This value is . if ‘$@’ does not contain a slash.
+
 $(OBJ_PATH)/%.o:$(SRC_PATH)/%.c
-	mkdir -p $(@D)
+	@if [ ! -d "$(@D)" ]; then mkdir $(@D) & echo "$(@D) MADE"; fi
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
