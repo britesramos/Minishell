@@ -26,7 +26,13 @@ static int	token_word(t_data *data, int end, t_token **token_list)
 		end++;
 	}
 	new = ft_substr(data->line, end - len, len);
-	create_token_list(data, token_list, new, T_WORD);
+	if (!new)
+		error_exit(data, NULL, "New str does not exist!\n", 1);
+	else
+	{
+		create_token_list(data, token_list, new, T_WORD);
+		free(new);
+	}
 	return (end - 1);
 }
 

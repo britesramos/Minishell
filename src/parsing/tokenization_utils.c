@@ -30,8 +30,12 @@ void free_token_list(t_token *token_list)
 	to_free = token_list;
 	while(to_free)
 	{
+		free(to_free->str);
+		to_free->str = NULL;
+		to_free->type = 0;
+		token_list = token_list->next;
 		free (to_free);
-		to_free = to_free->next;
+		to_free = token_list;
 	}
 }
 
@@ -41,9 +45,9 @@ t_token *create_new_node(t_data *data, t_token_t type, char *str)
 
 	node = (t_token *)malloc(sizeof(t_token));
 	if (!node)
-		error_exit(data, "Memory allocation failed!", 1);
+		error_exit(data, NULL, "Memory allocation failed!", 1);
 	node->str = ft_strdup(str);
-	node->lenght = ft_strlen(str);
+	node->lenght = ft_strlen(str); //I dont think we need this.
 	node->type = type;
 	node->next = NULL;
 	return (node);

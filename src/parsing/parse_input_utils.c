@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 18:06:55 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/31 15:26:43 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ char **ft_realloc(t_data *data, int number_of_times, char **old_array)
 	{
 		new[i] = ft_strdup(old_array[i]);
 		//Protect.
-		i++;
-	}
-	while (i > 0)
-	{
 		free(old_array[i]);
 		old_array[i] = NULL;
-		i--;
+		i++;
 	}
+	// while (i > 0)
+	// {
+	// 	free(old_array[i]);
+	// 	old_array[i] = NULL;
+	// 	i--;
+	// }
 	free(old_array);
 	old_array = NULL;
 	return(new);
@@ -58,25 +60,24 @@ t_cmd *create_new_node_cmd(t_data *data)
 	node->infile = NULL;
 	node->outfile = NULL;
 	node->pipe = NULL;
-	
+	// if (node->pipe == NULL)
+	// 	printf("HERE\n");
 	return (node);
 }
 
 void	add_new_node(t_cmd **head, t_cmd *newnode, t_cmd **current_cmd)
 {
-	t_cmd *temp;
-
-	temp = NULL;
-	if(*current_cmd == NULL)
-	{
-		*current_cmd = newnode;
-		*head = *current_cmd;
-	}
-	else
-	{
-		temp = *current_cmd;
-		while (temp != NULL)
-			temp = temp->pipe;
-		temp = newnode;
-	}
+	if (*head == NULL)
+    {
+        *head = newnode;
+        *current_cmd = newnode;
+    }
+    else
+    {
+        t_cmd *temp = *head;
+        while (temp->pipe != NULL) // Traverse to the end of the list
+            temp = temp->pipe;
+        temp->pipe = newnode; // Link the new node to the end
+        *current_cmd = temp->pipe; // Update current_cmd to point to the new node
+    }
 }

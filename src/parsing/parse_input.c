@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 19:22:27 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/31 18:26:39 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, 
 	static int 	alloc_times = 2;
 
 	if (current_cmd->cmd == NULL)
-		current_cmd->cmd = (char **)ft_calloc(alloc_times + 1, sizeof(char *));
+		current_cmd->cmd = (char **)ft_calloc(alloc_times, sizeof(char *));
+	if (!current_cmd->cmd)
+		error_exit(data, NULL, "Error allocating word!\n", 1);
 	if (alloc_times <= 0)
 	{
 		current_cmd->cmd = ft_realloc(data, 2 + i, current_cmd->cmd);
@@ -105,7 +107,6 @@ void	parse_input(t_data *data, t_token *token_list)
 		}
 		if (current_token && current_token->type == T_PIPE)
 		{
-			printf("HERE!\n");
 			current_token = current_token->next;
 			data->nbr_pipes++;
 		}

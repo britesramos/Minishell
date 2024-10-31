@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 19:30:16 by sramos        ########   odam.nl         */
+/*   Updated: 2024/10/31 17:18:32 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,49 @@
 static void free_cmd_list(t_cmd *list)
 {
 	int	i;
+	t_cmd *temp;
 
-	i = 0;
+	temp = NULL;
 	while(list)
 	{
-		if (list->cmd)
+		i = 0;
+		temp = list;
+		if (temp->cmd)
 		{
-			while(list->cmd[i])
+			while(temp->cmd[i])
 			{
-				free(list->cmd[i]);
-				list->cmd[i] = NULL;
+				free(temp->cmd[i]);
+				temp->cmd[i] = NULL;
 				i++;
 			}
+			free (temp->cmd);
+			temp->cmd = NULL;
 		}
-		if (list->infile)
-			free_close_fd(list->infile, list->fd_in);
-		if (list->outfile)
-			free_close_fd(list->outfile, list->fd_out);
-		list->append = false;
-		free (list->cmd);
-		free (list);
+		if (temp->infile)
+			free_close_fd(temp->infile, temp->fd_in);
+		if (temp->outfile)
+			free_close_fd(temp->outfile, temp->fd_out);
+		temp->append = false;
 		list = list->pipe;
+		// list = NULL;
+		free (temp);
 	}
 }
 
 void	parsing(t_data *data, char **envp)
 {
+	envp = NULL;
 	t_token	*token_list;
+	data->line = NULL; //ft_bezero(data);
+	token_list = NULL;
 
 	while (1)
 	{
-		token_list = NULL;
 		if (data->line)
 			free(data->line);
-		data->line = NULL;
 		data->line = readline("minishell:~$ ");
+		if (!data->line)
+			exit(1); //remember to print "exit" and also free everything
 		if (data->line[0])
 			add_history(data->line);
 		if (input_checker(data) == 0)
@@ -66,18 +74,18 @@ void	parsing(t_data *data, char **envp)
 				current = current->next;
 			}
 
-
 			parse_input(data, token_list);
-
 			
 			t_cmd *currentll = data->cmd_head;
 			while (currentll != NULL)
 			{
 				int i = 0;
-				if (currentll->cmd) //there is a problem with the ll header. I is only saving the last node as the head.
+				if (currentll->cmd)
 				{
+					printf("%p\n", currentll->cmd[0]);
 					while(currentll->cmd[i])
 					{
+						
 						printf("This is cmd[%i]: %s\n", i, currentll->cmd[i]);
 						i++;
 					}
@@ -85,17 +93,33 @@ void	parsing(t_data *data, char **envp)
 				printf("This is fd_in: %i\n", currentll->fd_in);
 				printf("This is fd_out: %i\n", currentll->fd_out);
 				printf("This is infile: %s\n", currentll->infile);
-				printf("This is outfile: %s\n", currentll->outfile);
+				printf("This is outfile: %s\n\n\n", currentll->outfile);
 				currentll = currentll->pipe;
+				// printf("%p\n", currentll);
+				// if (currentll == NULL)
+				// 	printf("The pipe is now NULL\n");
 			}
-
-
-
-			free_token_list(token_list);
-			// free(data->line);
+			
+			if (token_list)
+			{
+				free_token_list(token_list);
+				token_list = NULL;
+			}
+			// if (token_list == NULL)
+				// printf("token_list does not exist!\n");
 			// exec(data);
-			free_cmd_list(data->cmd_head);
+			if (data->cmd_head)
+			{
+				free_cmd_list(data->cmd_head);
+				data->cmd_head = NULL;
+			}
+			// if (data->cmd_head == NULL)
+				// printf("data->cmd_head does not exist!\n");
 		}
 	}
-	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c 
+	// parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c 
 }
+
+
+
+//Bash Input: ">file"  - **Does nothing.** STDERROR = 0;

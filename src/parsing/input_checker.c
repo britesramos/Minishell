@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:41:06 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/25 00:25:47 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/10/31 10:44:34 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,17 @@ int	input_checker(t_data *data)
 {
 	if (start_with_pipe(data->line) == 1 || multiple_pipes(data->line) == 1)
 	{
-		error_exit(data, "minishell: syntax error near unexpected token `||'\n", 2);
+		error_exit(data, NULL, "minishell: syntax error near unexpected token `||'\n", 2);
 		return (1);
 	}
 	if (missing_closing_q_marks(data->line) == 1)
 	{
-		error_exit(data, "minishell: missing closing quotation marks\n", -1);
+		error_exit(data, NULL, "minishell: missing closing quotation marks\n", -1);
 		return (1);
 	}
 	if (multiple_redirection(data->line) == 1)
 	{
-		error_exit(data, "minishell: syntax error near unexpected token `>'\n", 2);
+		error_exit(data, NULL, "minishell: syntax error near unexpected token `>'\n", 2);
 		return (1);
 	}
 	return (0);
