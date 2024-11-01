@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 18:24:06 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/01 14:39:05 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	parse_envp(t_data *data, char **envp);
 int		is_space(char c);
 
 /*Parsing input utils*/
+void 	free_null(void **input);
 void	free_close_fd(char *file, int fd);
 t_cmd	*create_new_node_cmd(t_data *data);
 void	add_new_node(t_cmd **head, t_cmd *newnode, t_cmd **current_cmd);

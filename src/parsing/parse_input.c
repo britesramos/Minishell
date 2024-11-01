@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/31 18:26:39 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/01 14:55:02 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,16 @@ static t_token 	*parse_append(t_token *current_token, t_cmd *current_cmd, t_data
 
 static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, int i)
 {
-	static int 	alloc_times = 2;
+	int 	alloc_times = 2;
 
+	// printf("alloc_times: %i - i: %i\n", alloc_times, i);
 	if (current_cmd->cmd == NULL)
-		current_cmd->cmd = (char **)ft_calloc(alloc_times, sizeof(char *));
+		current_cmd->cmd = (char **)ft_calloc(alloc_times + 1, sizeof(char *));
 	if (!current_cmd->cmd)
 		error_exit(data, NULL, "Error allocating word!\n", 1);
-	if (alloc_times <= 0)
+	if (i >= alloc_times)
 	{
+		// printf("HERE!\n");
 		current_cmd->cmd = ft_realloc(data, 2 + i, current_cmd->cmd);
 		alloc_times = 2;
 	}
