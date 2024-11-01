@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/01 14:54:45 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/01 18:45:15 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ void	parsing(t_data *data, char **envp)
 			free(data->line);
 		data->line = readline("minishell:~$ ");
 		if (!data->line)
-			exit(1); //remember to print "exit" and also free everything
+			error_exit(data, NULL, "exit\n", 0); 
 		if (data->line[0])
 			add_history(data->line);
 		if (input_checker(data) == 0)
 		{
 			token_list = tokenization(data, token_list); /*I think tokenization is basically done. Just need to make sure it accepts all types of words.*/
 			
-			
+			/*----------------------------------TEMP----------------------------------------------*/
 			// t_token *current = token_list;
 			// while (current)
 			// {
@@ -76,11 +76,11 @@ void	parsing(t_data *data, char **envp)
 			// 	printf("%i\n\n\n", current->type);
 			// 	current = current->next;
 			// }
-
+			/*----------------------------------TEMP----------------------------------------------*/
 
 			parse_input(data, token_list);
 
-
+			/*----------------------------------TEMP----------------------------------------------*/
 			t_cmd *currentll = data->cmd_head;
 			while (currentll != NULL)
 			{
@@ -97,9 +97,11 @@ void	parsing(t_data *data, char **envp)
 				printf("This is fd_out: %i\n", currentll->fd_out);
 				printf("This is infile: %s\n", currentll->infile);
 				printf("This is outfile: %s\n\n\n", currentll->outfile);
+				printf("Nbr pipes: %i\n", data->nbr_pipes);
 				currentll = currentll->pipe;
 			}
-			
+			/*----------------------------------TEMP----------------------------------------------*/
+
 			if (token_list)
 			{
 				free_token_list(token_list);
@@ -113,6 +115,7 @@ void	parsing(t_data *data, char **envp)
 			}
 			if (data->cmd_head == NULL)
 				printf("data->cmd_head does not exist!\n");
+			data->nbr_pipes = 0;
 		}
 	}
 	// parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c 
