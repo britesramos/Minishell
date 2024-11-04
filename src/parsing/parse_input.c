@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 12:33:26 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/04 15:54:32 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_token	*parse_reout(t_token *current_token, t_cmd *current_cmd, t_data *
 
 static t_token 	*parse_append(t_token *current_token, t_cmd *current_cmd, t_data *data)
 {
-	current_cmd->append = true;
+	// current_cmd->append = true;
 	current_token = current_token->next;
 	if (current_cmd->outfile)
 		free_close_fd(current_cmd->outfile, current_cmd->fd_out);

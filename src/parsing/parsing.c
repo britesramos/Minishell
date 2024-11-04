@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 12:49:23 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/04 17:36:55 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void free_cmd_list(t_cmd *list)
 
 void	parsing(t_data *data, char **envp)
 {
+	envp = NULL; //temp
 	t_token	*token_list;
 	data->line = NULL; //ft_bezero(data);
 	token_list = NULL;
@@ -62,10 +63,10 @@ void	parsing(t_data *data, char **envp)
 			error_exit(data, NULL, "exit\n", 0); 
 		if (data->line[0])
 			add_history(data->line);
-		parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
+		// parse_envp(data, envp); //This is resulting in segfault.
 		if (input_checker(data) == 0)
 		{
-			token_list = tokenization(data, token_list); /*I think tokenization is basically done. Just need to make sure it accepts all types of words.*/
+			token_list = tokenization(data, token_list);
 			
 			/*----------------------------------TEMP----------------------------------------------*/
 			// t_token *current = token_list;
@@ -106,18 +107,17 @@ void	parsing(t_data *data, char **envp)
 				free_token_list(token_list);
 				token_list = NULL;
 			}
-			exec(data);
+			// exec(data);
 			if (data->cmd_head)
 			{
 				free_cmd_list(data->cmd_head);
 				data->cmd_head = NULL;
 			}
-			if (data->cmd_head == NULL)
-				printf("data->cmd_head does not exist!\n");
+			// if (data->cmd_head == NULL)
+			// 	printf("data->cmd_head does not exist!\n");
 			data->nbr_pipes = 0;
 		}
 	}
-	// parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c 
 }
 
 
