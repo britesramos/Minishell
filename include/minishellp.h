@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:16 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/24 22:42:06 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/10/31 12:35:05 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum e_tokens
 typedef struct s_token
 {
 	char		*str;
-	int			lenght; // I don't need this.
+	int			lenght;
 	t_token_t	type;
 	t_token		*next;
 }	t_token;

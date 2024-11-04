@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/03 16:06:58 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/04 12:42:23 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
 {
-	char			**cmd; /*Commands arguments and flags*/
-	int				fd_in; /*STIN*/
-	int				fd_out; /*STOUT*/
-	char			*infile; /*Init as NULL if not exists. Or name of file.*/
-	char			*outfile; /*Init as NULL if not exists. Or name of file.*/
-	struct s_cmd	*pipe; /*Pointer to the next node*/
+	char	**cmd; /*Commands, arguments and flags*/
+	bool	append;
+	int		fd_in; /*STIN*/
+	int		fd_out; /*STOUT*/
+	char	*infile; /*Init as NULL if not exists. Or name of file.*/
+	char	*outfile; /*Init as NULL if not exists. Or name of file.*/
+	struct s_cmd *pipe; /*Pointer to the next node*/
 }	t_cmd;
 
 /*Parsed env node (linked list)*/
@@ -67,6 +68,8 @@ typedef struct s_ex
 /*Initialize main struct t_data data.*/
 void	init_main_struct(t_data *data, char **envp);
 
+/*-----------------------------------PARSING-----------------------------------*/
+
 /*Parsing input*/
 void	parsing(t_data *data, char **envp);
 void	parse_input(t_data *data, t_token *token_list);
@@ -86,12 +89,22 @@ void	parse_envp(t_data *data, char **envp);
 
 /*Parsing_utils*/
 int		is_space(char c);
+int		ms_isword(char c);
+
+/*Parsing input utils*/
+void 	free_null(void **input);
+void	free_close_fd(char *file, int fd);
+t_cmd	*create_new_node_cmd(t_data *data);
+void	add_new_node(t_cmd **head, t_cmd *newnode, t_cmd **current_cmd);
+char	**ft_realloc(t_data *data, int number_of_times, char **old_array);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
 
 /*Error handling and exit error std.*/
-int		error_exit(t_data *data, char *str, int type);
+int	error_exit(t_data *data, char *file, char *str, int type);
+int	error_exit_system(t_data *data, char *str, int type);
+
 
 /*-----------------------------------PARSING-----------------------------------*/
 

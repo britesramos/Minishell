@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:41:06 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/25 00:25:47 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/11/04 12:14:49 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,42 @@ static int	multiple_redirection(char *str)
 	return (0);
 }
 
+static int	lonely_redirection(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '>' && str[i + 1] == '>' && str[i + 2] == '\0')
+		return (1);
+	else if((str[i] == '<' && str[i + 1] == '<' && str[i + 2] == '\0'))
+		return (1);
+	else if ((str[i] == '>' || str[i] == '<') && str[i + 1] =='\0')
+		return (1);
+	return (0);
+}
+
 
 /*Make something cleaner for all this returns! This doesnt look nice!*/
 int	input_checker(t_data *data)
 {
 	if (start_with_pipe(data->line) == 1 || multiple_pipes(data->line) == 1)
 	{
-		error_exit(data, "minishell: syntax error near unexpected token `||'\n", 2);
+		error_exit(data, NULL, "minishell: syntax error near unexpected token `||'\n", 2);
 		return (1);
 	}
 	if (missing_closing_q_marks(data->line) == 1)
 	{
-		error_exit(data, "minishell: missing closing quotation marks\n", -1);
+		error_exit(data, NULL, "minishell: missing closing quotation marks\n", -1);
 		return (1);
 	}
 	if (multiple_redirection(data->line) == 1)
 	{
-		error_exit(data, "minishell: syntax error near unexpected token `>'\n", 2);
+		error_exit(data, NULL, "minishell: syntax error near unexpected token `>'\n", 2);
+		return (1);
+	}
+	if (lonely_redirection(data->line) == 1)
+	{
+		error_exit(data, NULL, "syntax error near unexpected token `newline'\n", 2);
 		return (1);
 	}
 	return (0);

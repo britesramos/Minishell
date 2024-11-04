@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 09:11:47 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/04 12:49:29 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,8 @@ int	main(int argc, char **argv, char **envp)
 		return(1);
 	}
 	parsing(data, envp);
-	if (exec(data) == 9)
-		return (bye(data));
-	
-	// 1) Readline function. (Malloc every time and also dont forget to free.)
-	// 2) Parsing.
-		// 2.1) Invalid inputs (syntax errors).
-		// 2.2) White spaces.
-		// "" ''
-		// Position of pipe | beging ...
-		// 2.2) env in linked list.
-		// 2.3)Tokenize.
-	// 3) History. ???
-	// 4) Expansion. (echo $USER) ???
-	// 5) Execution.
-		//5.1.)Built-ins.
-		//5.2.)Pipes.
-		//5.3.)Redirections
-		//5.4.)Signals
+	// if (exec(data) == 9)
+	// 	return (bye(data));
 
 	//bye part
 	if (data->exit_code > 255)
@@ -66,6 +50,6 @@ int	main(int argc, char **argv, char **envp)
 	else
 		exit_code = data->exit_code;
 	ft_printf("exit_code in main: %d\n", exit_code);
-	clean_up(data);
+	// clean_up(data);
 	return (bye(data));
 }

@@ -19,13 +19,20 @@ static int	token_word(t_data *data, int end, t_token **token_list)
 
 	len = 0;
 	new = NULL;
-	while(ft_isalnum(data->line[end]))
+	
+	while(ms_isword(data->line[end]) && !ms_isspace(data->line[end]))
 	{
 		len++;
 		end++;
 	}
 	new = ft_substr(data->line, end - len, len);
-	create_token_list(data, token_list, new, T_WORD);
+	if (!new)
+		error_exit(data, NULL, "New str does not exist!\n", 1);
+	else
+	{
+		create_token_list(data, token_list, new, T_WORD);
+		free(new);
+	}
 	return (end - 1);
 }
 
@@ -48,13 +55,13 @@ t_token	*tokenization(t_data *data, t_token *token_list)
 			i = token_apppend_heredoc(data, i, &token_list, ">>", T_APPEND);
 		else if (data->line[i] == '<' && data->line[i + 1] == '<')
 			i = token_apppend_heredoc(data, i, &token_list, "<<", T_HEREDOC);
-		else if (data->line[i] == '>')
+		else if (data->line[i] == '>' && data->line[i + 1])
 			create_token_list(data, &token_list, ">", T_REOUT);
-		else if (data->line[i] == '<')
+		else if (data->line[i] == '<' && data->line[i + 1])
 			create_token_list(data, &token_list, "<", T_REIN);
 		else if (data->line[i] == '|')
 			create_token_list(data, &token_list, "|", T_PIPE);
-		else if (ft_isalnum(data->line[i])) //This doesnt work. We should also accept characters like =.
+		else if (ms_isword(data->line[i]))
 			i = token_word(data, i, &token_list);
 		i++;
 	}
