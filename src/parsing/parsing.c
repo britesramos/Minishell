@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/01 18:45:15 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/04 12:49:23 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void free_cmd_list(t_cmd *list)
 
 void	parsing(t_data *data, char **envp)
 {
-	envp = NULL;
 	t_token	*token_list;
 	data->line = NULL; //ft_bezero(data);
 	token_list = NULL;
@@ -63,6 +62,7 @@ void	parsing(t_data *data, char **envp)
 			error_exit(data, NULL, "exit\n", 0); 
 		if (data->line[0])
 			add_history(data->line);
+		parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
 		if (input_checker(data) == 0)
 		{
 			token_list = tokenization(data, token_list); /*I think tokenization is basically done. Just need to make sure it accepts all types of words.*/
@@ -77,9 +77,8 @@ void	parsing(t_data *data, char **envp)
 			// 	current = current->next;
 			// }
 			/*----------------------------------TEMP----------------------------------------------*/
-
 			parse_input(data, token_list);
-
+			data->cmd_current = data->cmd_head;
 			/*----------------------------------TEMP----------------------------------------------*/
 			t_cmd *currentll = data->cmd_head;
 			while (currentll != NULL)
@@ -107,7 +106,7 @@ void	parsing(t_data *data, char **envp)
 				free_token_list(token_list);
 				token_list = NULL;
 			}
-			// exec(data);
+			exec(data);
 			if (data->cmd_head)
 			{
 				free_cmd_list(data->cmd_head);

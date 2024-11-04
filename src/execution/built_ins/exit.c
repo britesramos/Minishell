@@ -6,11 +6,14 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 12:19:30 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 13:16:00 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+// TODO: // if to be deleted when ( ) handled by Sara?
+// only else ifwould stay
 
 /// @brief checks if there are any non-digit chars in cmd & 
 /// displays error message if there is '(' or ')' in the argument, 
@@ -20,12 +23,11 @@ static int	digit_check(char *cmd)
 {
 	int	i;
 	int	non_digit;
-	
+
 	i = 0;
 	non_digit = 0;
-	while(cmd[i])
+	while (cmd[i])
 	{
-		// if to be deleted when ( ) handled by Sara?
 		if (cmd[i] == '(' || cmd[i] == ')')
 		{
 			ft_putstr_fd("minishell : ", STDERR_FILENO);
@@ -36,7 +38,6 @@ static int	digit_check(char *cmd)
 				ft_putendl_fd("`('", STDERR_FILENO);
 			return (1);
 		}
-		//only this statement would stay
 		else if (!ft_isdigit(cmd[i]))
 			non_digit = 1;
 		i++;
@@ -45,6 +46,7 @@ static int	digit_check(char *cmd)
 		return (2);
 	return (0);
 }
+
 /// @brief goes to digit_check() to check chars in cmd and 
 /// displays error msg if there is a non-digit char
 /// @return 0 when exit should work; 1 when it shouldn't; 
@@ -70,7 +72,6 @@ static int	is_digit_only(char *cmd, t_data *data)
 	return (0);
 }
 
-
 /// @brief checks: for digits only the 1st arg, if more args 
 /// (and 1st is digits), doesn't work when: multiple args (all digits), ( or ).
 /// Works: multiple args if the 1st arg is not a digit, # as 1st character. . .
@@ -81,7 +82,7 @@ static int	is_digit_only(char *cmd, t_data *data)
 int	ft_exit(char **cmd, t_data *data)
 {
 	int	digit_check;
-	
+
 	if (!cmd[1] || cmd[1][0] == '#')
 	{
 		data->exit_code = 0;
@@ -123,7 +124,6 @@ int	ft_exit(char **cmd, t_data *data)
 // 		exit
 // 		bash: exit: $: numeric argument required	(when you run echo $? -> 2)
 
-
 //undefined behaviour: $# (sometimes replaced by 0)
 // ->	exit 1$#
 // 		exit		(when you run echo $? -> 10)
@@ -137,7 +137,6 @@ int	ft_exit(char **cmd, t_data *data)
 // 		exit		(when you run echo $? -> 250)
 // ->	exit 654$#
 // 		exit		(when you run echo $? -> 140)
-
 
 //EXIT DOESN'T WORK
 // ->	exit 24 53

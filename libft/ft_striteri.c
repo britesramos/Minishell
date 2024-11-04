@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/21 14:13:36 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/20 13:44:10 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/11/03 13:32:10 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 	}
 }
 
-void	f(unsigned int i, char *a)
-{
-	i = 0;
-	i++; //temp (to silence windows)
-	*a = *a + 1;
-}
+// void	f(unsigned int i, char *a)
+// {
+// 	i = 0;
+// 	i++;
+// 	*a = *a + 1;
+// }
 
 // int	main(void)
 // {

@@ -17,7 +17,6 @@ int	ms_isspace(char c)
 	return (c == ' ' || (c >= '\b' && c <= '\v'));
 }
 
-
 /*Fix and Replace this with ft_isalnum for the tokenization. Bash accept file names that include _ = - etc.*/
 int	ms_isword(char c)
 {

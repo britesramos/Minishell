@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 12:59:06 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/04 13:05:32 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ typedef struct s_data
 typedef struct s_ex
 {
 	pid_t	pid;
-	int		current_pipe;
 	int		p_fd[2];
+	int		i;
 }	t_ex;
 
 /*Initialize main struct t_data data.*/
@@ -141,8 +141,8 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 #define READ 0
 #define WRITE 1
 
-int	exec(t_data *data);
-int	ft_builtin_manager(t_data *data, t_cmd *current);
+int		exec(t_data *data);
+int		ft_builtin_manager(t_data *data);
 
 // built-in funtions:
 void	ft_cd(char **cmd, t_data *data);
@@ -155,15 +155,15 @@ void	ft_pwd(char **cmd, t_data *data, int fd);
 void	ft_unset(char **cmd, t_data *data);
 
 // pipes functions:
-void	single_cmd(t_data *data, t_cmd *current, char **cmd);
+void	single_cmd(t_data *data);
 int		mltpl_cmd(t_data *data);
 char	*get_path(t_data *data, char *cmd);
-char	**ft_env_path(t_data *data);
+// char	**ft_env_path(t_data *data);
 
 // fd_utils
-int	fds_first_cmd(t_cmd *current, t_ex *ex);
-int	fds_in_between_cmd(t_cmd *current, t_ex *ex);
-int	fds_last_cmd(t_cmd *current, t_ex *ex);
+int		fds_first_cmd(t_cmd *current, t_ex *ex);
+int		fds_in_between_cmd(t_cmd *current, t_ex *ex);
+int		fds_last_cmd(t_cmd *current, t_ex *ex);
 
 //envp utils
 char	*find_value(t_data *data, char *key);
