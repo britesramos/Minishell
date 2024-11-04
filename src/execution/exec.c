@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 12:20:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 15:26:57 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,21 @@
 
 int	exec(t_data *data)
 {
-	int		i;
-	char	**cmd;
-	t_cmd	*current;
+	int	check;
 
-	i = 0;
-	
 	if (data->nbr_pipes == 0)
 	{
-		current = data->cmd_current;
-		cmd = current->cmd;
-		if (ft_builtin_manager(data, current) == 9)
+		check = ft_builtin_manager(data);
+		if (check == 9)
 			return (9);
+		else if (check == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
 		else
-			single_cmd(data, current, cmd);
+			single_cmd(data);
 	}
-	else 
+	else
 		mltpl_cmd(data);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 /*

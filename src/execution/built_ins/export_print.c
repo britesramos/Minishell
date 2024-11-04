@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 09:09:23 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/28 11:57:29 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 13:17:27 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 static int	ft_size(t_envp *current)
 {
 	t_envp	*env;
-	int	i;
+	int		i;
 
 	i = 0;
 	env = current;
-	while(env != NULL)
+	while (env != NULL)
 	{
-		env=env->next;
+		env = env->next;
 		i++;
 	}
 	return (i);
@@ -29,7 +29,7 @@ static int	ft_size(t_envp *current)
 
 static void	ft_print_key_value(char *key, char *value, t_data *data, int fd)
 {
-	ft_putstr_fd("declare -x ",fd);
+	ft_putstr_fd("declare -x ", fd);
 	ft_putstr_fd(key, fd);
 	if (ft_strncmp(value, "=", 2) == 0)
 		ft_putendl_fd("=\"\"", fd);
@@ -55,7 +55,7 @@ static t_envp	*find_to_print(t_envp *last_p, t_envp *env)
 			ft_strncmp(last_p->key, env->key, ft_strlen(last_p->key) + 1) < 0)
 		{
 			if (to_p == NULL || \
-				ft_strncmp(to_p->key, env->key,ft_strlen(env->key) + 1) > 0)
+				ft_strncmp(to_p->key, env->key, ft_strlen(env->key) + 1) > 0)
 				to_p = env;
 		}
 		env = env->next;

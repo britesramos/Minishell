@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 12:21:33 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/04 09:11:47 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	main(int argc, char **argv, char **envp)
 	
 	(void)argv; //Not going to use this. Waiting for user prompt.
 	data = malloc(sizeof(t_data));
-	init_main_struct(data, envp);
 	
+	init_main_struct(data, envp);
 	// if (argc > 1)
 	if (argc < 1) //for execution testing only, to be deleted!
 	{

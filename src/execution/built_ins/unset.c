@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/21 07:31:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/22 11:03:05 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 13:18:00 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	do_unset(char *cmd, t_data *data, int len)
 	t_envp	*current;
 	t_envp	*previous;
 
-	current	= data->envp_head;
+	current = data->envp_head;
 	previous = NULL;
 	while (current != NULL)
 	{
@@ -40,7 +40,7 @@ static void	do_unset(char *cmd, t_data *data, int len)
 			else
 				previous->next = current->next;
 			unset_node(&current);
-			return;
+			return ;
 		}
 		previous = current;
 		current = current->next;
@@ -51,7 +51,7 @@ void	ft_unset(char **cmd, t_data *data)
 {
 	int		len;
 	int		i;
-	
+
 	i = 1;
 	if (!cmd[i])
 	{
@@ -66,7 +66,6 @@ void	ft_unset(char **cmd, t_data *data)
 	}
 	data->exit_code = 0;
 }
-
 
 /*
 TEST CASES [hello & hi variables are valid]

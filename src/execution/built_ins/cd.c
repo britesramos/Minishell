@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/18 11:15:51 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 13:12:44 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,11 @@ static void	ft_cd_dir(char *path, t_data *data)
 {
 	char	*old_cwd;
 	char	*cwd;
-	
+
 	old_cwd = find_value(data, "OLDPWD");
-	ft_printf("old_ cwd:  %s\n", old_cwd);
-	char	*cur_cwd = getcwd(NULL, 0);
-	ft_printf("current cwd: %s\n", cur_cwd);
 	if (access(path, F_OK) == 0)
 	{
-		if(chdir(path) != 0)
+		if (chdir(path) != 0)
 		{
 			if (opendir(path) == NULL)
 			{
@@ -41,7 +38,6 @@ static void	ft_cd_dir(char *path, t_data *data)
 			}
 		}
 		cwd = getcwd(NULL, 0);
-		ft_printf("new_ cwd:  %s\n", cwd);
 		replace_value(data, "PWD", cwd);
 		replace_value(data, "OLDPWD", old_cwd);
 	}
@@ -50,7 +46,7 @@ static void	ft_cd_dir(char *path, t_data *data)
 		ft_cd_perror(data);
 		return ;
 	}
-	data->exit_code = 0; 
+	data->exit_code = 0;
 }
 
 /// @brief changes the current directory to path
@@ -62,7 +58,6 @@ static void	ft_chdir_error(char *path, t_data *data)
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
-	ft_printf("old_ cwd:  %s\n", cwd);
 	oops = chdir(path);
 	if (oops != 0)
 	{
@@ -72,7 +67,6 @@ static void	ft_chdir_error(char *path, t_data *data)
 	replace_value(data, "PWD", path);
 	replace_value(data, "OLDPWD", cwd);
 	cwd = getcwd(NULL, 0);
-	ft_printf("new_ cwd:  %s\n", cwd);
 	data->exit_code = 0;
 }
 
@@ -81,7 +75,7 @@ static void	ft_chdir_error(char *path, t_data *data)
 /// @param key key word from the envp either HOME or OLDPWD
 static void	ft_cd_key(t_data *data, char *key)
 {
-	char *path;
+	char	*path;
 
 	path = find_value(data, key);
 	if (path == NULL)
@@ -116,6 +110,7 @@ void	ft_cd(char **cmd, t_data *data)
 	else
 		ft_cd_dir(cmd[1], data);
 }
+
 /*
 TESTING ON:
 cd		->goes to home dir

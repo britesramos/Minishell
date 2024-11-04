@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 09:14:19 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 09:14:46 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 15:27:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ int	fds_last_cmd(t_cmd *current, t_ex *ex)
 		close(current->fd_out);
 	}
 	close(ex->p_fd[WRITE]);
-		return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

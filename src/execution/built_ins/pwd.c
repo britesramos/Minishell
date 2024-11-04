@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 18:37:21 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 12:25:30 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/10/29 13:10:18 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_pwd(char **cmd, t_data *data, int fd)
 		data->exit_code = 2;
 		return ;
 	}
+	ft_printf("fd = %d\n", fd);
 	if (getcwd(path, sizeof(path)) != NULL)
 		ft_putendl_fd(path, fd);
 	else

@@ -6,20 +6,20 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 12:56:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 12:49:25 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void free_cmd_list(t_cmd *list)
-{
-	while(list)
-	{
-		free (list);
-		list = list->pipe;
-	}
-}
+// static void free_cmd_list(t_cmd *list)
+// {
+// 	while(list)
+// 	{
+// 		free (list);
+// 		list = list->pipe;
+// 	}
+// }
 
 static t_cmd *create_new_node_cmd(t_data *data)
 {
@@ -100,12 +100,6 @@ static void	parse_input2(t_data *data, t_token *token_list)
 				if (current_cmd->infile)
 				{
 					free(current_cmd->infile);
-					close(current_cmd->fd_in);
-				}
-				current_cmd->fd_in = open(current_token->str, O_RDONLY);
-				if (current_cmd->fd_in == -1)
-				{
-					error_exit(data, "BAAAAAAAAAA!\n", 1);
 				}
 					//syntax error infile does not exist
 				current_cmd->infile = ft_strdup(current_token->str);
@@ -197,6 +191,6 @@ void	parse_input(t_data *data, t_token *token_list)
 		printf("This is outfile: %s\n", current->outfile);
 		current = current->pipe;
 	}
-
-	free_cmd_list(data->cmd_head);
+	data->cmd_current = data->cmd_head;
+	// free_cmd_list(data->cmd_head);
 }

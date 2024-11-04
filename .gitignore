@@ -9,7 +9,9 @@ minishell
 
 # test files
 test
+test1
 test2
+test3
 
 # any other
 .vscode/

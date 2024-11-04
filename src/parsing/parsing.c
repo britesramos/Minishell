@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 12:22:47 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/04 12:16:23 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	parsing(t_data *data, char **envp)
 		data->line = readline("minishell:~$ ");
 		if(data->line[0])
 			add_history(data->line);
+		parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
 		if (input_checker(data) == 0)
 		{
 			token_list = tokenization(data, token_list); /*I think tokenization is basically done. Just need to make sure it accepts all types of words.*/

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/29 12:56:48 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 16:06:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,12 @@
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
 {
-	char	**cmd; /*Commands arguments and flags*/
-	// bool	flag;
-	// bool	append;
-	int		fd_in; /*STIN*/
-	int		fd_out; /*STOUT*/
-	char	*infile; /*Init as NULL if not exists. Or name of file.*/
-	char	*outfile; /*Init as NULL if not exists. Or name of file.*/
-	struct s_cmd *pipe; /*Pointer to the next node*/
+	char			**cmd; /*Commands arguments and flags*/
+	int				fd_in; /*STIN*/
+	int				fd_out; /*STOUT*/
+	char			*infile; /*Init as NULL if not exists. Or name of file.*/
+	char			*outfile; /*Init as NULL if not exists. Or name of file.*/
+	struct s_cmd	*pipe; /*Pointer to the next node*/
 }	t_cmd;
 
 /*Parsed env node (linked list)*/
@@ -62,8 +60,8 @@ typedef struct s_data
 typedef struct s_ex
 {
 	pid_t	pid;
-	int		current_pipe;
 	int		p_fd[2];
+	int		i;
 }	t_ex;
 
 /*Initialize main struct t_data data.*/
@@ -130,8 +128,8 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 #define READ 0
 #define WRITE 1
 
-int	exec(t_data *data);
-int	ft_builtin_manager(t_data *data, t_cmd *current);
+int		exec(t_data *data);
+int		ft_builtin_manager(t_data *data);
 
 // built-in funtions:
 void	ft_cd(char **cmd, t_data *data);
@@ -144,15 +142,15 @@ void	ft_pwd(char **cmd, t_data *data, int fd);
 void	ft_unset(char **cmd, t_data *data);
 
 // pipes functions:
-void	single_cmd(t_data *data, t_cmd *current, char **cmd);
+void	single_cmd(t_data *data);
 int		mltpl_cmd(t_data *data);
 char	*get_path(t_data *data, char *cmd);
-char	**ft_env_path(t_data *data);
+// char	**ft_env_path(t_data *data);
 
 // fd_utils
-int	fds_first_cmd(t_cmd *current, t_ex *ex);
-int	fds_in_between_cmd(t_cmd *current, t_ex *ex);
-int	fds_last_cmd(t_cmd *current, t_ex *ex);
+int		fds_first_cmd(t_cmd *current, t_ex *ex);
+int		fds_in_between_cmd(t_cmd *current, t_ex *ex);
+int		fds_last_cmd(t_cmd *current, t_ex *ex);
 
 //envp utils
 char	*find_value(t_data *data, char *key);

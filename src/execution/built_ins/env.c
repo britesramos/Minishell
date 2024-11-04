@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/17 09:58:47 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 07:30:53 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 11:43:38 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	ft_env_arg_option(char *cmd, t_data *data)
 void	ft_env(char **cmd, t_data *data, int fd)
 {
 	t_envp	*current;
-	
+
 	if (cmd[1])
 		ft_env_arg_option(cmd[1], data);
 	current = data->envp_head;

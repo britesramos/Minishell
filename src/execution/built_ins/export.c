@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 12:53:24 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 13:21:12 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 static char	*init_key(char *cmd, t_data *data)
 {
-	int	i;
-	int	key_len;
-	char *key;
+	int		i;
+	int		key_len;
+	char	*key;
 
 	i = 0;
 	key_len = 0;
 	key = NULL;
-	while(cmd[key_len] != '=')
+	while (cmd[key_len] != '=')
 		key_len++;
 	key = malloc(key_len + 1);
-	if(!key)
+	if (!key)
 	{
 		perror("export - key creation");
 		data->exit_code = 1;
 		return (NULL);
 	}
-	while(i < key_len)
+	while (i < key_len)
 	{
 		key[i] = cmd[i];
 		i++;
@@ -51,18 +51,18 @@ static char	*init_value(char *cmd, t_data *data)
 		key_len++;
 	key_len++;
 	value = ft_calloc(strlen(cmd) - key_len + 1, 1);
-	if(!value)
+	if (!value)
 	{
 		perror("export - value creation");
 		data->exit_code = 1;
 		return (NULL);
-	}	
+	}
 	while ((i + key_len) < ft_strlen(cmd))
 	{
 		value[i] = cmd[key_len + i];
 		i++;
 	}
-	return(value);
+	return (value);
 }
 
 /// @brief checks if the cmd has correct input
@@ -110,7 +110,7 @@ void	ft_export(char **cmd, t_data *data, int fd)
 {
 	int	i;
 	int	check;
-	
+
 	i = 1;
 	if (!cmd[i])
 		ft_print_export(data, fd);
@@ -122,7 +122,8 @@ void	ft_export(char **cmd, t_data *data, int fd)
 			if (check == 0)
 				add_node(data, cmd[i], &data->envp_head);
 			else if (check == 1)
-				replace_value(data, init_key(cmd[1], data), init_value(cmd[1], data));
+				replace_value(data, init_key(cmd[1], data), \
+					init_value(cmd[1], data));
 			else if (check == -1)
 				ft_export_error(cmd[i], data);
 			i++;

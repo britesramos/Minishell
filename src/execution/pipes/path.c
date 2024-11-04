@@ -6,18 +6,18 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 12:48:37 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/03 16:00:32 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-char	**ft_env_path(t_data *data)
+static char	**ft_env_path(t_data *data)
 {
 	char	*path;
 	char	**split_path;
 	t_envp	*current;
-	
+
 	path = NULL;
 	current = data->envp_head;
 	while (current != NULL)
@@ -35,7 +35,7 @@ char	**ft_env_path(t_data *data)
 	return (split_path);
 }
 
-char	*find_path(char **paths, char *cmd)
+static char	*find_path(char **paths, char *cmd)
 {
 	char	*right_path;
 	int		i;
@@ -73,6 +73,7 @@ char	*get_path(t_data *data, char *cmd)
 	}
 	path = find_path(all_paths, slash_cmd);
 	free(slash_cmd);
+	slash_cmd = NULL;
 	ft_free(all_paths);
 	return (path);
 }
