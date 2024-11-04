@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 11:02:41 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/04 12:59:06 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 typedef struct s_cmd
 {
 	char	**cmd; /*Commands, arguments and flags*/
-	bool	append;
+	// bool	append;
 	int		fd_in; /*STIN*/
 	int		fd_out; /*STOUT*/
 	char	*infile; /*Init as NULL if not exists. Or name of file.*/
