@@ -19,10 +19,10 @@ int	ms_isspace(char c)
 
 
 /*Fix and Replace this with ft_isalnum for the tokenization. Bash accept file names that include _ = - etc.*/
-// int	ms_isword(char c)
-// {
-// 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
-// }
+int	ms_isword(char c)
+{
+	return (c != '>' && c != '<' && c != '|' && c != '\0');
+}
 
 void free_token_list(t_token *token_list)
 {

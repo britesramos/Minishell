@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/01 14:39:05 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/04 11:02:41 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	parse_envp(t_data *data, char **envp);
 
 /*Parsing_utils*/
 int		is_space(char c);
+int		ms_isword(char c);
 
 /*Parsing input utils*/
 void 	free_null(void **input);
