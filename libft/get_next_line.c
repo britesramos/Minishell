@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/22 10:46:36 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/10/29 12:52:08 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 12:00:28 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char	*get_next_line(int fd, int flag)
 	int			str_len;
 
 	if (flag == 1)
-		return (ft_free(&str), NULL);
+		return (ft_free_array(&str), NULL);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	str = read_file(fd, str);
@@ -138,9 +138,9 @@ char	*get_next_line(int fd, int flag)
 	str_len = ft_strlen(str);
 	line = read_l(str);
 	if (!line)
-		return (ft_free(&str), NULL);
+		return (ft_free_array(&str), NULL);
 	str = store_r(str, str_len);
 	if (!str)
-		return (ft_free(&line), NULL);
+		return (ft_free_array(&line), NULL);
 	return (line);
 }

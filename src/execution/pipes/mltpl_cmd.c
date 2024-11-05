@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/05 11:02:25 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 12:25:02 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		if (data->cmd_current->pipe->fd_in == data->std[IN])
 			data->cmd_current->pipe->fd_in = ex->p_fd[READ];
 	}
-	close_fd (data->cmd_current->fd_in);
+	if (data->cmd_current->fd_in != data->std[IN])
+		close_fd (data->cmd_current->fd_in);
 	close_fd (ex->p_fd[WRITE]);
 	return (EXIT_SUCCESS);
 }
