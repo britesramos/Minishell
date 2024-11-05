@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:38:59 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 07:32:03 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 12:03:02 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	parse_envp(t_data *data, char **envp)
 	while(envp[i])
 	{
 		new_node = create_node_envp(data, envp[i]);
+
 		if (data->envp_head == NULL)
 		{
 			data->envp_head = new_node;
