@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 09:09:23 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/03 13:17:27 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/04 13:55:14 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,19 @@ static t_envp	*find_to_print(t_envp *last_p, t_envp *env)
 void	ft_print_export(t_data *data, int fd)
 {
 	t_envp	*current;
+	t_envp	*save_head;
 	t_envp	*last_p;
 	int		l_size;
 	int		printed;
 
+	
 	l_size = ft_size(data->envp_head);
 	last_p = NULL;
 	printed = 0;
+	save_head = data->envp_head;
 	while (printed < l_size)
 	{
-		current = data->envp_head;
+		current = save_head;
 		last_p = find_to_print(last_p, current);
 		ft_print_key_value(last_p->key, last_p->value, data, fd);
 		printed++;

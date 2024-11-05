@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 12:42:23 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 10:27:16 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_data
 	int		exit_code;
 	int		nbr_pipes;
 	int		kids;
+	int		std[2];
 	t_cmd	*cmd_head;
 	t_cmd	*cmd_current;
 	t_envp	*envp_head; /*Pointer to linked list header | Parsed envp*/
@@ -141,6 +142,9 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 #define READ 0
 #define WRITE 1
 
+#define IN 0
+#define OUT 1
+
 int		exec(t_data *data);
 int		ft_builtin_manager(t_data *data);
 
@@ -161,14 +165,14 @@ char	*get_path(t_data *data, char *cmd);
 // char	**ft_env_path(t_data *data);
 
 // fd_utils
-int		fds_first_cmd(t_cmd *current, t_ex *ex);
-int		fds_in_between_cmd(t_cmd *current, t_ex *ex);
-int		fds_last_cmd(t_cmd *current, t_ex *ex);
+int		fds_first_cmd(t_cmd *current, t_ex *ex, t_data *data);
+int		fds_in_between_cmd(t_cmd *current, t_ex *ex, t_data *data);
+int		fds_last_cmd(t_cmd *current, t_data *data);
 
 //envp utils
 char	*find_value(t_data *data, char *key);
 void	replace_value(t_data *data, char *key, char *new_value);
 void	add_node(t_data *data, char *cmd, t_envp **env);
 
-
+void	close_fd(int fd);
 #endif

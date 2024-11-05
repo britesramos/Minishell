@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 12:49:29 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 07:40:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ int	main(int argc, char **argv, char **envp)
 	else
 		exit_code = data->exit_code;
 	ft_printf("exit_code in main: %d\n", exit_code);
-	// clean_up(data);
+	clean_up(data);
 	return (bye(data));
 }

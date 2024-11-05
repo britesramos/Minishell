@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:38:59 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 12:49:39 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 07:32:03 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static	char	*init_key(t_data *data, char *envp)
 
 	i = 0;
 	key_len = 0;
-	key = NULL;
 	while(envp[key_len] != '=')
 		key_len++;
 	key = malloc(key_len + 1);
@@ -31,6 +30,7 @@ static	char	*init_key(t_data *data, char *envp)
 		key[i] = envp[i];
 		i++;
 	}
+	key[i] = '\0';
 	return (key);
 }
 
@@ -42,7 +42,6 @@ static char	*init_value(t_data *data, char *envp)
 
 	i = 0;
 	key_len = 0;
-	value = NULL;
 	while (envp[key_len] != '=')
 		key_len++;
 	value = malloc(strlen(envp) - key_len + 1);
@@ -53,6 +52,7 @@ static char	*init_value(t_data *data, char *envp)
 		value[i] = envp[key_len + i];
 		i++;
 	}
+	value[i] = '\0';
 	return(value);
 }
 
@@ -76,8 +76,6 @@ void	parse_envp(t_data *data, char **envp)
 	t_envp	*new_node;
 
 	i = 0;
-	current = NULL;
-	new_node = NULL;
 	while(envp[i])
 	{
 		new_node = create_node_envp(data, envp[i]);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/03 13:16:00 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 07:41:47 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	ft_exit(char **cmd, t_data *data)
 		data->exit_code = 0;
 		return (0);
 	}
+	ft_printf("here?\n");
 	digit_check = is_digit_only(cmd[1], data);
 	if (digit_check == 1)
 		return (9);

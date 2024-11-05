@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/03 13:21:12 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/04 14:04:38 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,10 @@ void	ft_export(char **cmd, t_data *data, int fd)
 		{
 			check = ft_export_check(cmd[i], data);
 			if (check == 0)
+			{
+				ft_printf("here\n");
 				add_node(data, cmd[i], &data->envp_head);
+			}
 			else if (check == 1)
 				replace_value(data, init_key(cmd[1], data), \
 					init_value(cmd[1], data));

@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/24 10:29:43 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/03 12:53:54 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 10:25:03 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,6 @@ void	init_main_struct(t_data *data, char **envp)
 	data->kids = 0;
 	data->line = NULL;
 	data->nbr_pipes = 0;
+	data->std[IN] = STDIN_FILENO;
+	data->std[OUT] = STDOUT_FILENO;
 }

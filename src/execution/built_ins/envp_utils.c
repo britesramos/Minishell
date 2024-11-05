@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/03 13:19:07 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/04 13:58:22 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	replace_value(t_data *data, char *key, char *new_value)
 		}
 		env = env->next;
 	}
+	free(key);
+	free(new_value);
 }
 
 // t_envp	*check;
