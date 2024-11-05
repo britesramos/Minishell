@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 10:29:30 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 11:56:06 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ t_cmd *create_new_node_cmd(t_data *data)
 	if (!node)
 		error_exit(data, NULL, "Memory allocation failed!", 1);
 	node->cmd = NULL;
-	node->append = false;
 	node->fd_in = data->std[IN];
 	node->fd_out = data->std[OUT];
 	node->infile = NULL;

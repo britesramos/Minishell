@@ -12,6 +12,7 @@
 
 #include "../../include/minishell.h"
 
+/*Fix norminette*/
 static int	token_word(t_data *data, int end, t_token **token_list)
 {
 	int	len;
@@ -20,12 +21,24 @@ static int	token_word(t_data *data, int end, t_token **token_list)
 	len = 0;
 	new = NULL;
 	
-	while(ms_isword(data->line[end]) && !ms_isspace(data->line[end]))
+	if (data->line[end + len] != '"' && data->line[end + len] != '\'')
 	{
-		len++;
-		end++;
+		while(ms_isword(data->line[end + len]) && !ms_isspace(data->line[end + len]))
+			len++;
 	}
-	new = ft_substr(data->line, end - len, len);
+	else if (data->line[end] == '\'')
+	{
+		end++;
+		while(data->line[end + len] != '\'')
+			len++;
+	}
+	else if (data->line[end] == '"')
+	{
+		end++;
+		while(data->line[end + len] != '"')
+			len++;
+	}
+	new = ft_substr(data->line, end, len);
 	if (!new)
 		error_exit(data, NULL, "New str does not exist!\n", 1);
 	else
@@ -33,7 +46,7 @@ static int	token_word(t_data *data, int end, t_token **token_list)
 		create_token_list(data, token_list, new, T_WORD);
 		free(new);
 	}
-	return (end - 1);
+	return (end + len);
 }
 
 static int	token_apppend_heredoc(t_data *data, int i, t_token **token_list, char *str, t_token_t type)
@@ -49,6 +62,7 @@ t_token	*tokenization(t_data *data, t_token *token_list)
 	i = 0;
 	while(data->line[i])
 	{
+		// printf("data->line[%i]: %c\n", i, data->line[i]);
 		while(ms_isspace(data->line[i]))
 			i++;
 		if (data->line[i] == '>' && data->line[i + 1] == '>')

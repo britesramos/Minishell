@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 10:52:02 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 11:55:30 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void free_cmd_list(t_cmd *list)
 
 void	parsing(t_data *data, char **envp)
 {
+	envp = NULL; //temp
 	t_token	*token_list;
 	
 	data->line = NULL; //ft_bezero(data);
@@ -64,9 +65,10 @@ void	parsing(t_data *data, char **envp)
 			error_exit(data, NULL, "exit\n", 0);
 		if (data->line[0])
 			add_history(data->line);
+		// parse_envp(data, envp); //This is resulting in segfault.
 		if (input_checker(data) == 0)
 		{
-			token_list = tokenization(data, token_list); /*I think tokenization is basically done. Just need to make sure it accepts all types of words.*/
+			token_list = tokenization(data, token_list);
 			
 			/*----------------------------------TEMP----------------------------------------------*/
 			// t_token *current = token_list;
@@ -119,7 +121,6 @@ void	parsing(t_data *data, char **envp)
 			data->nbr_pipes = 0;
 		}
 	}
-	// parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c 
 }
 
 
