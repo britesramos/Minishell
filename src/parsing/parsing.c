@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 12:03:39 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/05 12:28:45 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	parsing(t_data *data, char **envp)
 		if (data->line)
 			free(data->line);
 		data->line = readline("minishell:~$ ");
+		printf("data->line: %s\n", data->line);
 		if (!data->line)
 			error_exit(data, NULL, "exit\n", 0);
 		if (data->line[0])

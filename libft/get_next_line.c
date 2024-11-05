@@ -6,7 +6,11 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/22 10:46:36 by mstencel      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2024/11/05 11:59:52 by sramos        ########   odam.nl         */
+=======
+/*   Updated: 2024/11/05 12:00:28 by mstencel      ########   odam.nl         */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
