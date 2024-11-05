@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 11:54:39 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/05 18:36:27 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 typedef struct s_cmd
 {
 	char	**cmd; /*Commands, arguments and flags*/
-	// bool	append;
+	bool	heredoc;
+	// char	*hd_delimiter;
 	int		fd_in; /*STIN*/
 	int		fd_out; /*STOUT*/
 	char	*infile; /*Init as NULL if not exists. Or name of file.*/
@@ -81,6 +82,9 @@ int		ms_isspace(char c);
 t_token *create_new_node(t_data *data, t_token_t type, char *str);
 void	create_token_list(t_data *data, t_token **token_list, char *str, t_token_t type);
 void 	free_token_list(t_token *token_list);
+
+/*HEREDOC parsing*/
+// t_token	*parse_heredoc(t_token *current_token, t_cmd *current_cmd, t_data *data);
 
 /*Invalid input checker*/
 int		input_checker(t_data *data);

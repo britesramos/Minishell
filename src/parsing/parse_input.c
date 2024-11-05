@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 15:54:32 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/05 18:23:15 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static t_token	*parse_reout(t_token *current_token, t_cmd *current_cmd, t_data *
 
 static t_token 	*parse_append(t_token *current_token, t_cmd *current_cmd, t_data *data)
 {
-	// current_cmd->append = true;
 	current_token = current_token->next;
 	if (current_cmd->outfile)
 		free_close_fd(current_cmd->outfile, current_cmd->fd_out);
@@ -103,6 +102,12 @@ void	parse_input(t_data *data, t_token *token_list)
 				current_token = parse_reout(current_token, current_cmd, data);
 			else if (current_token->type == T_APPEND)
 				current_token = parse_append(current_token, current_cmd, data);
+			else if (current_token->type == T_HEREDOC)
+				current_token = parse_heredoc(current_token, current_cmd, data);
+			//Set fd_in to STDIN.
+			//Close infile if there is an infile - cause we are going to use a pipe.
+			//Create a flag for HEREDOC.
+			//Create an char * for HEREDOC - Store the delimiter in there.
 			else if (current_token->type == T_WORD)
 				i = parse_word(current_token, current_cmd, data, i);
 			current_token = current_token->next;
