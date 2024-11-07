@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 11:54:39 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 08:20:40 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int		ms_isword(char c);
 /*Parsing input utils*/
 void 	free_null(void **input);
 void	free_close_fd(char *file, int fd);
+void	free_cmd_list(t_cmd *list);
 t_cmd	*create_new_node_cmd(t_data *data);
 void	add_new_node(t_cmd **head, t_cmd *newnode, t_cmd **current_cmd);
 char	**ft_realloc(t_data *data, int number_of_times, char **old_array);
@@ -174,5 +175,5 @@ char	*find_value(t_data *data, char *key);
 void	replace_value(t_data *data, char *key, char *new_value);
 void	add_node(t_data *data, char *cmd, t_envp **env);
 
-void	close_fd(int fd);
+void	close_fd(int *fd);
 #endif

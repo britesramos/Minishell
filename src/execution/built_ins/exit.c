@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/05 07:41:47 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 08:07:03 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,6 @@ int	ft_exit(char **cmd, t_data *data)
 		data->exit_code = 0;
 		return (0);
 	}
-	ft_printf("here?\n");
-	digit_check = is_digit_only(cmd[1], data);
-	if (digit_check == 1)
-		return (9);
-	else if (digit_check == 2)
-		return (9);
 	if (cmd[2])
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);
@@ -101,7 +95,15 @@ int	ft_exit(char **cmd, t_data *data)
 		data->exit_code = 1;
 		return (9);
 	}
-	data->exit_code = ft_atol(cmd[1]);
+	ft_printf("here?\n");
+	digit_check = is_digit_only(cmd[1], data);
+	printf("digit_check = %d\n", digit_check);
+	if (digit_check == 1)
+		return (0);
+	else if (digit_check == 2)
+		return (9);
+	else
+		data->exit_code = ft_atol(cmd[1]);
 	return (0);
 }
 

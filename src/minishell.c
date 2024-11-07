@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 07:40:33 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 09:18:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	bye(t_data *data)
 		exit_code = data->exit_code % 256;
 	else
 		exit_code = data->exit_code;
-	ft_printf("exit_code in main: %d\n", exit_code);
+	// ft_printf("exit_code in main: %d\n", exit_code);
 	clean_up(data);
 	return (exit_code);
 }
@@ -28,28 +28,16 @@ int	bye(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data *data;
-	int		exit_code;
 	
 	(void)argv; //Not going to use this. Waiting for user prompt.
 	data = malloc(sizeof(t_data));
 	
 	init_main_struct(data, envp);
-	// if (argc > 1)
 	if (argc < 1) //for execution testing only, to be deleted!
 	{
 		write(2, "Invalid number of arguments. Type: minishell\n", 45);
 		return(1);
 	}
 	parsing(data, envp);
-	// if (exec(data) == 9)
-	// 	return (bye(data));
-
-	//bye part
-	if (data->exit_code > 255)
-		exit_code = data->exit_code % 256;
-	else
-		exit_code = data->exit_code;
-	ft_printf("exit_code in main: %d\n", exit_code);
-	clean_up(data);
 	return (bye(data));
 }

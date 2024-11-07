@@ -6,45 +6,32 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 12:25:17 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 10:55:12 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void free_cmd_list(t_cmd *list)
+void	free_cmd_list(t_cmd *list)
 {
-	int	i;
-	t_cmd *temp;
+	t_cmd	*next;
 
-	temp = NULL;
-	while(list)
+	while (list)
 	{
-		i = 0;
-		temp = list;
-		if (temp->cmd)
-		{
-			while(temp->cmd[i])
-			{
-				free(temp->cmd[i]);
-				temp->cmd[i] = NULL;
-				// free_null((void**)&temp->cmd[i]);
-				i++;
-			}
-			free(temp->cmd);
-			temp->cmd = NULL;
-			// free_null((void**)&temp->cmd);
-		}
-		if (temp->infile)
-			free_close_fd(temp->infile, temp->fd_in);
-		if (temp->outfile)
-			free_close_fd(temp->outfile, temp->fd_out);
-		list = list->pipe;
+		next = list->pipe;
+		if (list->cmd)
+			ft_free_array(list->cmd);
+		if (list->infile)
+			free_close_fd(list->infile, list->fd_in);
+		if (list->outfile)
+			free_close_fd(list->outfile, list->fd_out);
+		// ft_printf("to free list = %p\n", list);
+		free(list);
 		list = NULL;
-		free(temp);
-		temp = NULL;
-		// free_null((void**)&temp);
+		list = next;
+		// ft_printf("list = %p\n", list);
 	}
+	list = NULL;
 }
 
 void	parsing(t_data *data, char **envp)
@@ -58,9 +45,8 @@ void	parsing(t_data *data, char **envp)
 	while (1)
 	{
 		if (data->line)
-			free(data->line);
+			ft_free_string(data->line);
 		data->line = readline("minishell:~$ ");
-		printf("data->line: %s\n", data->line);
 		if (!data->line)
 			error_exit(data, NULL, "exit\n", 0);
 		if (data->line[0])
@@ -119,6 +105,10 @@ void	parsing(t_data *data, char **envp)
 			// if (data->cmd_head == NULL)
 			// 	printf("data->cmd_head does not exist!\n");
 			data->nbr_pipes = 0;
+			data->std[IN] = STDIN_FILENO;
+			data->std[OUT] = STDOUT_FILENO;
+			// should stay (for the moment commented out - infinite loop)
+			wait(NULL);
 		}
 	}
 }
