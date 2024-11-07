@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/05 12:25:02 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 11:35:46 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,11 @@
 static void	child_fd_handling(t_data *data, t_ex *ex)
 {
 	if (ex->i == 0)
-	{
-		// ft_putendl_fd("in the first cmd:", data->std[OUT]);
-		// ft_putnbr_fd(data->cmd_current->fd_in, data->std[OUT]);
-		// ft_putnbr_fd(data->cmd_current->fd_out, data->std[OUT]);
-		// ft_putnbr_fd(ex->p_fd[WRITE], data->std[OUT]);
-		// ft_putnbr_fd(ex->p_fd[WRITE], data->std[OUT]);
-		// ft_putendl_fd("end of the first cmd", data->std[OUT]);
-		// ft_putendl_fd(" ", data->std[OUT]);
-		// ft_putendl_fd(" ", data->std[OUT]);
 		fds_first_cmd(data->cmd_current, ex, data);
-	}
 	else if (ex->i == data->nbr_pipes)
-	{
-		// ft_putendl_fd("in the last cmd:", data->std[OUT]);
-		// ft_putnbr_fd(data->cmd_current->fd_in, data->std[OUT]);
-		// ft_putnbr_fd(data->cmd_current->fd_out, data->std[OUT]);
-		// ft_putendl_fd("end of the last cmd", data->std[OUT]);
-		// ft_putendl_fd(" ", data->std[OUT]);
-		// ft_putendl_fd(" ", data->std[OUT]);
 		fds_last_cmd(data->cmd_current, data);
-		
-	}
 	else
-	{
-		// ft_putendl_fd("in between cmd:", data->std[OUT]);
-		// ft_putnbr_fd(ex->i, data->std[OUT]);
-		// ft_putnbr_fd(data->cmd_current->fd_in, data->std[OUT]);
-		// ft_putnbr_fd(data->cmd_current->fd_out, data->std[OUT]);
-		// ft_putnbr_fd(ex->p_fd[READ], data->std[OUT]);
-		// ft_putnbr_fd(ex->p_fd[WRITE], data->std[OUT]);
-		// ft_putendl_fd("end of in between cmd", data->std[OUT]);
-		// ft_putendl_fd(" ", data->std[OUT]);
-		// ft_putendl_fd(" ", data->std[OUT]);
 		fds_in_between_cmd(data->cmd_current, ex, data);
-	}
 }
 
 static	int	ft_child(t_data *data, t_ex *ex)
@@ -59,14 +29,14 @@ static	int	ft_child(t_data *data, t_ex *ex)
 
 	child_fd_handling(data, ex);
 	built_in_check = ft_builtin_manager(data);
-	if ( built_in_check == 0 || built_in_check == 9)
+	if (built_in_check == 0 || built_in_check == 9)
 	{
 		if (ex->i != data->nbr_pipes)
 		{
-			close_fd (ex->p_fd[READ]);
-			close_fd (ex->p_fd[WRITE]);
+			close_fd(&ex->p_fd[READ]);
+			close_fd(&ex->p_fd[WRITE]);
 		}
-		return (EXIT_FAILURE);
+		exit (data->exit_code);
 	}
 	if (access(data->cmd_current->cmd[0], F_OK | X_OK) == 0)
 		path = ft_strdup(data->cmd_current->cmd[0]);
@@ -79,7 +49,8 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	if (path)
 		free(path);
 	path = NULL;
-	return (EXIT_FAILURE);
+	data->exit_code = 127;
+	exit (data->exit_code);
 }
 
 static int	do_pipex(t_data *data, t_ex *ex)
@@ -91,14 +62,15 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		return (perror("error: child"), EXIT_FAILURE);
 	if (ex->pid == 0)
 		ft_child(data, ex);
-	if (ex->i != data->nbr_pipes)
+	//before the last cmd
+	if (ex->i < data->nbr_pipes)
 	{
 		if (data->cmd_current->pipe->fd_in == data->std[IN])
 			data->cmd_current->pipe->fd_in = ex->p_fd[READ];
 	}
 	if (data->cmd_current->fd_in != data->std[IN])
-		close_fd (data->cmd_current->fd_in);
-	close_fd (ex->p_fd[WRITE]);
+		close_fd(&data->cmd_current->fd_in);
+	close_fd(&ex->p_fd[WRITE]);
 	return (EXIT_SUCCESS);
 }
 
@@ -118,6 +90,17 @@ int	mltpl_cmd(t_data *data)
 		ex.i++;
 		data->cmd_current = data->cmd_current->pipe;
 	}
-	wait(&status);
+	// wait(&status);
+	if (i > 0)
+	{
+		wait()
+		i--;
+	}
+	waitpid(ex.pid, &status, 0);
 	return (EXIT_SUCCESS);
 }
+
+
+// ls -la > test1 | cat test1 | grep "a" | sort | tee test2
+// cat test1 | grep "8" | wc -l > out | wc 
+// cat test1 | grep "8" | sort | tee test2

@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/05 12:11:13 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 09:59:53 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec(t_data *data)
 		check = ft_builtin_manager(data);
 		if (check == 9)
 		{
-			ft_printf("check = %d\n", check);
+			// ft_printf("check = %d\n", check);
 			return (9);
 		}
 		else if (check == EXIT_SUCCESS)

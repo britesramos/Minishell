@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 11:56:06 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 08:40:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	free_close_fd(char *file, int fd)
 {
-	free(file);
-	file = NULL;
-	close(fd);
+	if (file)
+	{
+		free(file);
+		file = NULL;
+	}
+	close_fd(&fd);
 }
 
 void free_null(void **input)

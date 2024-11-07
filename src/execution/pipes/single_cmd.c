@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/05 10:31:16 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 10:48:24 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_dup_all(t_cmd *current, t_data *data)
 			perror("dup2 fd_in in single cmd");
 			return ;
 		}
-		close(current->fd_in);
+		close_fd(&current->fd_in);
 	}
 	if (current->fd_out != data->std[OUT])
 	{
@@ -33,7 +33,7 @@ static void	ft_dup_all(t_cmd *current, t_data *data)
 			perror("dup2 fd_out in single cmd");
 			return ;
 		}
-		close(current->fd_out);
+		close_fd(&current->fd_out);
 	}
 }
 
@@ -56,6 +56,7 @@ static void	ft_single_child(t_data *data, char *path)
 		path = NULL;
 	}
 	data->exit_code = 127;
+	exit (data->exit_code);
 }
 
 void	single_cmd(t_data *data)

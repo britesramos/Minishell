@@ -60,7 +60,9 @@ t_token	*tokenization(t_data *data, t_token *token_list)
 	int	i;
 
 	i = 0;
-	while(data->line[i])
+	if (!data->line || !data->line[i])
+		return (NULL);
+	while (data->line[i])
 	{
 		// printf("data->line[%i]: %c\n", i, data->line[i]);
 		while(ms_isspace(data->line[i]))

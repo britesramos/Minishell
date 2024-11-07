@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 15:18:51 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/31 14:42:10 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/07 09:19:55 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,27 @@
 
 static void	free_envp(t_envp *envp_head)
 {
-	t_envp	*current;
 	t_envp	*next;
 
-	current = envp_head;
-	next = envp_head->next;
-	while (current->next != NULL)
+	while (envp_head)
 	{
-		free(current->key);
-		free(current->value);
-		free(current);
-		current = next;
-		next = current->next;
+		next = envp_head->next;
+		if (envp_head->key)
+			ft_free_string(envp_head->key);
+		if (envp_head->value)
+			ft_free_string(envp_head->value);
+		// ft_printf("to free envp = %p\n", envp_head);
+		free(envp_head);
+		envp_head = NULL;
+		envp_head = next;
+		// ft_printf("envp = %p\n", envp_head);
 	}
 }
 
 void	clean_up(t_data *data)
 {
-	if (data->cmd_current)
-		free(data->cmd_current);
 	free_envp(data->envp_head);
+	free_cmd_list(data->cmd_head);
 	free(data->line); /*This might have to be changed if readline is a loop, so it will alocate multiple times for line.*/
 	free(data);
 }
