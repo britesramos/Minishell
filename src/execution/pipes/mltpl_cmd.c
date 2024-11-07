@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/07 11:35:46 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 11:54:56 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ int	mltpl_cmd(t_data *data)
 		data->cmd_current = data->cmd_current->pipe;
 	}
 	// wait(&status);
-	if (i > 0)
-	{
-		wait()
-		i--;
-	}
+	// if (i > 0)
+	// {
+	// 	wait()
+	// 	i--;
+	// }
 	waitpid(ex.pid, &status, 0);
 	return (EXIT_SUCCESS);
 }

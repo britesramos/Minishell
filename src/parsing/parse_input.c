@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 18:23:15 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/07 18:14:30 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,13 @@ static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, 
 {
 	int 	alloc_times = 2;
 
-	// printf("alloc_times: %i - i: %i\n", alloc_times, i);
+	printf("alloc_times: %i - i: %i\n", alloc_times, i);
 	if (current_cmd->cmd == NULL)
 		current_cmd->cmd = (char **)ft_calloc(alloc_times + 1, sizeof(char *));
 	if (!current_cmd->cmd)
 		error_exit(data, NULL, "Error allocating word!\n", 1);
 	if (i >= alloc_times)
 	{
-		// printf("HERE!\n");
 		current_cmd->cmd = ft_realloc(data, 2 + i, current_cmd->cmd);
 		alloc_times = 2;
 	}
@@ -104,10 +103,6 @@ void	parse_input(t_data *data, t_token *token_list)
 				current_token = parse_append(current_token, current_cmd, data);
 			else if (current_token->type == T_HEREDOC)
 				current_token = parse_heredoc(current_token, current_cmd, data);
-			//Set fd_in to STDIN.
-			//Close infile if there is an infile - cause we are going to use a pipe.
-			//Create a flag for HEREDOC.
-			//Create an char * for HEREDOC - Store the delimiter in there.
 			else if (current_token->type == T_WORD)
 				i = parse_word(current_token, current_cmd, data, i);
 			current_token = current_token->next;

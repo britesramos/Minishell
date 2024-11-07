@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/07 11:50:11 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/07 13:14:33 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	create_token_list(t_data *data, t_token **token_list, char *str, t_token_t 
 void 	free_token_list(t_token *token_list);
 
 /*HEREDOC parsing*/
-// t_token	*parse_heredoc(t_token *current_token, t_cmd *current_cmd, t_data *data);
+t_token	*parse_heredoc(t_token *current_token, t_cmd *current_cmd, t_data *data);
 
 /*Invalid input checker*/
 int		input_checker(t_data *data);

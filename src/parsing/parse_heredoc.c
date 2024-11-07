@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/05 17:33:30 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/07 18:09:48 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,24 @@ t_token	*parse_heredoc(t_token *current_token, t_cmd *current_cmd, t_data *data)
 
 	current_token = current_token->next;
 	delimiter = current_token->str;
-	while (heredoc_line != delimiter)
+	heredoc_line = NULL;
+	current_cmd->fd_in = open("/tmp/heredoc.txt", O_CREAT | O_TRUNC | O_RDWR, 0660);
+	if (current_cmd->fd_in == -1)
+		error_exit(data, NULL, "Error on opening heredoc temp file.\n", 1);
+	while (1)
 	{
 		if (heredoc_line)
+		{
+			ft_putchar_fd('\n', current_cmd->fd_in);	
 			free(heredoc_line);
+		}
 		heredoc_line = readline("> ");
-		
-		//Use a pipe OR:
-
-		//Store it in a tempfile.
-		//Make that file the Redirection Standard input file.
+		if (ft_strncmp(heredoc_line, delimiter, ft_strlen(delimiter)) == 0)
+			break ;
+		ft_putstr_fd(heredoc_line, current_cmd->fd_in);
 	}
+	current_cmd->infile = ft_strdup("/tmp/heredoc.txt");
+	close(current_cmd->fd_in); //
+	current_cmd->fd_in = open("/tmp/heredoc.txt", O_RDWR, 0660); //
+	return (current_token);
 }
