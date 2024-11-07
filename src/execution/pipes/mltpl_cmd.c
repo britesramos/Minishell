@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/07 11:35:46 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 14:48:54 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,45 @@ static void	child_fd_handling(t_data *data, t_ex *ex)
 		fds_in_between_cmd(data->cmd_current, ex, data);
 }
 
-static	int	ft_child(t_data *data, t_ex *ex)
+static int	builtin_check(t_data *data, t_ex *ex)
 {
-	char	*path;
-	int		built_in_check;
+	int	built_in_check;
 
-	child_fd_handling(data, ex);
 	built_in_check = ft_builtin_manager(data);
-	if (built_in_check == 0 || built_in_check == 9)
+	if ( built_in_check == 0)
 	{
 		if (ex->i != data->nbr_pipes)
 		{
 			close_fd(&ex->p_fd[READ]);
 			close_fd(&ex->p_fd[WRITE]);
 		}
-		exit (data->exit_code);
+		return (EXIT_SUCCESS);
 	}
+	else if (built_in_check == 9)
+		return (EXIT_FAILURE);
+	return (EXIT_FAILURE);
+}
+
+static	int	ft_child(t_data *data, t_ex *ex)
+{
+	char	*path;
+	int		bi_check;
+
+	child_fd_handling(data, ex);
+	bi_check = builtin_check(data, ex);
+	if (bi_check == EXIT_SUCCESS)
+		exit (data->exit_code);
 	if (access(data->cmd_current->cmd[0], F_OK | X_OK) == 0)
 		path = ft_strdup(data->cmd_current->cmd[0]);
 	else
 		path = get_path(data, data->cmd_current->cmd[0]);
 	if (path != NULL)
-		data->exit_code = execve(path, &data->cmd_current->cmd[0], data->envp);
+		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
 	ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
 	ft_putendl_fd(": Command not found", STDERR_FILENO);
 	if (path)
 		free(path);
 	path = NULL;
-	data->exit_code = 127;
 	exit (data->exit_code);
 }
 
@@ -90,17 +101,11 @@ int	mltpl_cmd(t_data *data)
 		ex.i++;
 		data->cmd_current = data->cmd_current->pipe;
 	}
-	// wait(&status);
-	if (i > 0)
-	{
-		wait()
-		i--;
-	}
-	waitpid(ex.pid, &status, 0);
+	wait(&status);
 	return (EXIT_SUCCESS);
 }
 
 
 // ls -la > test1 | cat test1 | grep "a" | sort | tee test2
-// cat test1 | grep "8" | wc -l > out | wc 
 // cat test1 | grep "8" | sort | tee test2
+// ls -la | grep 8 | wc -l
