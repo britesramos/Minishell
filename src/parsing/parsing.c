@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/08 12:56:04 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/08 14:15:47 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	parsing(t_data *data, char **envp)
 			// t_token *current = token_list;
 			// while (current)
 			// {
-			// 	printf("%i\n", current->lenght);
-			// 	printf("%s\n", current->str);
-			// 	printf("%i\n\n\n", current->type);
+			// 	if (current->type == T_PIPE)
+			// 		printf("\n");
+			// 	printf("LEN: %i - TYPE: %i - STR: %s\n", current->lenght, current->type, current->str);
 			// 	current = current->next;
 			// }
 			/*----------------------------------TEMP----------------------------------------------*/
@@ -96,8 +96,8 @@ void	parsing(t_data *data, char **envp)
 				free_token_list(token_list);
 				token_list = NULL;
 			}
-			// if (exec(data) == 9)
-			// 	return ;
+			if (exec(data) == 9)
+				return ;
 			if (data->cmd_head)
 			{
 				free_cmd_list(data->cmd_head);

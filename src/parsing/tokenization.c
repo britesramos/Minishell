@@ -20,7 +20,6 @@ static int	token_word(t_data *data, int end, t_token **token_list)
 
 	len = 0;
 	new = NULL;
-	
 	if (data->line[end + len] != '"' && data->line[end + len] != '\'')
 	{
 		while(ms_isword(data->line[end + len]) && !ms_isspace(data->line[end + len]))
@@ -64,9 +63,9 @@ t_token	*tokenization(t_data *data, t_token *token_list)
 		return (NULL);
 	while (data->line[i])
 	{
-		// printf("data->line[%i]: %c\n", i, data->line[i]);
 		while(ms_isspace(data->line[i]))
 			i++;
+		// printf("tOKENIZATION: data->line[%i]: %c\n", i, data->line[i]);
 		if (data->line[i] == '>' && data->line[i + 1] == '>')
 			i = token_apppend_heredoc(data, i, &token_list, ">>", T_APPEND);
 		else if (data->line[i] == '<' && data->line[i + 1] == '<')
