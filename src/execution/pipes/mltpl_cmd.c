@@ -6,38 +6,35 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/07 14:48:54 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/08 12:01:06 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static void	child_fd_handling(t_data *data, t_ex *ex)
+static int	children_wait(t_ex *ex)
 {
-	if (ex->i == 0)
-		fds_first_cmd(data->cmd_current, ex, data);
-	else if (ex->i == data->nbr_pipes)
-		fds_last_cmd(data->cmd_current, data);
-	else
-		fds_in_between_cmd(data->cmd_current, ex, data);
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < ex->i)
+	{
+		waitpid(ex->pid_store[i], &status, 0);
+		i++;
+	}
+	return (status);
 }
 
-static int	builtin_check(t_data *data, t_ex *ex)
+static int	builtin_check(t_data *data)
 {
 	int	built_in_check;
 
 	built_in_check = ft_builtin_manager(data);
-	if ( built_in_check == 0)
-	{
-		if (ex->i != data->nbr_pipes)
-		{
-			close_fd(&ex->p_fd[READ]);
-			close_fd(&ex->p_fd[WRITE]);
-		}
+	if (built_in_check == 0)
 		return (EXIT_SUCCESS);
-	}
-	else if (built_in_check == 9)
-		return (EXIT_FAILURE);
+	// else if (built_in_check == 9)
+	// 	return (EXIT_FAILURE);
 	return (EXIT_FAILURE);
 }
 
@@ -47,7 +44,7 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	int		bi_check;
 
 	child_fd_handling(data, ex);
-	bi_check = builtin_check(data, ex);
+	bi_check = builtin_check(data);
 	if (bi_check == EXIT_SUCCESS)
 		exit (data->exit_code);
 	if (access(data->cmd_current->cmd[0], F_OK | X_OK) == 0)
@@ -79,7 +76,11 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		if (data->cmd_current->pipe->fd_in == data->std[IN])
 			data->cmd_current->pipe->fd_in = ex->p_fd[READ];
 	}
+	ex->pid_store[ex->i] = ex->pid;
+	/*close the file in case of the redirection*/
 	if (data->cmd_current->fd_in != data->std[IN])
+		close_fd(&data->cmd_current->fd_in);
+	if (ex->i != 0)
 		close_fd(&data->cmd_current->fd_in);
 	close_fd(&ex->p_fd[WRITE]);
 	return (EXIT_SUCCESS);
@@ -101,7 +102,9 @@ int	mltpl_cmd(t_data *data)
 		ex.i++;
 		data->cmd_current = data->cmd_current->pipe;
 	}
-	wait(&status);
+	children_wait(&ex);
+	waitpid(ex.pid, &status, 0);
+	// wait(&status);
 	return (EXIT_SUCCESS);
 }
 

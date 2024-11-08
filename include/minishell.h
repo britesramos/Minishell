@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/07 14:18:08 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/08 12:01:46 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_ex
 	pid_t	pid;
 	int		p_fd[2];
 	int		i;
+	int		pid_store[1024];
 }	t_ex;
 
 /*Initialize main struct t_data data.*/
@@ -169,6 +170,7 @@ char	*get_path(t_data *data, char *cmd);
 int		fds_first_cmd(t_cmd *current, t_ex *ex, t_data *data);
 int		fds_in_between_cmd(t_cmd *current, t_ex *ex, t_data *data);
 int		fds_last_cmd(t_cmd *current, t_data *data);
+void	child_fd_handling(t_data *data, t_ex *ex);
 
 //envp utils
 char	*find_value(t_data *data, char *key);

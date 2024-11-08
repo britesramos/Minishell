@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/03 13:12:44 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/08 13:25:25 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,18 @@ static void	ft_chdir_error(char *path, t_data *data)
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
-	oops = chdir(path);
+	if (ft_strncmp(path, "..", 3) == 0)
+		oops = chdir("..");
+	else
+		oops = chdir(path);
 	if (oops != 0)
 	{
 		ft_cd_perror(data);
 		return ;
 	}
-	replace_value(data, "PWD", path);
 	replace_value(data, "OLDPWD", cwd);
 	cwd = getcwd(NULL, 0);
+	replace_value(data, "PWD", cwd);
 	data->exit_code = 0;
 }
 
