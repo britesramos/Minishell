@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/07 13:14:33 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/08 16:02:12 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ typedef struct s_ex
 
 /*Initialize main struct t_data data.*/
 void	init_main_struct(t_data *data, char **envp);
+
+/*EXPANSIONS*/
+void	expansion(t_data *data);
 
 /*-----------------------------------PARSING-----------------------------------*/
 

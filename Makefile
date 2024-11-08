@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/11/07 13:14:12 by sramos        ########   odam.nl          #
+#    Updated: 2024/11/08 16:01:50 by sramos        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC_PATH = src
 SRC_FILES = src/minishell.c\
 			src/clean_up.c\
 			src/init.c\
+			src/expansion/expansion.c\
 			src/parsing/parsing.c\
 			src/parsing/input_checker.c\
 			src/parsing/parse_envp.c\
