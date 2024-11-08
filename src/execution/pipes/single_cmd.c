@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/07 10:48:24 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/07 16:57:42 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 /// value as oldfd, then dup2() does nothing, and returns newfd.
 static void	ft_dup_all(t_cmd *current, t_data *data)
 {
+	printf("current->fd_in: %i\n", current->fd_in);
+	printf("current->fd_out: %i\n", current->fd_out);
+
 	if (current->fd_in != data->std[IN])
 	{
 		if (dup2(current->fd_in, data->std[IN]) == -1)
@@ -35,6 +38,8 @@ static void	ft_dup_all(t_cmd *current, t_data *data)
 		}
 		close_fd(&current->fd_out);
 	}
+	printf("current->fd_in: %i\n", current->fd_in);
+	printf("current->fd_out: %i\n", current->fd_out);
 }
 
 static void	ft_single_child(t_data *data, char *path)
@@ -43,8 +48,10 @@ static void	ft_single_child(t_data *data, char *path)
 		path = ft_strdup(data->cmd_current->cmd[0]);
 	else
 		path = get_path(data, data->cmd_current->cmd[0]);
+	printf("HERE!\n");
 	if (path != NULL)
 	{
+		printf("path: %s\n", path);
 		data->exit_code = 0;
 		execve(path, data->cmd_current->cmd, data->envp);
 	}
@@ -56,6 +63,7 @@ static void	ft_single_child(t_data *data, char *path)
 		path = NULL;
 	}
 	data->exit_code = 127;
+	// printf("HERE2\n");
 	exit (data->exit_code);
 }
 
@@ -74,6 +82,7 @@ void	single_cmd(t_data *data)
 	}
 	if (pid == 0)
 	{
+		printf("fd_in : %i\n", data->cmd_current->fd_in);
 		ft_dup_all(data->cmd_current, data);
 		ft_single_child(data, path);
 	}
