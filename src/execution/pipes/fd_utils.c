@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 09:14:19 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/08 12:03:47 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/10 11:58:40 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 void	close_fd(int *fd)
 {
-	if (*fd > 0)
+	// ft_printf("to close: %d\n", *fd);
+	if (*fd > 2)
 	{
 		close(*fd);
 		*fd = -3;
@@ -52,11 +53,12 @@ int	fds_first_cmd(t_cmd *current, t_ex *ex, t_data *data)
 //			redirection
 int	fds_in_between_cmd(t_cmd *current, t_ex *ex,t_data *data)
 {
-	/*it will be always either p_fd[READ] or the redirection file*/
+	/*it will be always either p_fd[OUT] or the redirection file*/
 	if (dup2(current->fd_in, data->std[IN]) == -1)
 		return (perror("error dup2() cmd fd_in"), EXIT_FAILURE);
 	close_fd(&current->fd_in);
 	close_fd(&ex->p_fd[READ]);
+	/*in case of the redirection*/
 	if (current->fd_out != data->std[OUT])
 	{
 		if (dup2(current->fd_out, data->std[OUT]) == -1)

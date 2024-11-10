@@ -6,44 +6,45 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/08 13:25:25 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/10 13:01:43 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static void	ft_cd_perror(t_data *data)
-{
-	perror("minishell: cd");
-	data->exit_code = 1;
-}
-
-/// @brief changes the path to the given directory
-/// @param path destination path
-/// @param data main struct
-static void	ft_cd_dir(char *path, t_data *data)
+static void	ft_cd_change(char *path, t_data *data)
 {
 	char	*old_cwd;
 	char	*cwd;
 
-	old_cwd = find_value(data, "OLDPWD");
-	if (access(path, F_OK) == 0)
+	old_cwd = getcwd(NULL, 0);
+	if (chdir(path) != 0)
 	{
-		if (chdir(path) != 0)
+		if (opendir(path) == NULL)
 		{
-			if (opendir(path) == NULL)
-			{
-				ft_cd_perror(data);
-				return ;
-			}
+			perror("minishell: cd");
+			data->exit_code = 1;
+			ft_free_string(old_cwd);
+			return ;
 		}
 		cwd = getcwd(NULL, 0);
 		replace_value(data, "PWD", cwd);
 		replace_value(data, "OLDPWD", old_cwd);
+		ft_free_string(cwd);
 	}
+	ft_free_string(old_cwd);
+}
+
+/// @brief changes the path to the given directory
+/// @param path destination path
+static void	ft_cd_dir(char *path, t_data *data)
+{
+	if (access(path, F_OK) == 0)
+		ft_cd_change(path, data);
 	else
 	{
-		ft_cd_perror(data);
+		perror("minishell: cd");
+		data->exit_code = 1;
 		return ;
 	}
 	data->exit_code = 0;
@@ -51,25 +52,25 @@ static void	ft_cd_dir(char *path, t_data *data)
 
 /// @brief changes the current directory to path
 /// @param path the destination directory
-/// @param data the main struct
 static void	ft_chdir_error(char *path, t_data *data)
 {
 	int		oops;
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
-	if (ft_strncmp(path, "..", 3) == 0)
-		oops = chdir("..");
-	else
-		oops = chdir(path);
+	oops = chdir(path);
 	if (oops != 0)
 	{
-		ft_cd_perror(data);
+		perror("minishell: cd");
+		data->exit_code = 1;
+		ft_free_string(cwd);
 		return ;
 	}
 	replace_value(data, "OLDPWD", cwd);
+	ft_free_string(cwd);
 	cwd = getcwd(NULL, 0);
 	replace_value(data, "PWD", cwd);
+	ft_free_string(cwd);
 	data->exit_code = 0;
 }
 

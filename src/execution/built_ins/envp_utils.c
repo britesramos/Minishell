@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/08 13:14:04 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/10 12:36:46 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,21 @@ void	replace_value(t_data *data, char *key, char *new_value)
 	{
 		if (ft_strncmp(env->key, key, len) == 0)
 		{
-			ft_free_string(env->value);
+			free(env->value);
+			env->value = NULL;
 			env->value = ft_strjoin("=", new_value);
 		}
 		env = env->next;
 	}
 }
+
+// t_envp	*check;
+// check = *env;
+// while (check != NULL)
+// {
+// 	ft_printf("%s%s\n", check->key, check->value);
+// 	check = check->next;
+// }
 
 void	add_node(t_data *data, char *cmd, t_envp **env)
 {
