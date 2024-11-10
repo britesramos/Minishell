@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/08 13:44:47 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/10 15:37:21 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	free_cmd_list(t_cmd *list)
 	{
 		next = list->pipe;
 		if (list->cmd)
+		{
+			printf("cleaning?\n");
 			ft_free_array(list->cmd);
+		}
+			
 		if (list->infile)
 			free_close_fd(list->infile, list->fd_in);
 		if (list->outfile)
@@ -47,7 +51,9 @@ void	parsing(t_data *data, char **envp)
 		if (data->line)
 			ft_free_string(data->line);
 		data->line = readline("minishell:~$ ");
-		// printf("data->line: %s\n", data->line);
+		// printf("data->line:%s\n", data->line);
+		if (!data->line[0])
+			continue ;
 		if (!data->line)
 			error_exit(data, NULL, "exit\n", 0);
 		if (data->line[0])

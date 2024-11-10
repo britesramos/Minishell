@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 09:09:23 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/04 13:55:14 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/10 15:31:32 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	ft_print_key_value(char *key, char *value, t_data *data, int fd)
 	ft_putstr_fd(key, fd);
 	if (ft_strncmp(value, "=", 2) == 0)
 		ft_putendl_fd("=\"\"", fd);
-	else if (value == NULL)
+	else if (ft_strchr(value, '=') == NULL)
 		ft_putchar_fd('\n', fd);
 	else
 	{
@@ -83,4 +83,12 @@ void	ft_print_export(t_data *data, int fd)
 		ft_print_key_value(last_p->key, last_p->value, data, fd);
 		printed++;
 	}
+}
+
+void	ft_export_error(char *cmd, t_data *data)
+{
+	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putendl_fd("': not a valid identifier ", STDERR_FILENO);
+	data->exit_code = 1;
 }

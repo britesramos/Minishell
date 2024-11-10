@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/08 13:38:26 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/10 13:36:51 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,12 @@ void	parse_input(t_data *data, t_token *token_list)
 
 	current_token = token_list;
 	current_cmd = data->cmd_head;
-	while(current_token)
+	while(current_token && current_token->lenght > 0)
 	{
 		i = 0;
 		newnode = create_new_node_cmd(data);
 		add_new_node(&data->cmd_head, newnode, &current_cmd);
-		while(current_token && current_token->type != T_PIPE)
+		while(current_token && current_token->type != T_PIPE && current_token->lenght > 0)
 		{
 			if (current_token->type == T_REIN)
 				current_token = parse_rein(current_token, current_cmd, data);

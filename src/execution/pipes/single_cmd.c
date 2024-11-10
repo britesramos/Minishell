@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/10 11:45:00 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/10 14:53:32 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static void	ft_single_child(t_data *data, char *path)
 		path = NULL;
 	}
 	data->exit_code = 127;
-	// printf("HERE2\n");
 	exit (data->exit_code);
 }
 
@@ -64,7 +63,6 @@ void	single_cmd(t_data *data)
 {
 	pid_t	pid;
 	char	*path;
-	// int		wstatus;
 
 	path = NULL;
 	pid = fork();
@@ -75,16 +73,8 @@ void	single_cmd(t_data *data)
 	}
 	if (pid == 0)
 	{
-		printf("fd_in : %i\n", data->cmd_current->fd_in);
 		ft_dup_all(data->cmd_current, data);
 		ft_single_child(data, path);
 	}
-	// else
-	// {
-	// 	close(data->cmd_current->fd_in);
-	// 	close(data->cmd_current->fd_out);
-	// }
 	waitpid(pid, &data->exit_code, 0);
-	// if (WIFEXITED(wstatus))
-	// 	ft_printf("child %i exited with status: %d\n", pid, WIFEXITED(wstatus));
 }
