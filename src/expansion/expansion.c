@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/08 16:54:29 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/11 16:59:34 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,30 @@
 
 static void	expand_stderror(t_data *data, int i)
 {
-	char *temp;
-	char *str = "A";
-	// i = 0;
-	// temp = NULL;
-	
-	temp = ft_strdup(data->line);
-	ft_strlcpy(temp, temp, i + 1);
-	ft_strlcat(temp, str, i + 1);
-	printf("temp len: %zu\n", ft_strlen(temp));
+	char	*temp;
+	char	*substr;
+	int		new_line;
+
+	printf("1 - This is data->line: %s\n", data->line);
+	substr = ft_substr(data->line, i + 2, ft_strlen(&data->line[i + 1]));
+	temp = ft_substr(data->line, 0, i);
+	data->exit_code = 200;
+	new_line = ft_strlen(data->line) - 2 + ft_strlen(ft_itoa(data->exit_code));
+	printf("This is new_line len: %i\n", new_line);
+	printf("This is substring:%s\n", substr);
 	printf("This is temp: %s\n", temp);
 	free(data->line);
-	data->line = ft_calloc(sizeof(char),ft_strlen(temp) + 1/*ft_strlen(data->exit_code)*/); //I need the lenght of exist code.
+	printf("This is the len of exit_code: %zu\n", ft_strlen(ft_itoa(data->exit_code)));
+	data->line = ft_calloc(sizeof(char),new_line); //I need the lenght of exit code.
 	data->line = ft_strdup(temp);
 	free (temp);
-	data->exit_code = 200; //size of this. for the cat function.
-	char *res = ft_itoa(data->exit_code);
-	ft_strlcat(data->line, res, i + 10);
-	printf("This is data->line: %s\n", data->line);
-
+	char *exit_code = ft_itoa(data->exit_code);
+	printf("Exit code len: %zu\n", ft_strlen(exit_code) + 1);
+	ft_strlcat(data->line, exit_code, ft_strlen(data->line) + ft_strlen(exit_code) + 1);
+	printf("2 - This is data->line: %s\n", data->line);
+	ft_strlcat(data->line, substr, ft_strlen(data->line) + ft_strlen(substr) + 1);
+	printf("3 - This is data->line: %s\n\n\n", data->line);
+	free(substr);
 
 }
 
@@ -45,10 +50,7 @@ void	expansion(t_data *data)
 	{
 		// printf("data->line[%i]: %c\n", i, data->line[i]);
 		if (data->line[i] == '$' && data->line[i + 1] == '?')
-		{
 			expand_stderror(data, i);
-			i++;
-		}
 		i++;
 	}
 }
