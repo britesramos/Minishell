@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/11 09:53:28 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/12 11:22:03 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,7 @@ void	parsing(t_data *data, char **envp)
 				token_list = NULL;
 			}
 			if (exec(data) == 9)
-			{
-				// ft_putendl_fd("exit", STDOUT_FILENO);
 				return ;
-			}
 			if (data->cmd_head)
 			{
 				free_cmd_list(data->cmd_head);

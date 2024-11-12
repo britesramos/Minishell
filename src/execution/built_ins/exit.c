@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/11 09:58:53 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/12 11:28:20 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,22 @@ static int	digit_check(char *cmd)
 
 	i = 0;
 	non_digit = 0;
+	if (cmd[i] == '-' || cmd[i] == '+')
+		i++;
 	while (cmd[i])
 	{
-		if (cmd[i] == '(' || cmd[i] == ')')
-		{
-			ft_putstr_fd("minishell : ", STDERR_FILENO);
-			ft_putstr_fd("syntax error near unexpected token ", STDERR_FILENO);
-			if (cmd[i] == '(')
-				ft_putendl_fd("`)'", STDERR_FILENO);
-			else
-				ft_putendl_fd("`('", STDERR_FILENO);
-			return (1);
-		}
-		else if (!ft_isdigit(cmd[i]))
+		// if (cmd[i] == '(' || cmd[i] == ')')
+		// {
+		// 	ft_putstr_fd("minishell : ", STDERR_FILENO);
+		// 	ft_putstr_fd("syntax error near unexpected token ", STDERR_FILENO);
+		// 	if (cmd[i] == '(')
+		// 		ft_putendl_fd("`)'", STDERR_FILENO);
+		// 	else
+		// 		ft_putendl_fd("`('", STDERR_FILENO);
+		// 	return (1);
+		// }
+		// else if (!ft_isdigit(cmd[i]))
+		if (!ft_isdigit(cmd[i]))
 			non_digit = 1;
 		i++;
 	}
@@ -93,7 +96,7 @@ int	ft_exit(char **cmd, t_data *data)
 		ft_putendl_fd("exit", data->cmd_current->fd_out);
 		ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
 		data->exit_code = 1;
-		return (9);
+		return (-9);
 	}
 	digit_check = is_digit_only(cmd[1], data);
 	if (digit_check == 1)
