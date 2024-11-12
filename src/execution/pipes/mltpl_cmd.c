@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/12 11:04:30 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/12 14:32:44 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,20 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		return (perror("error: child"), EXIT_FAILURE);
 	if (ex->pid == 0)
 		ft_child(data, ex);
-	//before the last cmd
-	if (ex->i < data->nbr_pipes)
+	if (ex->fd_in != data->std[IN])
 	{
-		if (data->cmd_current->pipe->fd_in == data->std[IN])
-			data->cmd_current->pipe->fd_in = ex->p_fd[READ];
+		// printf("will close fd_in in parent [%d] :%d\n", ex->i, ex->fd_in);
+		close_fd(&ex->fd_in);
 	}
+	ex->fd_in = ex->p_fd[READ];
 	ex->pid_store[ex->i] = ex->pid;
 	if (data->cmd_current->fd_in != data->std[IN])
 		close_fd(&data->cmd_current->fd_in);
-	if (ex->i != 0)
-		close_fd(&data->cmd_current->fd_in);
-	close_fd(&ex->p_fd[WRITE]);
+	if (ex->i != data->nbr_pipes)
+	{
+		// printf("will close WRITE in parent [%d] :%d\n", ex->i, ex->p_fd[WRITE]);
+		close_fd(&ex->p_fd[WRITE]);
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -97,6 +99,7 @@ int	mltpl_cmd(t_data *data)
 	t_ex	ex;
 
 	ex.i = 0;
+	ex.fd_in = data->std[IN];
 	while (data->cmd_current != NULL)
 	{
 		if (do_pipex(data, &ex) == EXIT_FAILURE)
