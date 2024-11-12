@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/07 11:53:42 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/11 07:56:05 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char **ft_realloc(t_data *data, int number_of_times, char **old_array)
 	new = (char **)ft_calloc(number_of_times, sizeof(char *));
 	if(!new)
 		error_exit(data, NULL, "Memory calloc failed!\n", 1); //fix
-	if (old_array[i] && old_array)
+	if (old_array && old_array[i])
 	{
 		while (old_array[i])
 		{

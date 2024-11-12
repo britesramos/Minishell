@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 15:18:51 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/07 09:19:55 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/11 07:38:20 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ static void	free_envp(t_envp *envp_head)
 	while (envp_head)
 	{
 		next = envp_head->next;
+		// printf("to free %s at %p %s at %p\n", envp_head->key, envp_head->key, \
+		// envp_head->value, envp_head->value);
 		if (envp_head->key)
 			ft_free_string(envp_head->key);
 		if (envp_head->value)
 			ft_free_string(envp_head->value);
-		// ft_printf("to free envp = %p\n", envp_head);
 		free(envp_head);
 		envp_head = NULL;
 		envp_head = next;
-		// ft_printf("envp = %p\n", envp_head);
 	}
 }
 

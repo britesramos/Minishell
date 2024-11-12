@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/04 13:58:22 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/11 13:16:54 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*find_value(t_data *data, char *key)
 	char	*value;
 	int		len;
 
+	value = NULL;
 	len = ft_strlen(key) + 1;
 	env_current = data->envp_head;
 	while (env_current != NULL)
@@ -40,14 +41,11 @@ void	replace_value(t_data *data, char *key, char *new_value)
 	{
 		if (ft_strncmp(env->key, key, len) == 0)
 		{
-			free(env->value);
-			env->value = NULL;
+			ft_free_string(env->value);
 			env->value = ft_strjoin("=", new_value);
 		}
 		env = env->next;
 	}
-	free(key);
-	free(new_value);
 }
 
 // t_envp	*check;
@@ -58,14 +56,36 @@ void	replace_value(t_data *data, char *key, char *new_value)
 // 	check = check->next;
 // }
 
+static t_envp	*create_node_export(t_data *data, char *key, char *value)
+{
+	t_envp	*new_node;
+
+	new_node = (t_envp *)malloc(sizeof(t_envp));
+	if (!new_node)
+		error_exit(data, NULL, "Memory allocation failed! [Node creation | envp_utils]\n", 1);
+	new_node->key = ft_strdup(key);
+	if (value == NULL)
+		new_node->value = ft_strdup("");
+	else
+		new_node->value = ft_strdup(value);
+	new_node->next = NULL;
+	return (new_node);
+}
+
 void	add_node(t_data *data, char *cmd, t_envp **env)
 {
 	t_envp	*current;
 	t_envp	*new_node;
 
-	current = *env;
+
+	current = (*env);
 	while (current->next != NULL)
 		current = current->next;
-	new_node = create_node_envp(data, cmd);
-	current->next = new_node;
+	if (ft_strchr(cmd, '=') == NULL)
+		new_node = create_node_export(data, cmd, NULL);
+	else
+		new_node = create_node_export(data, init_key_export(cmd, data), init_value_export(cmd, data));
+	current->next = new_node;	
 }
+
+// export he hi ha

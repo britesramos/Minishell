@@ -6,13 +6,13 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/04 14:04:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/10 15:32:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static char	*init_key(char *cmd, t_data *data)
+char	*init_key_export(char *cmd, t_data *data)
 {
 	int		i;
 	int		key_len;
@@ -35,10 +35,11 @@ static char	*init_key(char *cmd, t_data *data)
 		key[i] = cmd[i];
 		i++;
 	}
+	key[i] = '\0';
 	return (key);
 }
 
-static char	*init_value(char *cmd, t_data *data)
+char	*init_value_export(char *cmd, t_data *data)
 {
 	int		i;
 	size_t	key_len;
@@ -62,6 +63,7 @@ static char	*init_value(char *cmd, t_data *data)
 		value[i] = cmd[key_len + i];
 		i++;
 	}
+	value[i] = '\0';
 	return (value);
 }
 
@@ -97,20 +99,29 @@ static int	ft_export_check(char *cmd, t_data *data)
 	return (0);
 }
 
-static void	ft_export_error(char *cmd, t_data *data)
+
+static void	replace_export(t_data *data, char *cmd)
 {
-	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd("': not a valid identifier ", STDERR_FILENO);
-	data->exit_code = 1;
+	char	*key;
+	char	*value;
+	
+	key = init_key_export(cmd, data);
+	value = init_value_export(cmd, data);
+	replace_value(data, key, value);
+	ft_free_string(key);
+	ft_free_string(value);
 }
 
 /// @brief prints the env, adds the key & value, changes the value 
 void	ft_export(char **cmd, t_data *data, int fd)
 {
-	int	i;
-	int	check;
+	int		i;
+	int		check;
+	char	*key;
+	char	*value;
 
+	key = NULL;
+	value = NULL;
 	i = 1;
 	if (!cmd[i])
 		ft_print_export(data, fd);
@@ -120,13 +131,9 @@ void	ft_export(char **cmd, t_data *data, int fd)
 		{
 			check = ft_export_check(cmd[i], data);
 			if (check == 0)
-			{
-				ft_printf("here\n");
 				add_node(data, cmd[i], &data->envp_head);
-			}
 			else if (check == 1)
-				replace_value(data, init_key(cmd[1], data), \
-					init_value(cmd[1], data));
+				replace_export(data,cmd[i]);
 			else if (check == -1)
 				ft_export_error(cmd[i], data);
 			i++;
