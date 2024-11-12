@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/10 11:55:26 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/12 11:04:30 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	builtin_check(t_data *data, t_ex *ex)
 	int	built_in_check;
 
 	built_in_check = ft_builtin_manager(data);
-	if ( built_in_check == 0)
+	if (built_in_check == 0 || built_in_check == 9)
 	{
 		if (ex->i != data->nbr_pipes)
 		{
@@ -38,8 +38,6 @@ static int	builtin_check(t_data *data, t_ex *ex)
 		}
 		return (EXIT_SUCCESS);
 	}
-	else if (built_in_check == 9)
-		return (EXIT_FAILURE);
 	return (EXIT_FAILURE);
 }
 
@@ -63,6 +61,7 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	if (path)
 		free(path);
 	path = NULL;
+	data->exit_code = 127;
 	exit (data->exit_code);
 }
 
@@ -114,3 +113,5 @@ int	mltpl_cmd(t_data *data)
 // ls -la > test1 | cat test1 | grep "a" | sort | tee test2
 // cat test1 | grep "8" | sort | tee test2
 // ls -la | grep 8 | wc -l
+// cat | cat | ls
+// echo Hello | mydog | wc -l

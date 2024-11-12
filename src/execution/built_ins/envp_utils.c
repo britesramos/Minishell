@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/10 15:34:45 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/11 13:16:54 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*find_value(t_data *data, char *key)
 	char	*value;
 	int		len;
 
+	value = NULL;
 	len = ft_strlen(key) + 1;
 	env_current = data->envp_head;
 	while (env_current != NULL)
@@ -75,22 +76,16 @@ void	add_node(t_data *data, char *cmd, t_envp **env)
 {
 	t_envp	*current;
 	t_envp	*new_node;
-	char	*key;
-	char	*value;
+
 
 	current = (*env);
 	while (current->next != NULL)
 		current = current->next;
 	if (ft_strchr(cmd, '=') == NULL)
-	{
 		new_node = create_node_export(data, cmd, NULL);
-	}
 	else
-	{
-		key = init_key_export(cmd, data);
-		value = init_value_export(cmd, data);
-		printf("in adding the node value = %s\n", value);
-		new_node = create_node_export(data, key, value);
-	}
+		new_node = create_node_export(data, init_key_export(cmd, data), init_value_export(cmd, data));
 	current->next = new_node;	
 }
+
+// export he hi ha

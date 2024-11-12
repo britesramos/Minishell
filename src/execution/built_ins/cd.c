@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/10 13:01:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/11 13:21:56 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	ft_cd_change(char *path, t_data *data)
 		if (opendir(path) == NULL)
 		{
 			perror("minishell: cd");
-			data->exit_code = 1;
+			data->exit_code = 127;
 			ft_free_string(old_cwd);
 			return ;
 		}
@@ -33,6 +33,7 @@ static void	ft_cd_change(char *path, t_data *data)
 		ft_free_string(cwd);
 	}
 	ft_free_string(old_cwd);
+	data->exit_code = 0;
 }
 
 /// @brief changes the path to the given directory
@@ -44,10 +45,9 @@ static void	ft_cd_dir(char *path, t_data *data)
 	else
 	{
 		perror("minishell: cd");
-		data->exit_code = 1;
+		data->exit_code = 127;
 		return ;
 	}
-	data->exit_code = 0;
 }
 
 /// @brief changes the current directory to path
@@ -84,10 +84,11 @@ static void	ft_cd_key(t_data *data, char *key)
 	path = find_value(data, key);
 	if (path == NULL)
 	{
-		ft_putstr_fd("minishell: cd:", STDERR_FILENO);
-		ft_putstr_fd(path, STDERR_FILENO);
-		ft_putendl_fd("No such file or directory", STDERR_FILENO);
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(key, STDERR_FILENO);
+		ft_putendl_fd(" not set", STDERR_FILENO);
 		data->exit_code = 1;
+		return ;
 	}
 	if (ft_strncmp(key, "OLDPWD", 7) == 0)
 		ft_putendl_fd(path, data->cmd_current->fd_out);
