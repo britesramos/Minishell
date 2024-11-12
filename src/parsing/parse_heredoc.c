@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/07 18:09:48 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/12 11:46:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_token	*parse_heredoc(t_token *current_token, t_cmd *current_cmd, t_data *data)
 	current_cmd->fd_in = open("/tmp/heredoc.txt", O_CREAT | O_TRUNC | O_RDWR, 0660);
 	if (current_cmd->fd_in == -1)
 		error_exit(data, NULL, "Error on opening heredoc temp file.\n", 1);
+	printf("fd_in in heredoc = %d\n", current_cmd->fd_in);
 	while (1)
 	{
 		if (heredoc_line)
