@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/12 14:33:00 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/14 13:38:46 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,19 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 # include <sys/types.h>
 # include <sys/wait.h>
 
+//for signals
+# include <signal.h>
+
 #define READ 0
 #define WRITE 1
 
 #define IN 0
 #define OUT 1
+
+#define PARENT 1
+#define CHILD 2
+#define HEREDOCP 3
+#define HEREDOCC 4
 
 int		exec(t_data *data);
 int		ft_builtin_manager(t_data *data);
@@ -185,5 +193,9 @@ char	*find_value(t_data *data, char *key);
 void	replace_value(t_data *data, char *key, char *new_value);
 
 
+void	ms_signals(int process);
+void	signal_hd(int signal);
+
 void	close_fd(int *fd);
+int		bye(t_data *data);
 #endif
