@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 12:08:13 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 14:28:52 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_data
 	char	**envp;
 	int		exit_code;
 	int		nbr_pipes;
-	int		kids;
 	int		std[2];
 	t_cmd	*cmd_head;
 	t_cmd	*cmd_current;
@@ -65,6 +64,8 @@ typedef struct s_ex
 	pid_t	pid;
 	int		p_fd[2];
 	int		i;
+	int		pid_store[1024];
+	int		fd_in;
 }	t_ex;
 
 /*Initialize main struct t_data data.*/
@@ -148,11 +149,19 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 # include <sys/types.h>
 # include <sys/wait.h>
 
+//for signals
+# include <signal.h>
+
 #define READ 0
 #define WRITE 1
 
 #define IN 0
 #define OUT 1
+
+#define PARENT 1
+#define CHILD 2
+#define HEREDOCP 3
+#define HEREDOCC 4
 
 int		exec(t_data *data);
 int		ft_builtin_manager(t_data *data);
@@ -163,6 +172,7 @@ void	ft_echo(char **cmd, t_data *data, int fd);
 void	ft_env(char **cmd, t_data *data, int fd);
 int		ft_exit(char **cmd, t_data *data);
 void	ft_export(char **cmd, t_data *data, int fd);
+void	ft_export_error(char *cmd, t_data *data);
 void	ft_print_export(t_data *data, int fd);
 void	ft_pwd(char **cmd, t_data *data, int fd);
 void	ft_unset(char **cmd, t_data *data);
@@ -174,14 +184,22 @@ char	*get_path(t_data *data, char *cmd);
 // char	**ft_env_path(t_data *data);
 
 // fd_utils
-int		fds_first_cmd(t_cmd *current, t_ex *ex, t_data *data);
-int		fds_in_between_cmd(t_cmd *current, t_ex *ex, t_data *data);
-int		fds_last_cmd(t_cmd *current, t_data *data);
+// int		fds_first_cmd(t_cmd *current, t_ex *ex, t_data *data);
+// int		fds_in_between_cmd(t_cmd *current, t_ex *ex, t_data *data);
+// int		fds_last_cmd(t_cmd *current, t_data *data);
+void	child_fd_handling(t_data *data, t_ex *ex);
 
 //envp utils
+void	add_node(t_data *data, char *cmd, t_envp **env);
+char	*init_key_export(char *cmd, t_data *data);
+char	*init_value_export(char *cmd, t_data *data);
 char	*find_value(t_data *data, char *key);
 void	replace_value(t_data *data, char *key, char *new_value);
-void	add_node(t_data *data, char *cmd, t_envp **env);
+
+
+void	ms_signals(int process);
+void	signal_hd(int signal);
 
 void	close_fd(int *fd);
+int		bye(t_data *data);
 #endif

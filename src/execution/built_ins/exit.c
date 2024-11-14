@@ -6,14 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/07 08:07:03 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/14 07:29:29 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-// TODO: // if to be deleted when ( ) handled by Sara?
-// only else ifwould stay
 
 /// @brief checks if there are any non-digit chars in cmd & 
 /// displays error message if there is '(' or ')' in the argument, 
@@ -26,6 +23,8 @@ static int	digit_check(char *cmd)
 
 	i = 0;
 	non_digit = 0;
+	if (cmd[i] == '-' || cmd[i] == '+')
+		i++;
 	while (cmd[i])
 	{
 		if (cmd[i] == '(' || cmd[i] == ')')
@@ -39,6 +38,7 @@ static int	digit_check(char *cmd)
 			return (1);
 		}
 		else if (!ft_isdigit(cmd[i]))
+		if (!ft_isdigit(cmd[i]))
 			non_digit = 1;
 		i++;
 	}
@@ -90,20 +90,20 @@ int	ft_exit(char **cmd, t_data *data)
 	}
 	if (cmd[2])
 	{
-		ft_putendl_fd("exit", STDERR_FILENO);
+		ft_putendl_fd("exit", data->cmd_current->fd_out);
 		ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
 		data->exit_code = 1;
-		return (9);
+		return (-9);
 	}
-	ft_printf("here?\n");
 	digit_check = is_digit_only(cmd[1], data);
-	printf("digit_check = %d\n", digit_check);
-	if (digit_check == 1)
+	if (digit_check == 1 || digit_check == 2)
 		return (0);
-	else if (digit_check == 2)
-		return (9);
 	else
 		data->exit_code = ft_atol(cmd[1]);
+	if (data->exit_code < -255)
+		data->exit_code = data->exit_code % -256;
+	if (data->exit_code < 0)
+		data->exit_code = data->exit_code + 256;
 	return (0);
 }
 
@@ -126,20 +126,6 @@ int	ft_exit(char **cmd, t_data *data)
 // ->	exit $
 // 		exit
 // 		bash: exit: $: numeric argument required	(when you run echo $? -> 2)
-
-//undefined behaviour: $# (sometimes replaced by 0)
-// ->	exit 1$#
-// 		exit		(when you run echo $? -> 10)
-// ->	exit 32$#
-// 		exit		(when you run echo $? -> 64)
-// ->	exit 31$#
-//		exit		(when you run echo $? -> 54)
-// ->	exit 29$#
-//		exit		(when you run echo $? -> 34)
-// ->	exit 25$#
-// 		exit		(when you run echo $? -> 250)
-// ->	exit 654$#
-// 		exit		(when you run echo $? -> 140)
 
 //EXIT DOESN'T WORK
 // ->	exit 24 53

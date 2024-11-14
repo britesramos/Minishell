@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/17 09:58:47 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/03 11:43:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/11 12:20:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ void	ft_env(char **cmd, t_data *data, int fd)
 		}
 		current = current->next;
 	}
+	// data->exit_code = 0;
 }
