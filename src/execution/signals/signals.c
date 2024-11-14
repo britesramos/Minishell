@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/12 17:55:59 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/14 14:21:15 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/14 14:41:13 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	ms_signals(int process)
 	}
 	else if (process == HEREDOCC)
 	{
-		ft_putendl_fd("elo", 1);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_IGN);
 	}

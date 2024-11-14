@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 12:50:31 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 17:11:49 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	alloc_newline(t_data *data, char *temp, char *value, char *leftover)
 
 	temp_i = ft_strlen(temp);
 	value_i = ft_strlen(value);
-	lo_i = ft_strlen(leftover);
+	if (leftover)
+		lo_i = ft_strlen(leftover);
 	if (value)
 	{
 		if (leftover)

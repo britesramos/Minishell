@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 14:36:40 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 16:47:15 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ void	parsing(t_data *data, char **envp)
 		// parse_envp(data, envp); //This is resulting in segfault.
 		if (input_checker(data) == 0)
 		{
+			printf("B = This is data.line: %s\n", data->line);
+			expansion(data);
+			printf("A = This is data.line: %s\n", data->line);
 			token_list = tokenization(data, token_list);
-			
+			printf("HOLA!\n");
 			/*----------------------------------TEMP----------------------------------------------*/
 			// t_token *current = token_list;
 			// while (current)

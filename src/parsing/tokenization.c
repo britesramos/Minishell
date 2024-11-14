@@ -19,7 +19,10 @@ static int	next_quote_mark(char *str, char c, int end)
 	len = 0;
 	end++;
 	while (str[end] != c)
+	{
+		end++;
 		len++;
+	}
 	return (len);
 }
 
@@ -73,6 +76,7 @@ t_token	*tokenization(t_data *data, t_token *token_list)
 		return (NULL);
 	while (data->line[i])
 	{
+		printf("This is data->line[%i]: %c\n", i, data->line[i]);
 		while (ms_isspace(data->line[i]))
 			i++;
 		if (data->line[i] == '>' && data->line[i + 1] == '>')
