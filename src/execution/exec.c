@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/12 11:22:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/14 12:35:24 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	exec(t_data *data)
 
 	if (data->nbr_pipes == 0)
 	{
+		ms_signals(PARENT);
 		check = ft_builtin_manager(data);
 		if (check == 9)
 		{

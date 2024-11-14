@@ -6,14 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/12 11:28:20 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/14 07:29:29 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-// TODO: // if to be deleted when ( ) handled by Sara?
-// only else ifwould stay
 
 /// @brief checks if there are any non-digit chars in cmd & 
 /// displays error message if there is '(' or ')' in the argument, 
@@ -30,17 +27,17 @@ static int	digit_check(char *cmd)
 		i++;
 	while (cmd[i])
 	{
-		// if (cmd[i] == '(' || cmd[i] == ')')
-		// {
-		// 	ft_putstr_fd("minishell : ", STDERR_FILENO);
-		// 	ft_putstr_fd("syntax error near unexpected token ", STDERR_FILENO);
-		// 	if (cmd[i] == '(')
-		// 		ft_putendl_fd("`)'", STDERR_FILENO);
-		// 	else
-		// 		ft_putendl_fd("`('", STDERR_FILENO);
-		// 	return (1);
-		// }
-		// else if (!ft_isdigit(cmd[i]))
+		if (cmd[i] == '(' || cmd[i] == ')')
+		{
+			ft_putstr_fd("minishell : ", STDERR_FILENO);
+			ft_putstr_fd("syntax error near unexpected token ", STDERR_FILENO);
+			if (cmd[i] == '(')
+				ft_putendl_fd("`)'", STDERR_FILENO);
+			else
+				ft_putendl_fd("`('", STDERR_FILENO);
+			return (1);
+		}
+		else if (!ft_isdigit(cmd[i]))
 		if (!ft_isdigit(cmd[i]))
 			non_digit = 1;
 		i++;
@@ -99,12 +96,14 @@ int	ft_exit(char **cmd, t_data *data)
 		return (-9);
 	}
 	digit_check = is_digit_only(cmd[1], data);
-	if (digit_check == 1)
-		return (0);
-	else if (digit_check == 2)
+	if (digit_check == 1 || digit_check == 2)
 		return (0);
 	else
 		data->exit_code = ft_atol(cmd[1]);
+	if (data->exit_code < -255)
+		data->exit_code = data->exit_code % -256;
+	if (data->exit_code < 0)
+		data->exit_code = data->exit_code + 256;
 	return (0);
 }
 

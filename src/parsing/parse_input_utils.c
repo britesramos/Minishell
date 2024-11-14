@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/12 14:34:19 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/14 14:03:25 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_cmd *create_new_node_cmd(t_data *data)
 	node->infile = NULL;
 	node->outfile = NULL;
 	node->pipe = NULL;
+	node->heredoc = false;
 	// if (node->pipe == NULL)
 	// 	printf("HERE\n");
 	return (node);

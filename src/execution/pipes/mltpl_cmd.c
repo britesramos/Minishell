@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/12 14:32:44 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/14 14:19:38 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	char	*path;
 	int		bi_check;
 
+	if (data->cmd_current->heredoc == true)
+	{
+		ft_putendl_fd("am I here", STDOUT_FILENO);
+		ms_signals(HEREDOCC);
+	}
+	else
+		ms_signals(CHILD);
 	child_fd_handling(data, ex);
 	bi_check = builtin_check(data, ex);
 	if (bi_check == EXIT_SUCCESS)
@@ -74,20 +81,18 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		return (perror("error: child"), EXIT_FAILURE);
 	if (ex->pid == 0)
 		ft_child(data, ex);
+	if (data->cmd_current->heredoc == true)
+		ms_signals(HEREDOCP);
+	else
+		ms_signals(PARENT);
 	if (ex->fd_in != data->std[IN])
-	{
-		// printf("will close fd_in in parent [%d] :%d\n", ex->i, ex->fd_in);
 		close_fd(&ex->fd_in);
-	}
 	ex->fd_in = ex->p_fd[READ];
 	ex->pid_store[ex->i] = ex->pid;
 	if (data->cmd_current->fd_in != data->std[IN])
 		close_fd(&data->cmd_current->fd_in);
 	if (ex->i != data->nbr_pipes)
-	{
-		// printf("will close WRITE in parent [%d] :%d\n", ex->i, ex->p_fd[WRITE]);
 		close_fd(&ex->p_fd[WRITE]);
-	}
 	return (EXIT_SUCCESS);
 }
 
@@ -98,6 +103,7 @@ int	mltpl_cmd(t_data *data)
 {
 	t_ex	ex;
 
+	ft_bzero(&ex, sizeof(ex));
 	ex.i = 0;
 	ex.fd_in = data->std[IN];
 	while (data->cmd_current != NULL)
@@ -118,3 +124,4 @@ int	mltpl_cmd(t_data *data)
 // ls -la | grep 8 | wc -l
 // cat | cat | ls
 // echo Hello | mydog | wc -l
+// cat >test1 | cat | ls

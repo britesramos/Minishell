@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/12 11:34:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/14 14:25:01 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,23 @@ void	parsing(t_data *data, char **envp)
 	
 	data->line = NULL; //ft_bezero(data);
 	token_list = NULL;
-
+					
 	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
 	while (1)
 	{
+		ms_signals(PARENT);
 		if (data->line)
 			ft_free_string(data->line);
 		data->line = readline("minishell:~$ ");
 		// printf("data->line:%s\n", data->line);
+		if (data->line == NULL)
+		{
+			ft_putendl_fd("exit", STDOUT_FILENO);
+			data->exit_code = 0;
+			return ;
+		}
 		if (!data->line[0])
 			continue ;
-		if (!data->line)
-			error_exit(data, NULL, "exit\n", 0);
 		if (data->line[0])
 			add_history(data->line);
 		// parse_envp(data, envp); //This is resulting in segfault.
