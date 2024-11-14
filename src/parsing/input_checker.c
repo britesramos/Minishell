@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:41:06 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 16:06:10 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 17:19:36 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,13 @@ static int	lonely_redirection(char *str)
 	int	i;
 
 	i = 0;
-	// if (str[i] == '$' && str[i + 1] == '>')
-	// 	return (1);
+	while (str[i])
+		i++;
+	if (str[i - 1] == '>' && str[i - 2] == '$')
+		return (1);
+	i = 0;
+	if (str[i] == '$' && str[i + 1] == '>')
+		return (1);
 	if (str[i] == '>' && str[i + 1] == '>' && str[i + 2] == '\0')
 		return (1);
 	else if ((str[i] == '<' && str[i + 1] == '<' && str[i + 2] == '\0'))

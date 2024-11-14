@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 16:47:15 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 17:45:32 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,25 +77,25 @@ void	parsing(t_data *data, char **envp)
 			parse_input(data, token_list);
 			data->cmd_current = data->cmd_head;
 			/*----------------------------------TEMP----------------------------------------------*/
-			// t_cmd *currentll = data->cmd_head;
-			// while (currentll != NULL)
-			// {
-			// 	int i = 0;
-			// 	if (currentll->cmd)
-			// 	{
-			// 		while(currentll->cmd[i])
-			// 		{
-			// 			printf("This is cmd[%i]: %s - %p\n", i, currentll->cmd[i], currentll->cmd[i]);
-			// 			i++;
-			// 		}
-			// 	}
-			// 	printf("This is fd_in: %i\n", currentll->fd_in);
-			// 	printf("This is fd_out: %i\n", currentll->fd_out);
-			// 	printf("This is infile: %s\n", currentll->infile);
-			// 	printf("This is outfile: %s\n\n\n", currentll->outfile);
-			// 	printf("Nbr pipes: %i\n", data->nbr_pipes);
-			// 	currentll = currentll->pipe;
-			// }
+			t_cmd *currentll = data->cmd_head;
+			while (currentll != NULL)
+			{
+				int i = 0;
+				if (currentll->cmd)
+				{
+					while(currentll->cmd[i])
+					{
+						printf("This is cmd[%i]: %s - %p\n", i, currentll->cmd[i], currentll->cmd[i]);
+						i++;
+					}
+				}
+				printf("This is fd_in: %i\n", currentll->fd_in);
+				printf("This is fd_out: %i\n", currentll->fd_out);
+				printf("This is infile: %s\n", currentll->infile);
+				printf("This is outfile: %s\n\n\n", currentll->outfile);
+				printf("Nbr pipes: %i\n", data->nbr_pipes);
+				currentll = currentll->pipe;
+			}
 			/*----------------------------------TEMP----------------------------------------------*/
 			if (token_list)
 			{
