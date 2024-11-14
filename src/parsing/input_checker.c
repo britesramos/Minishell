@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:41:06 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/04 12:14:49 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 11:33:37 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	start_with_pipe(char *str)
 	int	i;
 
 	i = 0;
-	while(is_space(str[i]))
+	while (is_space(str[i]))
 		i++;
 	if (str[i] == '|')
 		return (1);
@@ -29,9 +29,9 @@ static int	multiple_pipes(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
-		if(str[i] == '|' && str[i + 1] == '|')
+		if (str[i] == '|' && str[i + 1] == '|')
 			return (1);
 		i++;
 	}
@@ -47,7 +47,7 @@ static int	missing_closing_q_marks(char *str)
 	i = 0;
 	single_q = true;
 	double_q = true;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '"' && single_q == true)
 			double_q = !double_q;
@@ -65,7 +65,7 @@ static int	multiple_redirection(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '>' && str[i + 1] == '>' && str[i + 2] == '>')
 			return (1);
@@ -81,13 +81,12 @@ static int	lonely_redirection(char *str)
 	i = 0;
 	if (str[i] == '>' && str[i + 1] == '>' && str[i + 2] == '\0')
 		return (1);
-	else if((str[i] == '<' && str[i + 1] == '<' && str[i + 2] == '\0'))
+	else if ((str[i] == '<' && str[i + 1] == '<' && str[i + 2] == '\0'))
 		return (1);
-	else if ((str[i] == '>' || str[i] == '<') && str[i + 1] =='\0')
+	else if ((str[i] == '>' || str[i] == '<') && str[i + 1] == '\0')
 		return (1);
 	return (0);
 }
-
 
 /*Make something cleaner for all this returns! This doesnt look nice!*/
 int	input_checker(t_data *data)

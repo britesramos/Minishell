@@ -17,17 +17,17 @@ int	ms_isspace(char c)
 	return (c == ' ' || (c >= '\b' && c <= '\v'));
 }
 
-/*Fix and Replace this with ft_isalnum for the tokenization. Bash accept file names that include _ = - etc.*/
 int	ms_isword(char c)
 {
 	return (c != '>' && c != '<' && c != '|' && c != '\0');
 }
 
-void free_token_list(t_token *token_list)
+void	free_token_list(t_token *token_list)
 {
-	t_token *to_free;
+	t_token	*to_free;
+
 	to_free = token_list;
-	while(to_free)
+	while (to_free)
 	{
 		free(to_free->str);
 		to_free->str = NULL;
@@ -39,7 +39,7 @@ void free_token_list(t_token *token_list)
 	}
 }
 
-t_token *create_new_node(t_data *data, t_token_t type, char *str)
+t_token	*create_new_node(t_data *data, t_token_t type, char *str)
 {
 	t_token	*node;
 
@@ -47,24 +47,24 @@ t_token *create_new_node(t_data *data, t_token_t type, char *str)
 	if (!node)
 		error_exit(data, NULL, "Memory allocation failed!", 1);
 	node->str = ft_strdup(str);
-	node->lenght = ft_strlen(str); //I dont think we need this.
+	node->lenght = ft_strlen(str);
 	node->type = type;
 	node->next = NULL;
 	return (node);
 }
 
-void	create_token_list(t_data *data, t_token **token_list, char *str, t_token_t type)
+void	create_t_list(t_data *data, t_token **t_list, char *str, t_token_t type)
 {
-	t_token *newnode;
-	t_token *current;
+	t_token	*newnode;
+	t_token	*current;
 
-	current = *token_list;
+	current = *t_list;
 	newnode = create_new_node(data, type, str);
-	if (*token_list == NULL)
-		*token_list = newnode;
+	if (*t_list == NULL)
+		*t_list = newnode;
 	else
 	{
-		while(current->next != NULL)
+		while (current->next != NULL)
 			current = current->next;
 		current->next = newnode;
 	}

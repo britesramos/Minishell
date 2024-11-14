@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/08 16:02:12 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 12:08:13 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	parse_input(t_data *data, t_token *token_list);
 t_token *tokenization(t_data *data, t_token *token_list);
 int		ms_isspace(char c);
 t_token *create_new_node(t_data *data, t_token_t type, char *str);
-void	create_token_list(t_data *data, t_token **token_list, char *str, t_token_t type);
+void	create_t_list(t_data *data, t_token **token_list, char *str, t_token_t type);
 void 	free_token_list(t_token *token_list);
 
 /*HEREDOC parsing*/
@@ -98,6 +98,7 @@ void	parse_envp(t_data *data, char **envp);
 /*Parsing_utils*/
 int		is_space(char c);
 int		ms_isword(char c);
+int		only_spaces(t_data *data);
 
 /*Parsing input utils*/
 void 	free_null(void **input);

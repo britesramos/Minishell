@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/07 11:53:42 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 11:43:11 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,23 @@ void	free_close_fd(char *file, int fd)
 	close_fd(&fd);
 }
 
-void free_null(void **input)
+void	free_null(void **input)
 {
-    if (input && *input)
+	if (input && *input)
 	{
-        free(*input);
-        *input = NULL;
-    }
+		free(*input);
+		*input = NULL;
+	}
 }
 
-char **ft_realloc(t_data *data, int number_of_times, char **old_array)
+char	**ft_realloc(t_data *data, int number_of_times, char **old_array)
 {
-	char **new;
-	int	i = 0;
+	char	**new;
+	int		i;
 
+	i = 0;
 	new = (char **)ft_calloc(number_of_times, sizeof(char *));
-	if(!new)
+	if (!new)
 		error_exit(data, NULL, "Memory calloc failed!\n", 1); //fix
 	if (old_array[i] && old_array)
 	{
@@ -60,10 +61,10 @@ char **ft_realloc(t_data *data, int number_of_times, char **old_array)
 			old_array = NULL;
 		}
 	}
-	return(new);
+	return (new);
 }
 
-t_cmd *create_new_node_cmd(t_data *data)
+t_cmd	*create_new_node_cmd(t_data *data)
 {
 	t_cmd	*node;
 
@@ -83,17 +84,20 @@ t_cmd *create_new_node_cmd(t_data *data)
 
 void	add_new_node(t_cmd **head, t_cmd *newnode, t_cmd **current_cmd)
 {
+	t_cmd	*temp;
+
+	temp = NULL;
 	if (*head == NULL)
-    {
-        *head = newnode;
-        *current_cmd = newnode;
-    }
-    else
-    {
-        t_cmd *temp = *head;
-        while (temp->pipe != NULL) // Traverse to the end of the list
-            temp = temp->pipe;
-        temp->pipe = newnode; // Link the new node to the end
-        *current_cmd = temp->pipe; // Update current_cmd to point to the new node
-    }
+	{
+		*head = newnode;
+		*current_cmd = newnode;
+	}
+	else
+	{
+		temp = *head;
+		while (temp->pipe != NULL) // Traverse to the end of the list
+			temp = temp->pipe;
+		temp->pipe = newnode; // Link the new node to the end
+		*current_cmd = temp->pipe; // Update current_cmd to point to the new node
+	}
 }

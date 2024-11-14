@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/04 13:58:22 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/12 16:46:20 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*find_value(t_data *data, char *key)
 	char	*value;
 	int		len;
 
+	value = NULL;
 	len = ft_strlen(key) + 1;
 	env_current = data->envp_head;
 	while (env_current != NULL)

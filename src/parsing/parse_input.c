@@ -6,12 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/08 14:15:29 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 11:47:08 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
 
 static t_token	*parse_rein(t_token *current_token, t_cmd *current_cmd, t_data *data)
 {
@@ -23,7 +22,7 @@ static t_token	*parse_rein(t_token *current_token, t_cmd *current_cmd, t_data *d
 	if (current_cmd->fd_in == -1)
 		error_exit_system(data, current_token->str, 1);
 	current_cmd->infile = ft_strdup(current_token->str);
-	if(!current_cmd->infile)
+	if (!current_cmd->infile)
 		error_exit(data, NULL, "Infile red allocation failed!\n", 1); //Free memory.
 	return (current_token);
 }
@@ -37,12 +36,12 @@ static t_token	*parse_reout(t_token *current_token, t_cmd *current_cmd, t_data *
 	if (current_cmd->fd_out == -1)
 		error_exit_system(data, current_token->str, 1);
 	current_cmd->outfile = ft_strdup(current_token->str);
-	if(!current_cmd->outfile)
+	if (!current_cmd->outfile)
 		error_exit(data, NULL, "Outfile red allocation failed!\n", 1); //Free memory.
 	return (current_token);
 }
 
-static t_token 	*parse_append(t_token *current_token, t_cmd *current_cmd, t_data *data)
+static t_token	*parse_append(t_token *current_token, t_cmd *current_cmd, t_data *data)
 {
 	current_token = current_token->next;
 	if (current_cmd->outfile)
@@ -51,15 +50,16 @@ static t_token 	*parse_append(t_token *current_token, t_cmd *current_cmd, t_data
 	if (current_cmd->fd_out == -1)
 		error_exit_system(data, current_token->str, 1);
 	current_cmd->outfile = ft_strdup(current_token->str);
-	if(!current_cmd->outfile)
+	if (!current_cmd->outfile)
 		error_exit(data, NULL, "Outfile Append allocation failed!\n", 1); //Free memory.
 	return (current_token);
 }
 
 static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, int i)
 {
-	int 	alloc_times = 2;
+	int	alloc_times;
 
+	alloc_times = 2;
 	if (current_cmd->cmd == NULL)
 		current_cmd->cmd = (char **)ft_calloc(alloc_times + 1, sizeof(char *));
 	if (!current_cmd->cmd)
@@ -80,19 +80,19 @@ static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, 
 
 void	parse_input(t_data *data, t_token *token_list)
 {
-	t_token *current_token;
+	int		i;
+	t_token	*current_token;
 	t_cmd	*current_cmd;
 	t_cmd	*newnode;
-	int 	i;
 
 	current_token = token_list;
 	current_cmd = data->cmd_head;
-	while(current_token && current_token->lenght > 0)
+	while (current_token && current_token->lenght > 0)
 	{
 		i = 0;
 		newnode = create_new_node_cmd(data);
 		add_new_node(&data->cmd_head, newnode, &current_cmd);
-		while(current_token && current_token->type != T_PIPE && current_token->lenght > 0)
+		while (current_token && current_token->type != T_PIPE && current_token->lenght > 0)
 		{
 			if (current_token->type == T_REIN)
 				current_token = parse_rein(current_token, current_cmd, data);

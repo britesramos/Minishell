@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/11 14:24:25 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 11:48:43 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ void	free_cmd_list(t_cmd *list)
 			free_close_fd(list->infile, list->fd_in);
 		if (list->outfile)
 			free_close_fd(list->outfile, list->fd_out);
-		// ft_printf("to free list = %p\n", list);
 		free(list);
 		list = NULL;
 		list = next;
-		// ft_printf("list = %p\n", list);
 	}
 	list = NULL;
 }
@@ -37,31 +35,27 @@ void	free_cmd_list(t_cmd *list)
 void	parsing(t_data *data, char **envp)
 {
 	t_token	*token_list;
-	
+
 	data->line = NULL; //ft_bezero(data);
 	token_list = NULL;
-
 	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
 	while (1)
 	{
 		if (data->line)
 			ft_free_string(data->line);
 		data->line = readline("minishell:~$ ");
-		// printf("data->line: %s\n", data->line);
 		if (!data->line[0])
-			continue;
+			continue ;
 		if (!data->line)
-			error_exit(data, NULL, "exit\n", 0);
+			error_exit(data, NULL, "exit\n", 0); //gosia fixed this.
 		else
 		{
 			if (data->line[0])
 				add_history(data->line);
-			// parse_envp(data, envp); //This is resulting in segfault.
-			if (input_checker(data) == 0)
+			if (input_checker(data) == 0 && !only_spaces(data))
 			{
 				expansion(data);
 				token_list = tokenization(data, token_list);
-				
 				/*----------------------------------TEMP----------------------------------------------*/
 				// t_token *current = token_list;
 				// while (current)
@@ -74,7 +68,7 @@ void	parsing(t_data *data, char **envp)
 				/*----------------------------------TEMP----------------------------------------------*/
 				parse_input(data, token_list);
 				data->cmd_current = data->cmd_head;
-				printf("DATA->LINE: %s, %p\n", data->line, data->line);
+				// printf("DATA->LINE: %s, %p\n", data->line, data->line);
 				/*----------------------------------TEMP----------------------------------------------*/
 				// t_cmd *currentll = data->cmd_head;
 				// while (currentll != NULL)
@@ -114,11 +108,8 @@ void	parsing(t_data *data, char **envp)
 				data->std[OUT] = STDOUT_FILENO;
 				// should stay (for the moment commented out - infinite loop)
 				wait(NULL);
-		}
+			}
 		}
 	}
 }
-
-
-
 //Bash Input: ">file"  - **Does nothing.** STDERROR = 0;

@@ -6,39 +6,90 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/11 16:59:34 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 12:50:31 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	expand_stderror(t_data *data, int i)
+static void	expand_error(t_data *data, int i)
 {
 	char	*temp;
 	char	*substr;
-	int		new_line;
+	char	*exit;
+	int		new_line_len;
+	int		sstr_len;
 
-	printf("1 - This is data->line: %s\n", data->line);
+	exit = ft_itoa(data->exit_code);
 	substr = ft_substr(data->line, i + 2, ft_strlen(&data->line[i + 1]));
 	temp = ft_substr(data->line, 0, i);
-	data->exit_code = 200;
-	new_line = ft_strlen(data->line) - 2 + ft_strlen(ft_itoa(data->exit_code));
-	printf("This is new_line len: %i\n", new_line);
-	printf("This is substring:%s\n", substr);
-	printf("This is temp: %s\n", temp);
+	new_line_len = ft_strlen(data->line) - 2 + ft_strlen(exit);
 	free(data->line);
-	printf("This is the len of exit_code: %zu\n", ft_strlen(ft_itoa(data->exit_code)));
-	data->line = ft_calloc(sizeof(char),new_line); //I need the lenght of exit code.
-	data->line = ft_strdup(temp);
+	data->line = ft_calloc(sizeof(char), new_line_len + 1);
+	if (!data->line)
+		error_exit(data, NULL, "Failed alloc new line - expansion!\n", 1);
+	ft_strlcpy(data->line, temp, ft_strlen(temp) + 1);
 	free (temp);
-	char *exit_code = ft_itoa(data->exit_code);
-	printf("Exit code len: %zu\n", ft_strlen(exit_code) + 1);
-	ft_strlcat(data->line, exit_code, ft_strlen(data->line) + ft_strlen(exit_code) + 1);
-	printf("2 - This is data->line: %s\n", data->line);
-	ft_strlcat(data->line, substr, ft_strlen(data->line) + ft_strlen(substr) + 1);
-	printf("3 - This is data->line: %s\n\n\n", data->line);
+	ft_strlcat(data->line, exit, ft_strlen(data->line) + ft_strlen(exit) + 1);
+	sstr_len = ft_strlen(substr);
+	ft_strlcat(data->line, substr, ft_strlen(data->line) + sstr_len + 1);
 	free(substr);
+}
 
+static void	alloc_newline(t_data *data, char *temp, char *value, char *leftover)
+{
+	int	temp_i;
+	int	value_i;
+	int	lo_i;
+
+	temp_i = ft_strlen(temp);
+	value_i = ft_strlen(value);
+	lo_i = ft_strlen(leftover);
+	if (value)
+	{
+		if (leftover)
+			data->line = ft_calloc(sizeof(char), temp_i + value_i + lo_i + 1);
+		else if (!leftover)
+			data->line = ft_calloc(sizeof(char), temp_i + value_i + 1);
+		if (!data->line)
+			error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", 1);
+	}
+	if (!value)
+	{
+		if (leftover)
+			data->line = ft_calloc(sizeof(char), temp_i + lo_i + 1);
+		else if (!leftover)
+			data->line = ft_calloc(sizeof(char), temp_i + 1);
+		if (!data->line)
+			error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", 1);
+	}
+}
+
+static void	expand_path(t_data *data, int i)
+{
+	char	*temp;
+	char	*substr;
+	char	*leftover;
+	char	*value;
+	int		j;
+
+	j = 0;
+	leftover = NULL;
+	temp = ft_substr(data->line, 0, i);
+	i++;
+	while (ft_isalnum(data->line[i + j]))
+		j++;
+	substr = ft_substr(data->line, i, j);
+	if (data->line[i + j])
+		leftover = ft_substr(data->line, i + j, ft_strlen(data->line) - ft_strlen(substr) - ft_strlen(temp));
+	free(data->line);
+	value = find_value(data, substr);
+	alloc_newline(data, temp, value, leftover);
+	ft_strlcpy(data->line, temp, ft_strlen(temp) + 1);
+	if (value)
+		ft_strlcat(data->line, value, ft_strlen(data->line) + ft_strlen(value) + 1);
+	if (leftover)
+		ft_strlcat(data->line, leftover, ft_strlen(data->line) + ft_strlen(leftover) + 1);
 }
 
 void	expansion(t_data *data)
@@ -46,11 +97,12 @@ void	expansion(t_data *data)
 	int	i;
 
 	i = 0;
-	while(data->line[i])
+	while (data->line[i])
 	{
-		// printf("data->line[%i]: %c\n", i, data->line[i]);
 		if (data->line[i] == '$' && data->line[i + 1] == '?')
-			expand_stderror(data, i);
+			expand_error(data, i);
+		else if (data->line[i] == '$' && data->line[i + 1])
+			expand_path(data, i);
 		i++;
 	}
 }
