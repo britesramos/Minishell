@@ -36,7 +36,7 @@ static int	token_word(t_data *data, int end, t_token **token_list)
 	if (data->line[end + len] != '"' && data->line[end + len] != '\'')
 	{
 		while (ms_isword(data->line[end + len])
-			&& !ms_isspace(data->line[end + len]))
+			&& !ms_isspace(data->line[end + len]) && data->line[end + len] != '"' && data->line[end + len] != '\'')
 			len++;
 	}
 	else if (data->line[end] == '\'' || data->line[end] == '"')

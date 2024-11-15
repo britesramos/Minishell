@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 14:01:43 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/15 18:08:56 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, 
 		current_cmd->cmd[i] = ft_strdup(current_token->str);
 		if (!current_cmd->cmd[i])
 			error_exit(data, NULL, "Fail alloc new cmd array in parsing.\n", 1);
-		printf("2 - current_cmd->cmd[%i]: %s\n", i, current_cmd->cmd[i]);
+		// printf("2 - current_cmd->cmd[%i]: %s\n", i, current_cmd->cmd[i]);
 		alloc_times--;
 		i++;
 	}

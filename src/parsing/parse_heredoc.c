@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 09:21:06 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/15 14:44:57 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 			free(heredoc_line);
 		}
 		ms_signals(HEREDOCP);
-		heredoc_line = readline("> ");
+		heredoc_line = readline("> "); //There is a leak/error from here. (15_11_2024)
 		if (heredoc_line == NULL)
 		{
 			ft_putstr_fd("minishell: warning: here-document ", STDERR_FILENO);
