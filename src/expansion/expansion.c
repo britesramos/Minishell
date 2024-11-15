@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 14:21:51 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/15 14:42:15 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	expand_error(t_data *data, int i)
 	ft_strlcpy(data->line, temp, ft_strlen(temp) + 1);
 	free (temp);
 	ft_strlcat(data->line, exit, ft_strlen(data->line) + ft_strlen(exit) + 1);
+	free(exit);
 	sstr_len = ft_strlen(substr);
 	ft_strlcat(data->line, substr, ft_strlen(data->line) + sstr_len + 1);
 	free(substr);
