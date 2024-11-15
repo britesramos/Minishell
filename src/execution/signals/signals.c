@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/12 17:55:59 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/14 14:41:13 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/15 09:16:20 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	signal_hd(int signal)
 		rl_on_new_line();
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
