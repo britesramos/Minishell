@@ -91,7 +91,8 @@ t_token	*tokenization(t_data *data, t_token *token_list)
 			create_t_list(data, &token_list, "|", T_PIPE);
 		else if (ms_isword(data->line[i]))
 			i = token_word(data, i, &token_list);
-		i++;
+		if (data->line[i])
+			i++;
 	}
 	return (token_list);
 }

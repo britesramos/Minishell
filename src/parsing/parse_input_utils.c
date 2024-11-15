@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 14:32:51 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/15 14:14:09 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ void	free_close_fd(char *file, int fd)
 		file = NULL;
 	}
 	close_fd(&fd);
+}
+
+static void	free_null_2d_array(char **str)
+{
+	free(str);
+	str = NULL;
+}
+
+static void	free_null_array(char *str)
+{
+	free(str);
+	str = NULL;
 }
 
 void	free_null(void **input)
@@ -39,8 +51,8 @@ char	**ft_realloc(t_data *data, int number_of_times, char **old_array)
 	i = 0;
 	new = (char **)ft_calloc(number_of_times, sizeof(char *));
 	if (!new)
-		error_exit(data, NULL, "Memory calloc failed!\n", 1); //fix
-	if (old_array && old_array[i])
+		error_exit(data, NULL, "Memory calloc failed!\n", 1);
+	if (old_array)
 	{
 		while (old_array[i])
 		{
@@ -49,17 +61,13 @@ char	**ft_realloc(t_data *data, int number_of_times, char **old_array)
 				error_exit(data, NULL, "Memory allocation failed in ft_strdup - ft_realloc\n", 1);
 			i++;
 		}
-		while (i > 0)
+		while (i >= 0)
 		{
-			free(old_array[i]);
-			old_array[i] = NULL;
+			free_null_array(old_array[i]);
 			i--;
 		}
 		if (old_array)
-		{
-			free(old_array);
-			old_array = NULL;
-		}
+			free_null_2d_array(old_array);
 	}
 	return (new);
 }

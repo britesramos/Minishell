@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 10:26:42 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/15 11:55:04 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	parsing(t_data *data, char **envp)
 				printf("This is fd_out: %i\n", currentll->fd_out);
 				printf("This is infile: %s\n", currentll->infile);
 				printf("This is outfile: %s\n\n\n", currentll->outfile);
-				printf("Nbr pipes: %i\n", data->nbr_pipes);
+				// printf("Nbr pipes: %i\n", data->nbr_pipes);
 				currentll = currentll->pipe;
 			}
 			/*----------------------------------TEMP----------------------------------------------*/
