@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 14:28:52 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/15 09:00:01 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,12 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 #define HEREDOCP 3
 #define HEREDOCC 4
 
+#define TEMP 0
+#define VALUE 1
+#define LO 2
+
 int		exec(t_data *data);
-int		ft_builtin_manager(t_data *data);
+int		ft_builtin_manager(t_data *data, int fd);
 
 // built-in funtions:
 void	ft_cd(char **cmd, t_data *data);

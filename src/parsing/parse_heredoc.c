@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 14:32:15 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/14 15:29:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 			ft_putchar_fd('\n', c_cmd->fd_in);
 			free(heredoc_line);
 		}
-		ms_signals(HEREDOCC);
+		ms_signals(HEREDOCP);
 		heredoc_line = readline("> ");
 		if (heredoc_line == NULL)
 		{

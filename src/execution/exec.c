@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/14 12:35:24 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/15 08:59:22 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	exec(t_data *data)
 
 	if (data->nbr_pipes == 0)
 	{
-		ms_signals(PARENT);
-		check = ft_builtin_manager(data);
+		// ms_signals(PARENT);
+		check = ft_builtin_manager(data, data->cmd_current->fd_out);
 		if (check == 9)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);

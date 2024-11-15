@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:05:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/12 11:23:41 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/15 08:59:45 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 /// @brief checks if a cmd is a builtin, if not increments the number of kids
 /// @return 0 when cmd=builtin, 9 when exit should work, 1 when cmd != builtin
-int	ft_builtin_manager(t_data *data)
+int	ft_builtin_manager(t_data *data, int fd)
 {
 	char	**cmd;
 
@@ -28,9 +28,9 @@ int	ft_builtin_manager(t_data *data)
 	if (ft_strncmp(cmd[0], "cd", 3) == 0)
 		return (ft_cd(cmd, data), 0);
 	else if (ft_strncmp(cmd[0], "echo", 5) == 0)
-		return (ft_echo(cmd, data, data->cmd_current->fd_out), 0);
+		return (ft_echo(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "env", 4) == 0)
-		return (ft_env(cmd, data, data->cmd_current->fd_out), 0);
+		return (ft_env(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "exit", 5) == 0)
 	{
 		if (ft_exit(cmd, data) == 0)
@@ -38,9 +38,9 @@ int	ft_builtin_manager(t_data *data)
 		return (EXIT_SUCCESS);
 	}
 	else if (ft_strncmp(cmd[0], "export", 7) == 0)
-		return (ft_export(cmd, data, data->cmd_current->fd_out), 0);
+		return (ft_export(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "pwd", 4) == 0)
-		return (ft_pwd(cmd, data, data->cmd_current->fd_out), 0);
+		return (ft_pwd(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "unset", 6) == 0)
 		return (ft_unset(cmd, data), 0);
 	

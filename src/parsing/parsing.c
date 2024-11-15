@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 14:36:40 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/15 07:40:56 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	parsing(t_data *data, char **envp)
 	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
 	while (1)
 	{
-		ms_signals(PARENT);
+		// ms_signals(PARENT);
 		if (data->line)
 			ft_free_string(data->line);
 		data->line = readline("minishell:~$ ");
@@ -57,8 +57,9 @@ void	parsing(t_data *data, char **envp)
 		if (data->line[0])
 			add_history(data->line);
 		// parse_envp(data, envp); //This is resulting in segfault.
-		if (input_checker(data) == 0)
+		if (input_checker(data) == 0 && !only_spaces(data))
 		{
+			expansion(data);
 			token_list = tokenization(data, token_list);
 			
 			/*----------------------------------TEMP----------------------------------------------*/
@@ -110,7 +111,7 @@ void	parsing(t_data *data, char **envp)
 			data->std[IN] = STDIN_FILENO;
 			data->std[OUT] = STDOUT_FILENO;
 			// should stay (for the moment commented out - infinite loop)
-			wait(NULL); //
+			// wait(NULL); //
 		}
 	}
 }
