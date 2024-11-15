@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:05:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/15 08:59:45 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/15 09:10:03 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,5 @@ int	ft_builtin_manager(t_data *data, int fd)
 		return (ft_pwd(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "unset", 6) == 0)
 		return (ft_unset(cmd, data), 0);
-	
 	return (EXIT_FAILURE);
 }
