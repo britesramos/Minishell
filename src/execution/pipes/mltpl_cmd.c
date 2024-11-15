@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/14 14:19:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/15 09:00:59 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	builtin_check(t_data *data, t_ex *ex)
 {
 	int	built_in_check;
 
-	built_in_check = ft_builtin_manager(data);
+	built_in_check = ft_builtin_manager(data, data->std[OUT]);
 	if (built_in_check == 0 || built_in_check == 9)
 	{
 		if (ex->i != data->nbr_pipes)
@@ -46,13 +46,7 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	char	*path;
 	int		bi_check;
 
-	if (data->cmd_current->heredoc == true)
-	{
-		ft_putendl_fd("am I here", STDOUT_FILENO);
-		ms_signals(HEREDOCC);
-	}
-	else
-		ms_signals(CHILD);
+	ms_signals(CHILD);
 	child_fd_handling(data, ex);
 	bi_check = builtin_check(data, ex);
 	if (bi_check == EXIT_SUCCESS)
@@ -81,10 +75,7 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		return (perror("error: child"), EXIT_FAILURE);
 	if (ex->pid == 0)
 		ft_child(data, ex);
-	if (data->cmd_current->heredoc == true)
-		ms_signals(HEREDOCP);
-	else
-		ms_signals(PARENT);
+	ms_signals(PARENT);
 	if (ex->fd_in != data->std[IN])
 		close_fd(&ex->fd_in);
 	ex->fd_in = ex->p_fd[READ];
@@ -108,6 +99,7 @@ int	mltpl_cmd(t_data *data)
 	ex.fd_in = data->std[IN];
 	while (data->cmd_current != NULL)
 	{
+		// printf("cmd_current = %s\n", data->cmd_current->cmd[0]);
 		if (do_pipex(data, &ex) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		ex.i++;

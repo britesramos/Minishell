@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/14 14:10:24 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/14 14:56:05 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ void	single_cmd(t_data *data)
 		ft_single_child(data, path);
 	}
 	if (data->cmd_current->heredoc == true)
-	{
-		ft_putendl_fd("in the hd parent", STDOUT_FILENO);
 		ms_signals(HEREDOCP);
-	}
 	else
 		ms_signals(PARENT);
 	waitpid(pid, &data->exit_code, 0);

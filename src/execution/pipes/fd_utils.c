@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 09:14:19 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/12 14:49:27 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/15 08:10:25 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	fds_first_cmd(t_cmd *current, t_ex *ex, t_data *data)
 		close_fd(&current->fd_in);
 	}
 	/*in case of redirection out*/
+	// printf("first current->fd_out = %d\n", current->fd_out);
 	if (current->fd_out != data->std[OUT])
 	{		
 		if (dup2(current->fd_out, data->std[OUT]) == -1)
@@ -56,6 +57,7 @@ static int	fds_in_between_cmd(t_cmd *current, t_ex *ex,t_data *data)
 	/*it will be always either p_fd[OUT] or the redirection file*/
 	if (current->fd_in == data->std[IN])
 		current->fd_in = ex->fd_in;
+	// printf("in between current->fd_in = %d\n", current->fd_in);
 	if (dup2(current->fd_in, data->std[IN]) == -1)
 		return (perror("error dup2() cmd fd_in"), EXIT_FAILURE);
 	close_fd(&ex->p_fd[READ]);
@@ -80,6 +82,7 @@ static int	fds_last_cmd(t_cmd *current, t_data *data, t_ex *ex)
 {
 	if (current->fd_in == data->std[IN])
 		current->fd_in = ex->fd_in;
+	// printf("last current->fd_in = %d\n", current->fd_in);
 	if (dup2(current->fd_in, data->std[IN]) == -1)
 		return (perror("error dup2() last cmd fd_in"), EXIT_FAILURE);
 	close_fd(&current->fd_in);
