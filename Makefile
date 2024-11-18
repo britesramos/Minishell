@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/11/18 16:57:11 by sramos        ########   odam.nl          #
+#    Updated: 2024/11/18 18:00:13 by sramos        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC_FILES = src/minishell.c\
 			src/parsing/parse_input_utils.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\
+			src/parsing/free_close_fd.c\
 			src/execution/exec.c\
 			src/execution/built_ins/builtins_manager.c\
 			src/execution/built_ins/cd.c\

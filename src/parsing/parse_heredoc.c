@@ -6,13 +6,13 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/18 17:38:24 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/18 18:24:10 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
+t_token	*p_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 {
 	char	*heredoc_line;
 	char	*heredoc;
@@ -30,7 +30,7 @@ t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 		if (heredoc_line)
 			ft_putchar_fd('\n', c_cmd->fd_in);
 		ms_signals(HEREDOCP);
-		heredoc_line = readline("> "); //There is a leak/error from here. (15_11_2024)
+		heredoc_line = readline("> ");
 		if (heredoc_line == NULL)
 		{
 			ft_putstr_fd("minishell: warning: here-document ", STDERR_FILENO);

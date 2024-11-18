@@ -6,21 +6,11 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 14:14:09 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/18 17:59:38 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	free_close_fd(char *file, int fd)
-{
-	if (file)
-	{
-		free(file);
-		file = NULL;
-	}
-	close_fd(&fd);
-}
 
 static void	free_null_2d_array(char **str)
 {
@@ -32,15 +22,6 @@ static void	free_null_array(char *str)
 {
 	free(str);
 	str = NULL;
-}
-
-void	free_null(void **input)
-{
-	if (input && *input)
-	{
-		free(*input);
-		*input = NULL;
-	}
 }
 
 char	**ft_realloc(t_data *data, int number_of_times, char **old_array)
@@ -58,7 +39,7 @@ char	**ft_realloc(t_data *data, int number_of_times, char **old_array)
 		{
 			new[i] = ft_strdup(old_array[i]);
 			if (!new[i])
-				error_exit(data, NULL, "Memory allocation failed in ft_strdup - ft_realloc\n", 1);
+				error_exit(data, NULL, "Mem alloc failed - ft_realloc\n", 1);
 			i++;
 		}
 		while (i >= 0)
@@ -86,8 +67,6 @@ t_cmd	*create_new_node_cmd(t_data *data)
 	node->outfile = NULL;
 	node->pipe = NULL;
 	node->heredoc = false;
-	// if (node->pipe == NULL)
-	// 	printf("HERE\n");
 	return (node);
 }
 
@@ -104,9 +83,9 @@ void	add_new_node(t_cmd **head, t_cmd *newnode, t_cmd **current_cmd)
 	else
 	{
 		temp = *head;
-		while (temp->pipe != NULL) // Traverse to the end of the list
+		while (temp->pipe != NULL)
 			temp = temp->pipe;
-		temp->pipe = newnode; // Link the new node to the end
-		*current_cmd = temp->pipe; // Update current_cmd to point to the new node
+		temp->pipe = newnode;
+		*current_cmd = temp->pipe;
 	}
 }
