@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 09:00:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/18 17:09:10 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	init_main_struct(t_data *data, char **envp);
 
 /*EXPANSIONS*/
 void	expansion(t_data *data);
+char 	*expansion_heredoc(t_data *data, char *heredoc_line);
 
 /*-----------------------------------PARSING-----------------------------------*/
 
@@ -83,6 +84,7 @@ void	parse_input(t_data *data, t_token *token_list);
 /*Tokenization*/
 t_token *tokenization(t_data *data, t_token *token_list);
 int		ms_isspace(char c);
+char	*token_word_remove_extra_quotes(char *new, t_data *data);
 t_token *create_new_node(t_data *data, t_token_t type, char *str);
 void	create_t_list(t_data *data, t_token **token_list, char *str, t_token_t type);
 void 	free_token_list(t_token *token_list);

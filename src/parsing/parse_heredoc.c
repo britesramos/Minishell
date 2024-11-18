@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 14:44:57 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/18 17:38:24 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 {
 	char	*heredoc_line;
+	char	*heredoc;
 	char	*delimiter;
 
 	c_cmd->heredoc = true;
@@ -27,10 +28,7 @@ t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 	while (1)
 	{
 		if (heredoc_line)
-		{
 			ft_putchar_fd('\n', c_cmd->fd_in);
-			free(heredoc_line);
-		}
 		ms_signals(HEREDOCP);
 		heredoc_line = readline("> "); //There is a leak/error from here. (15_11_2024)
 		if (heredoc_line == NULL)
@@ -43,10 +41,15 @@ t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 		}
 		if (ft_strncmp(heredoc_line, delimiter, ft_strlen(delimiter) + 1) == 0)
 			break ;
-		ft_putstr_fd(heredoc_line, c_cmd->fd_in);
+		heredoc = expansion_heredoc(data, heredoc_line);
+		ft_putstr_fd(heredoc, c_cmd->fd_in);
+		free(heredoc);
+		heredoc = NULL;
 	}
 	c_cmd->infile = ft_strdup("/tmp/heredoc.txt");
 	close(c_cmd->fd_in);
 	c_cmd->fd_in = open("/tmp/heredoc.txt", O_RDWR, 0660);
+	if (heredoc_line)
+		free(heredoc_line);
 	return (current_token);
 }

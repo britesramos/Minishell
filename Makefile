@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/11/14 14:37:01 by sramos        ########   odam.nl          #
+#    Updated: 2024/11/18 16:57:11 by sramos        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,13 @@ SRC_FILES = src/minishell.c\
 			src/clean_up.c\
 			src/init.c\
 			src/expansion/expansion.c\
+			src/expansion/expansion_heredoc.c\
 			src/parsing/parsing.c\
 			src/parsing/input_checker.c\
 			src/parsing/parse_envp.c\
 			src/parsing/tokenization.c\
 			src/parsing/tokenization_utils.c\
+			src/parsing/token_word_utils.c\
 			src/parsing/parse_input.c\
 			src/parsing/parse_heredoc.c\
 			src/parsing/parse_input_utils.c\
