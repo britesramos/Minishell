@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 12:36:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/19 17:35:09 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,30 @@ int	bye(t_data *data)
 	return (exit_code);
 }
 
+static void	check_tty(void)
+{
+	if (!isatty(STDIN_FILENO))
+	{
+		write (2, "minishell: stdin: not a tty\n", 28);
+		exit (EXIT_FAILURE);
+	}
+	if (!isatty(STDOUT_FILENO))
+	{
+		write (2, "minishell: stdout: not a tty\n", 29);
+		exit (EXIT_FAILURE);
+	}
+	if (!isatty(STDERR_FILENO))
+	{
+		write (2, "minishell: stderr: not a tty\n", 29);
+		exit (EXIT_FAILURE);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data *data;
 
+	check_tty();
 	(void)argv; //Not going to use this. Waiting for user prompt.
 	data = malloc(sizeof(t_data));
 	signal(SIGQUIT, SIG_IGN);
