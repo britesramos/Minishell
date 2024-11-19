@@ -29,6 +29,7 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 		new = token_word_remove_extra_quotes(new, data);
 	create_t_list(data, token_list, new, T_WORD);
 	free(new);
+	len--;
 	return (start + len);
 }
 

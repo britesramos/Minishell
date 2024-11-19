@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/18 18:26:48 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/19 14:13:04 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static t_token	*p_rein(t_token *current_t, t_cmd *current_cmd, t_data *data)
+t_token	*p_rein(t_token *current_t, t_cmd *current_cmd, t_data *data)
 {
 	current_t = current_t->next;
 	if (current_cmd->infile)
@@ -26,7 +26,7 @@ static t_token	*p_rein(t_token *current_t, t_cmd *current_cmd, t_data *data)
 	return (current_t);
 }
 
-static t_token	*p_reout(t_token *current_t, t_cmd *c_cmd, t_data *data)
+t_token	*p_reout(t_token *current_t, t_cmd *c_cmd, t_data *data)
 {
 	current_t = current_t->next;
 	if (c_cmd->outfile)
@@ -40,7 +40,7 @@ static t_token	*p_reout(t_token *current_t, t_cmd *c_cmd, t_data *data)
 	return (current_t);
 }
 
-static t_token	*p_append(t_token *current_t, t_cmd *current_cmd, t_data *data)
+t_token	*p_append(t_token *current_t, t_cmd *current_cmd, t_data *data)
 {
 	current_t = current_t->next;
 	if (current_cmd->outfile)
@@ -95,22 +95,13 @@ void	parse_input(t_data *data, t_token *token_list)
 		add_new_node(&data->cmd_head, newnode, &current_cmd);
 		while (current_t && current_t->type != T_PIPE && current_t->lenght > 0)
 		{
-			if (current_t->type == T_REIN)
-				current_t = p_rein(current_t, current_cmd, data);
-			else if (current_t->type == T_REOUT)
-				current_t = p_reout(current_t, current_cmd, data);
-			else if (current_t->type == T_APPEND)
-				current_t = p_append(current_t, current_cmd, data);
-			else if (current_t->type == T_HEREDOC)
-				current_t = p_heredoc(current_t, current_cmd, data);
-			else if (current_t->type == T_WORD)
+			if (current_t->type != T_WORD && current_t->type != T_PIPE)
+				current_t = p_redirections(current_t, current_cmd, data);
+			else if (current_t->type == T_WORD && current_t->type != T_PIPE)
 				i = p_word(current_t, current_cmd, data, i);
 			current_t = current_t->next;
 		}
 		if (current_t && current_t->type == T_PIPE)
-		{
-			current_t = current_t->next;
-			data->nbr_pipes++;
-		}
+			current_t = p_pipe(current_t, data);
 	}
 }

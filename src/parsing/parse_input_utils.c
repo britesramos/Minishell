@@ -6,22 +6,30 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/18 17:59:38 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/19 14:13:38 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	free_null_2d_array(char **str)
+t_token	*p_pipe(t_token *current_t, t_data *data)
 {
-	free(str);
-	str = NULL;
+	current_t = current_t->next;
+	data->nbr_pipes++;
+	return (current_t);
 }
 
-static void	free_null_array(char *str)
+t_token	*p_redirections(t_token *current_t, t_cmd *c_cmd, t_data *data)
 {
-	free(str);
-	str = NULL;
+	if (current_t->type == T_REIN)
+		current_t = p_rein(current_t, c_cmd, data);
+	else if (current_t->type == T_REOUT)
+		current_t = p_reout(current_t, c_cmd, data);
+	else if (current_t->type == T_APPEND)
+		current_t = p_append(current_t, c_cmd, data);
+	else if (current_t->type == T_HEREDOC)
+		current_t = p_heredoc(current_t, c_cmd, data);
+	return (current_t);
 }
 
 char	**ft_realloc(t_data *data, int number_of_times, char **old_array)
