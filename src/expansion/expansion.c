@@ -6,11 +6,30 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/18 16:55:47 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/19 18:16:02 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char	*convert_exit_code(t_data *data)
+{
+	int		exit_code;
+	char	*exit;
+
+	exit_code = 0;
+	if (data->exit_code > 255)
+	{
+		exit_code = data->exit_code / 256;
+		data->exit_code = exit_code;
+	}
+	else if (data->exit_code < -255)
+		data->exit_code = data->exit_code % -256;
+	else if (data->exit_code < 0)
+		data->exit_code = data->exit_code + 256;
+	exit = ft_itoa(data->exit_code);
+	return (exit);
+}
 
 static void	expand_error(t_data *data, int i)
 {
@@ -20,7 +39,7 @@ static void	expand_error(t_data *data, int i)
 	int		new_line_len;
 	int		sstr_len;
 
-	exit = ft_itoa(data->exit_code);
+	exit = convert_exit_code(data);
 	substr = ft_substr(data->line, i + 2, ft_strlen(&data->line[i + 1]));
 	temp = ft_substr(data->line, 0, i);
 	new_line_len = ft_strlen(data->line) - 2 + ft_strlen(exit);
