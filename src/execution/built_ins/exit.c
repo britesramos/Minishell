@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/14 07:29:29 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/20 10:27:39 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	is_digit_only(char *cmd, t_data *data)
 /// from the bash man:
 /// Exit the shell, returning a status of n to the shell’s parent. 
 /// If n is omitted, the exit status is that of the last command executed.
-/// @return returns 0 when exit should work and 9 when it shouldn't
+/// @return returns 0 when exit should work and -9 when it shouldn't
 int	ft_exit(char **cmd, t_data *data)
 {
 	int	digit_check;
@@ -100,6 +100,7 @@ int	ft_exit(char **cmd, t_data *data)
 		return (0);
 	else
 		data->exit_code = ft_atol(cmd[1]);
+	printf("exit code in exit: %d\n", data->exit_code);
 	if (data->exit_code < -255)
 		data->exit_code = data->exit_code % -256;
 	if (data->exit_code < 0)

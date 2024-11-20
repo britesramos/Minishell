@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 12:10:27 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/15 09:04:05 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/20 10:33:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ft_echo(char **cmd, t_data *data, int fd)
 
 	nl = 1;
 	i = 1;
+	data->exit_code = 0;
+	printf("in echo data->exit_code = %d\n", data->exit_code);
 	if (cmd[i] == NULL)
 	{
 		ft_putstr_fd("\n", fd);
@@ -70,7 +72,6 @@ void	ft_echo(char **cmd, t_data *data, int fd)
 	ft_echo_print(i, cmd, fd);
 	if (nl == 1)
 		ft_putchar_fd('\n', fd);
-	data->exit_code = 0;
 }
 
 /*

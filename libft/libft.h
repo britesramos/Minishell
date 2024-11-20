@@ -6,7 +6,7 @@
 /*   By: mstencel <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 17:12:13 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/04 14:18:08 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/19 11:38:26 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,6 @@ int		ft_ptr_help(size_t value);
 int		ft_pt_address(char *ptr);
 
 //get_next_line
-char	*get_next_line(int fd, int flag);
+char	*get_next_line(int fd);
 
 #endif

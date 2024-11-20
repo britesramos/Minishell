@@ -6,11 +6,13 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/15 09:00:59 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/20 10:37:06 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+extern volatile sig_atomic_t	sign;
 
 static void	children_wait(t_data *data, t_ex *ex)
 {
@@ -46,7 +48,6 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	char	*path;
 	int		bi_check;
 
-	ms_signals(CHILD);
 	child_fd_handling(data, ex);
 	bi_check = builtin_check(data, ex);
 	if (bi_check == EXIT_SUCCESS)
@@ -75,7 +76,7 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		return (perror("error: child"), EXIT_FAILURE);
 	if (ex->pid == 0)
 		ft_child(data, ex);
-	ms_signals(PARENT);
+	ms_signals(NONINTERACTIVE);
 	if (ex->fd_in != data->std[IN])
 		close_fd(&ex->fd_in);
 	ex->fd_in = ex->p_fd[READ];
@@ -99,7 +100,6 @@ int	mltpl_cmd(t_data *data)
 	ex.fd_in = data->std[IN];
 	while (data->cmd_current != NULL)
 	{
-		// printf("cmd_current = %s\n", data->cmd_current->cmd[0]);
 		if (do_pipex(data, &ex) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		ex.i++;
@@ -107,6 +107,14 @@ int	mltpl_cmd(t_data *data)
 	}
 	children_wait(data, &ex);
 	waitpid(ex.pid, &data->exit_code, 0);
+	if (WIFSIGNALED(data->exit_code))
+	{
+		if (WTERMSIG(data->exit_code) == SIGQUIT)
+			data->exit_code = WTERMSIG(data->exit_code) + 128;
+	}
+	else if (WIFEXITED(data->exit_code))
+		data->exit_code = WEXITSTATUS(data->exit_code);
+	printf("in single cmd after wait: %d\n", data->exit_code);
 	return (EXIT_SUCCESS);
 }
 

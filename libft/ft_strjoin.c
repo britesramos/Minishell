@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/18 11:00:32 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/07/26 09:09:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/19 12:04:19 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		s2_len;
 
 	newstr = NULL;
+	if (!s1)
+		s1 = "";
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	tot_len = s1_len + s2_len + 1;
@@ -32,6 +34,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		ft_strlcat(newstr, s2, tot_len);
 	return (newstr);
 }
+
 // #include <stdint.h>
 // int	main(void)
 // {

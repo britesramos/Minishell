@@ -6,11 +6,13 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 12:36:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/20 09:49:31 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+volatile sig_atomic_t	g_sign;
 
 int	bye(t_data *data)
 {
@@ -33,8 +35,12 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv; //Not going to use this. Waiting for user prompt.
 	data = malloc(sizeof(t_data));
-	signal(SIGQUIT, SIG_IGN);
-	ms_signals(PARENT);
+	ms_signals(INTERACTIVE);
+	if (g_sign == SIGINT)
+	{
+		ft_putstr_fd("in main?\n", STDOUT_FILENO);
+		data->exit_code = 130;
+	}
 	init_main_struct(data, envp);
 	if (argc < 1) //for execution testing only, to be deleted!
 	{

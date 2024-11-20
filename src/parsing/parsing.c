@@ -6,11 +6,13 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 09:20:47 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/20 10:29:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+extern volatile sig_atomic_t	g_sign;
 
 void	free_cmd_list(t_cmd *list)
 {
@@ -41,9 +43,10 @@ void	parsing(t_data *data, char **envp)
 	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
 	while (1)
 	{
-		// ms_signals(PARENT);
+		g_sign = 0;
 		if (data->line)
 			ft_free_string(data->line);
+		ms_signals(INTERACTIVE);
 		data->line = readline("minishell:~$ ");
 		// printf("data->line:%s\n", data->line);
 		if (data->line == NULL)
@@ -59,11 +62,11 @@ void	parsing(t_data *data, char **envp)
 		// parse_envp(data, envp); //This is resulting in segfault.
 		if (input_checker(data) == 0 && !only_spaces(data))
 		{
-			printf("B = This is data.line: %s\n", data->line);
+			// printf("B = This is data.line: %s\n", data->line);
 			expansion(data);
-			printf("A = This is data.line: %s\n", data->line);
+			// printf("A = This is data.line: %s\n", data->line);
 			token_list = tokenization(data, token_list);
-			printf("HOLA!\n");
+			// printf("HOLA!\n");
 			/*----------------------------------TEMP----------------------------------------------*/
 			// t_token *current = token_list;
 			// while (current)
@@ -74,7 +77,24 @@ void	parsing(t_data *data, char **envp)
 			// 	current = current->next;
 			// }
 			/*----------------------------------TEMP----------------------------------------------*/
-			parse_input(data, token_list);
+			if (parse_input(data, token_list) == 9)
+			{
+				if (token_list)
+				{
+					free_token_list(token_list);
+					token_list = NULL;
+				}
+				if (data->cmd_head)
+				{
+					free_cmd_list(data->cmd_head);
+					data->cmd_head = NULL;
+				}
+				data->nbr_pipes = 0;
+				data->std[IN] = STDIN_FILENO;
+				data->std[OUT] = STDOUT_FILENO;
+				g_sign = 0;
+				continue ;
+			}
 			data->cmd_current = data->cmd_head;
 			/*----------------------------------TEMP----------------------------------------------*/
 			// t_cmd *currentll = data->cmd_head;
@@ -112,8 +132,8 @@ void	parsing(t_data *data, char **envp)
 			data->nbr_pipes = 0;
 			data->std[IN] = STDIN_FILENO;
 			data->std[OUT] = STDOUT_FILENO;
-			// should stay (for the moment commented out - infinite loop)
-			// wait(NULL); //
+			if (g_sign == SIGINT)
+				data->exit_code = g_sign + 128;
 		}
 	}
 }

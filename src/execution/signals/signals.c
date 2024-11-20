@@ -6,104 +6,146 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/12 17:55:59 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/15 09:16:20 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/20 09:39:53 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
+// static void	signal_parent(int signal)
+// {
+// 	if (signal == SIGINT)
+// 	{
+// 		rl_replace_line("", 0);
+// 		rl_on_new_line();
+// 		ft_putchar_fd('\n', STDOUT_FILENO);
+// 		rl_redisplay();
+// 	}
+// }
 
-static void	signal_parent(int signal)
+// static void	signal_child_int(int signal)
+// {
+// 	if (signal == SIGINT)
+// 	{
+// 		rl_replace_line("", 0);
+// 		rl_on_new_line();
+// 		ft_putchar_fd('\n', STDOUT_FILENO);
+// 	}
+// }
+
+// void	signal_hd(int signal)
+// {
+// 	if (signal == SIGINT)
+// 	{
+// 		ft_putchar_fd('\n', STDOUT_FILENO);
+// 		close (STDERR_FILENO);
+// 		close (STDIN_FILENO);
+// 		close (STDOUT_FILENO);
+// 	}
+// }
+
+// void	ms_signals(int process)
+// {
+// 	if (process == PARENT)
+// 	{
+// 		signal(SIGINT, signal_parent);
+// 		signal(SIGQUIT, SIG_IGN);
+// 	}
+// 	else if (process == CHILD)
+// 	{
+// 		signal(SIGINT, signal_child_int);
+// 		signal(SIGQUIT, SIG_IGN);
+// 	}
+// 	else if (process == HEREDOC)
+// 	{
+// 		signal(SIGINT, signal_hd);
+// 		signal(SIGQUIT, SIG_IGN);
+// 	}
+// }
+
+						/*for the sigaction*/
+
+extern volatile sig_atomic_t	g_sign;
+
+static void	signal_hd(int signal, siginfo_t *info, void *x)
 {
+	(void)info;
+	(void)x;
+		if (signal == SIGINT)
+		{
+			ft_putchar_fd('\n', STDOUT_FILENO);
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			g_sign = signal;
+		}
+
+}
+
+static void	signal_p(int signal, siginfo_t *info, void *x)
+{
+	(void)info;
+	(void)x;
 	if (signal == SIGINT)
 	{
+		// ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putstr_fd("noninteractive\n", STDOUT_FILENO);
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		rl_redisplay();
+		g_sign = signal;
 	}
 }
 
-static void	signal_child_c(int signal)
+static void	signal_int(int signal, siginfo_t *info, void *x)
 {
+	(void)info;
+	(void)x;
 	if (signal == SIGINT)
 	{
-		rl_on_new_line();
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		// ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putstr_fd("interactive\n", STDOUT_FILENO);
 		rl_replace_line("", 0);
-	}
-}
-
-static void signal_child_s(int signal)
-{
-	if (signal == SIGQUIT)
-		write(STDERR_FILENO, "Quit (core dumped)", 18);
-}
-void	signal_hd(int signal)
-{
-	if (signal == SIGINT)
-	{
 		rl_on_new_line();
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		rl_replace_line("", 0);
 		rl_redisplay();
+		g_sign = signal;
 	}
 }
 
 void	ms_signals(int process)
 {
+	struct sigaction	sa;
 
-	if (process == PARENT)
+	ft_memset(&sa, 0, sizeof(sa));
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGINT);
+	sa.sa_flags = SA_SIGINFO;
+	if (process == NONINTERACTIVE)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, signal_parent);
-	}
-	else if (process == CHILD)
-	{
-		signal(SIGINT, signal_child_c);
-		signal(SIGQUIT, signal_child_s);
-	}
-	else if (process == HEREDOCP)
-	{
-		signal(SIGINT, signal_hd);
-		signal(SIGQUIT, SIG_IGN);
-	}
-	else if (process == HEREDOCC)
-	{
-		signal(SIGINT, SIG_DFL);
+		sa.sa_sigaction = &signal_p;
+		if (sigaction(SIGINT, &sa, NULL) == -1)
+		{
+			perror("SIGINT error");
+			return ;
+		}
 		signal(SIGQUIT, SIG_IGN);
 	}
-
+	else if (process == INTERACTIVE)
+	{
+		sa.sa_sigaction = &signal_int;
+		if (sigaction(SIGINT, &sa, NULL) == -1)
+		{
+			perror("SIGINT error");
+			return ;
+		}
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (process == HEREDOC)
+	{
+		sa.sa_sigaction = &signal_hd;
+		if (sigaction(SIGINT, &sa, NULL) == -1)
+		{
+			perror("SIGINT error");
+			return ;
+		}
+		signal(SIGQUIT, SIG_IGN);
+	}
 }
-	
-// 	struct sigaction	sa;
-
-// 	ft_memset(&sa, 0, sizeof(sa));
-// 	sigemptyset(&sa.sa_mask);
-// 	sigaddset(&sa.sa_mask, SIGINT);
-// 	sigaddset(&sa.sa_mask, SIGQUIT);
-
-// 	sa.sa_sigaction = &handles;
-// 	sa.sa_flags = SA_SIGINFO;
-// 	if (sigaction(SIGINT, &sa, NULL) == -1 || 
-// 		sigaction(SIGQUIT, &sa, NULL) == -1)
-// 	{
-// 		perror("SIGINT error");
-// 		data->exit_code = errno;
-// 		return ;
-// 	}
-// }
-// static void	handles(int signal, siginfo_t *info, void *x)
-// {
-// 	if (info || x)
-// 		printf("1\n");
-// 	if (signal == SIGINT)
-// 	{
-// 		ft_putchar_fd('\n', STDOUT_FILENO);
-// 		ft_putendl_fd("in handles?", STDOUT_FILENO);
-// 	}
-// 	else if (signal == SIGQUIT)
-// 		printf("I'm not me\n");
-// 	else if (signal == SIGTERM)
-// 		printf("what am I?\n");
-// }

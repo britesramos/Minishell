@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 09:00:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/20 11:52:01 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	expansion(t_data *data);
 
 /*Parsing input*/
 void	parsing(t_data *data, char **envp);
-void	parse_input(t_data *data, t_token *token_list);
+int		parse_input(t_data *data, t_token *token_list);
 
 /*Tokenization*/
 t_token *tokenization(t_data *data, t_token *token_list);
@@ -158,14 +158,9 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 #define IN 0
 #define OUT 1
 
-#define PARENT 1
-#define CHILD 2
-#define HEREDOCP 3
-#define HEREDOCC 4
-
-#define TEMP 0
-#define VALUE 1
-#define LO 2
+#define INTERACTIVE 1
+#define NONINTERACTIVE 2
+#define HEREDOC 3
 
 int		exec(t_data *data);
 int		ft_builtin_manager(t_data *data, int fd);
@@ -185,12 +180,8 @@ void	ft_unset(char **cmd, t_data *data);
 void	single_cmd(t_data *data);
 int		mltpl_cmd(t_data *data);
 char	*get_path(t_data *data, char *cmd);
-// char	**ft_env_path(t_data *data);
 
 // fd_utils
-// int		fds_first_cmd(t_cmd *current, t_ex *ex, t_data *data);
-// int		fds_in_between_cmd(t_cmd *current, t_ex *ex, t_data *data);
-// int		fds_last_cmd(t_cmd *current, t_data *data);
 void	child_fd_handling(t_data *data, t_ex *ex);
 
 //envp utils
@@ -202,7 +193,6 @@ void	replace_value(t_data *data, char *key, char *new_value);
 
 
 void	ms_signals(int process);
-void	signal_hd(int signal);
 
 void	close_fd(int *fd);
 int		bye(t_data *data);

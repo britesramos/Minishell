@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/14 14:33:37 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/20 08:44:03 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, 
 	return (i);
 }
 
-void	parse_input(t_data *data, t_token *token_list)
+int	parse_input(t_data *data, t_token *token_list)
 {
 	int		i;
 	t_token	*current_token;
@@ -101,7 +101,11 @@ void	parse_input(t_data *data, t_token *token_list)
 			else if (current_token->type == T_APPEND)
 				current_token = parse_append(current_token, current_cmd, data);
 			else if (current_token->type == T_HEREDOC)
+			{
 				current_token = parse_heredoc(current_token, current_cmd, data);
+				if (current_token == NULL && data->exit_code == 130)
+					return (9);
+			}
 			else if (current_token->type == T_WORD)
 				i = parse_word(current_token, current_cmd, data, i);
 			current_token = current_token->next;
@@ -112,4 +116,5 @@ void	parse_input(t_data *data, t_token *token_list)
 			data->nbr_pipes++;
 		}
 	}
+	return (0);
 }

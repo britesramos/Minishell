@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/14 14:56:05 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/20 10:25:42 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,19 @@ void	single_cmd(t_data *data)
 		perror("error: child in single cmd");
 		return ;
 	}
-	if (data->cmd_current->heredoc == false)
-		ms_signals(CHILD);
 	if (pid == 0)
 	{
 		ft_dup_all(data->cmd_current, data);
 		ft_single_child(data, path);
 	}
-	if (data->cmd_current->heredoc == true)
-		ms_signals(HEREDOCP);
-	else
-		ms_signals(PARENT);
+	ms_signals(NONINTERACTIVE);
 	waitpid(pid, &data->exit_code, 0);
+	if (WIFSIGNALED(data->exit_code))
+	{
+		if (WTERMSIG(data->exit_code) == SIGQUIT)
+			data->exit_code = WTERMSIG(data->exit_code) + 128;
+	}
+	else if (WIFEXITED(data->exit_code))
+		data->exit_code = WEXITSTATUS(data->exit_code);
+	printf("in single cmd after wait: %d\n", data->exit_code);
 }
