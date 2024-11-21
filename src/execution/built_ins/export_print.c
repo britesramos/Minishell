@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 09:09:23 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/10 15:31:32 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 09:29:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	ft_print_export(t_data *data, int fd)
 	int		l_size;
 	int		printed;
 
-	
 	l_size = ft_size(data->envp_head);
 	last_p = NULL;
 	printed = 0;

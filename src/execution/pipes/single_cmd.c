@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/20 10:25:42 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 10:20:45 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,4 @@ void	single_cmd(t_data *data)
 	}
 	else if (WIFEXITED(data->exit_code))
 		data->exit_code = WEXITSTATUS(data->exit_code);
-	printf("in single cmd after wait: %d\n", data->exit_code);
 }

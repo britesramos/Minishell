@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/10 15:32:58 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 09:29:24 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,11 @@ static int	ft_export_check(char *cmd, t_data *data)
 	return (0);
 }
 
-
 static void	replace_export(t_data *data, char *cmd)
 {
 	char	*key;
 	char	*value;
-	
+
 	key = init_key_export(cmd, data);
 	value = init_value_export(cmd, data);
 	replace_value(data, key, value);
@@ -133,7 +132,7 @@ void	ft_export(char **cmd, t_data *data, int fd)
 			if (check == 0)
 				add_node(data, cmd[i], &data->envp_head);
 			else if (check == 1)
-				replace_export(data,cmd[i]);
+				replace_export(data, cmd[i]);
 			else if (check == -1)
 				ft_export_error(cmd[i], data);
 			i++;

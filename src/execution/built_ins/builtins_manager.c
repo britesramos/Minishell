@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:05:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/20 12:03:19 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 09:07:54 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,54 +26,22 @@ int	ft_builtin_manager(t_data *data, int fd)
 
 	cmd = data->cmd_current->cmd;
 	if (ft_strncmp(cmd[0], "cd", 3) == 0)
-	{
-		ft_cd(cmd, data);
-		printf("builtin man exit_code = %d\n", data->exit_code);
-		return (0);
-		// return (ft_cd(cmd, data), 0);
-	}
+		return (ft_cd(cmd, data), 0);
 	else if (ft_strncmp(cmd[0], "echo", 5) == 0)
-	{
-		ft_echo(cmd, data, fd);
-		printf("builtin man exit_code = %d\n", data->exit_code);
-		return (0);
-		// return (ft_echo(cmd, data, fd), 0);
-	}
+		return (ft_echo(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "env", 4) == 0)
-	{
-		ft_env(cmd, data, fd);
-		printf("builtin man exit_code = %d\n", data->exit_code);
-		return (0);
-		// return (ft_env(cmd, data, fd), 0);
-	}
+		return (ft_env(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "exit", 5) == 0)
 	{
-		ft_exit(cmd, data);
-		printf("builtin man exit_code = %d\n", data->exit_code);
 		if (ft_exit(cmd, data) == 0)
 			return (9);
 		return (EXIT_SUCCESS);
 	}
 	else if (ft_strncmp(cmd[0], "export", 7) == 0)
-	{
-		ft_export(cmd, data, fd);
-		printf("builtin man exit_code = %d\n", data->exit_code);
-		return (0);
-		// return (ft_export(cmd, data, fd), 0);
-	}
+		return (ft_export(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "pwd", 4) == 0)
-	{
-		ft_pwd(cmd, data, fd);
-		printf("builtin man exit_code = %d\n", data->exit_code);
-		return (0);
-		// return (ft_pwd(cmd, data, fd), 0);
-	}
+		return (ft_pwd(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "unset", 6) == 0)
-	{
-		ft_unset(cmd, data);
-		printf("builtin man exit_code = %d\n", data->exit_code);
-		return (0);
-		// return (ft_unset(cmd, data), 0);
-	}
+		return (ft_unset(cmd, data), 0);
 	return (EXIT_FAILURE);
 }

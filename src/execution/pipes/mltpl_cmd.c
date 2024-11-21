@@ -6,20 +6,18 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/20 10:37:06 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 10:20:36 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-extern volatile sig_atomic_t	sign;
 
 static void	children_wait(t_data *data, t_ex *ex)
 {
 	int	i;
 
 	i = 0;
-	while(i < ex->i)
+	while (i < ex->i)
 	{
 		waitpid(ex->pid_store[i], &data->exit_code, 0);
 		i++;
@@ -114,10 +112,8 @@ int	mltpl_cmd(t_data *data)
 	}
 	else if (WIFEXITED(data->exit_code))
 		data->exit_code = WEXITSTATUS(data->exit_code);
-	printf("in single cmd after wait: %d\n", data->exit_code);
 	return (EXIT_SUCCESS);
 }
-
 
 // ls -la > test1 | cat test1 | grep "a" | sort | tee test2
 // cat test1 | grep "8" | sort | tee test2

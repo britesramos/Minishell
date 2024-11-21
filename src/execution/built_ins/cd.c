@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/20 11:54:42 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 09:25:54 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ static void	ft_cd_change(char *path, t_data *data)
 	char	*old_cwd;
 	char	*cwd;
 
-	old_cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-	{
-		perror("minishell: cd: getpwd: ");
+	cwd = NULL;
+	old_cwd = ft_getcdw_err(data);
+	if (old_cwd == NULL)
 		return ;
-	}
 	if (chdir(path) != 0)
 	{
 		if (opendir(path) == NULL)
@@ -32,12 +30,9 @@ static void	ft_cd_change(char *path, t_data *data)
 			ft_free_string(old_cwd);
 			return ;
 		}
-		cwd = getcwd(NULL, 0);
+		cwd = ft_getcdw_err(data);
 		if (cwd == NULL)
-		{
-			perror("minishell: cd: getpwd: ");
 			return ;
-		}
 		replace_value(data, "PWD", cwd);
 		replace_value(data, "OLDPWD", old_cwd);
 		ft_free_string(cwd);
@@ -67,14 +62,9 @@ static void	ft_chdir_error(char *path, t_data *data)
 	int		oops;
 	char	*cwd;
 
-	cwd = getcwd(NULL, 0);
+	cwd = ft_getcwd_parent_err(data);
 	if (cwd == NULL)
-	{
-		ft_putstr_fd("cd: error retrieving current directory: ", 2);
-		ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
-		ft_putendl_fd("No such file or directory", 2);
 		return ;
-	}
 	oops = chdir(path);
 	if (oops != 0)
 	{
@@ -85,12 +75,9 @@ static void	ft_chdir_error(char *path, t_data *data)
 	}
 	replace_value(data, "OLDPWD", cwd);
 	ft_free_string(cwd);
-	cwd = getcwd(NULL, 0);
+	cwd = ft_getcdw_err(data);
 	if (cwd == NULL)
-	{
-		perror("minishell: cd: getcwd: ");
 		return ;
-	}
 	replace_value(data, "PWD", cwd);
 	ft_free_string(cwd);
 	data->exit_code = 0;

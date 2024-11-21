@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/20 08:38:56 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 10:51:44 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,13 @@
 
 extern volatile sig_atomic_t	g_sign;
 
-t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
+static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 {
-	char	*heredoc_line;
-	char	*delimiter;
-	char	*str;
-
-	c_cmd->heredoc = true;
-	current_token = current_token->next;
-	delimiter = ft_strjoin(current_token->str, "\n"); //TODO add malloc check
-	heredoc_line = NULL;
-	str = NULL;
-	ms_signals(HEREDOC);
 	while (1)
 	{
-		ft_putchar_fd('>', data->std[OUT]);
-		heredoc_line = get_next_line(data->std[IN]);
-		if (heredoc_line == NULL)
+		ft_putstr_fd("> ", data->std[OUT]);
+		*heredoc_line = get_next_line(data->std[IN]);
+		if (*heredoc_line == NULL)
 		{
 			if (g_sign == SIGINT)
 			{
@@ -43,23 +33,38 @@ t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 			data->exit_code = 0;
 			break ;
 		}
-		if (ft_strncmp(heredoc_line, delimiter, ft_strlen(delimiter) + 1) == 0)
+		if (ft_strncmp(*heredoc_line, del, ft_strlen(del) + 1) == 0)
 			break;
-		str = ft_strjoin(str, heredoc_line); //TODO add malloc check
-		free (heredoc_line);
+		*str = ft_strjoin(*str, *heredoc_line); //TODO add malloc check
+		ft_free_string(*heredoc_line);
 	}
+	return (*str);
+}
+
+t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
+{
+	char	*heredoc_line;
+	char	*delimiter;
+	char	*str;
+
+	c_cmd->heredoc = true;
+	current_token = current_token->next;
+	delimiter = ft_strjoin(current_token->str, "\n");
+	heredoc_line = NULL;
+	str = NULL;
+	ms_signals(HEREDOC);
+	str = heredoc(data, &heredoc_line, delimiter, &str);
+	if (str == NULL && data->exit_code == 128 + g_sign)
+		return (NULL);
 	c_cmd->fd_in = open("/tmp/heredoc.txt", O_CREAT | O_TRUNC | O_RDWR, 0660);
 	if (str)
 		ft_putstr_fd(str, c_cmd->fd_in);
-	c_cmd->infile = ft_strdup("/tmp/heredoc.txt"); //TODO add malloc check
+	c_cmd->infile = ft_strdup("/tmp/heredoc.txt");
 	close(c_cmd->fd_in);
 	c_cmd->fd_in = open("/tmp/heredoc.txt", O_RDWR, 0660);
-	if (heredoc_line)
-		free (heredoc_line);
-	if (str)
-		free (str);
-	if (delimiter)
-		free (delimiter);
+	ft_free_string(heredoc_line);
+	ft_free_string(str);
+	ft_free_string(delimiter);
 	return (current_token);
 }
 

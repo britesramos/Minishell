@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/20 11:52:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 09:25:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ int		ft_builtin_manager(t_data *data, int fd);
 
 // built-in funtions:
 void	ft_cd(char **cmd, t_data *data);
+char	*ft_getcdw_err(t_data *data);
+char	*ft_getcwd_parent_err(t_data *data);
 void	ft_echo(char **cmd, t_data *data, int fd);
 void	ft_env(char **cmd, t_data *data, int fd);
 int		ft_exit(char **cmd, t_data *data);
