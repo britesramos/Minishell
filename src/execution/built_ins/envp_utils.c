@@ -6,7 +6,7 @@
 /*   By: gosia <gosia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 08:04:38 by mstencel          #+#    #+#             */
-/*   Updated: 2024/11/21 20:13:12 by gosia            ###   ########.fr       */
+/*   Updated: 2024/11/21 21:02:13 by gosia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	add_node(t_data *data, char *cmd, t_envp **env)
 	{
 		key = init_key_export(cmd, data);
 		value = init_value_export(cmd, data);
-		printf("key - value: %s%s\n", key, value);
 		new_node = create_node_export(data, key, value);
 		ft_free_string(&key);
 		ft_free_string(&value);

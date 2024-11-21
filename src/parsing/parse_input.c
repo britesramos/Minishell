@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_input.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: marvin <marvin@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 12:12:30 by mstencel      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_input.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gosia <gosia@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/15 18:23:26 by sramos            #+#    #+#             */
+/*   Updated: 2024/11/21 21:02:17 by gosia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static int	p_word(t_token *current_t, t_cmd *current_cmd, t_data *data, int i)
 	alloc_times = 2;
 	if (current_cmd->cmd == NULL)
 		current_cmd->cmd = (char **)ft_calloc(alloc_times + 1, sizeof(char *));
-	printf("Current_cmd: %p\n", current_cmd->cmd);
 	if (!current_cmd->cmd)
 		error_exit(data, NULL, "Error allocating word!\n", 1);
 	if (i >= alloc_times)

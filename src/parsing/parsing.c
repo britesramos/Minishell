@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parsing.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: sramos <sramos@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 12:14:33 by mstencel      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gosia <gosia@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/23 11:59:18 by sramos            #+#    #+#             */
+/*   Updated: 2024/11/21 21:02:24 by gosia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ void	parsing(t_data *data, char **envp)
 			}
 			if (data->cmd_head)
 			{
-				printf("Am i cleaning?\n");
 				free_cmd_list(data->cmd_head);
 				data->cmd_head = NULL;
 			}

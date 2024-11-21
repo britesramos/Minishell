@@ -6,7 +6,7 @@
 /*   By: gosia <gosia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 07:48:37 by mstencel          #+#    #+#             */
-/*   Updated: 2024/11/21 20:51:46 by gosia            ###   ########.fr       */
+/*   Updated: 2024/11/21 21:01:11 by gosia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*init_key_export(char *cmd, t_data *data)
 		i++;
 	}
 	key[i] = '\0';
-	printf("key: %s\n", key);
 	return (key);
 }
 
@@ -64,8 +63,6 @@ char	*init_value_export(char *cmd, t_data *data)
 		data->exit_code = 1;
 		return (NULL);
 	}
-	// if (cmd_len - key_len == 0)
-	// 	value[0] = '\0';
 	else
 		ft_strlcpy(value, cmd + key_len, (size_t)cmd - key_len);
 	return (value);
