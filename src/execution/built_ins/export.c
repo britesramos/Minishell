@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   export.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 09:29:24 by mstencel      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gosia <gosia@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/18 07:48:37 by mstencel          #+#    #+#             */
+/*   Updated: 2024/11/21 20:51:46 by gosia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*init_key_export(char *cmd, t_data *data)
 		i++;
 	}
 	key[i] = '\0';
+	printf("key: %s\n", key);
 	return (key);
 }
 
@@ -43,27 +44,30 @@ char	*init_value_export(char *cmd, t_data *data)
 {
 	int		i;
 	size_t	key_len;
+	size_t	cmd_len;
 	char	*value;
 
 	i = 0;
 	key_len = 0;
 	value = NULL;
+	cmd_len = ft_strlen(cmd);
 	while (cmd[key_len] != '=')
 		key_len++;
-	key_len++;
-	value = ft_calloc(strlen(cmd) - key_len + 1, 1);
+	if (key_len + 1 == cmd_len)
+		key_len++;
+	if (cmd_len - key_len == 0)
+		return (value);
+	value = ft_calloc(cmd_len - key_len + 1, 1);
 	if (!value)
 	{
 		perror("export - value creation");
 		data->exit_code = 1;
 		return (NULL);
 	}
-	while ((i + key_len) < ft_strlen(cmd))
-	{
-		value[i] = cmd[key_len + i];
-		i++;
-	}
-	value[i] = '\0';
+	// if (cmd_len - key_len == 0)
+	// 	value[0] = '\0';
+	else
+		ft_strlcpy(value, cmd + key_len, (size_t)cmd - key_len);
 	return (value);
 }
 
@@ -107,8 +111,8 @@ static void	replace_export(t_data *data, char *cmd)
 	key = init_key_export(cmd, data);
 	value = init_value_export(cmd, data);
 	replace_value(data, key, value);
-	ft_free_string(key);
-	ft_free_string(value);
+	ft_free_string(&key);
+	ft_free_string(&value);
 }
 
 /// @brief prints the env, adds the key & value, changes the value 
