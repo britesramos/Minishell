@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 11:06:12 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 11:11:22 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_cmd_list(t_cmd *list)
 	{
 		next = list->pipe;
 		if (list->cmd)
-			ft_free_array(list->cmd);			
+			ft_free_array(list->cmd);
 		if (list->infile)
 			free_close_fd(list->infile, list->fd_in);
 		if (list->outfile)
@@ -40,9 +40,9 @@ void	parsing(t_data *data, char **envp)
 {
 	t_token	*token_list;
 
-	data->line = NULL; //ft_bezero(data);
+	data->line = NULL;
 	token_list = NULL;
-	parse_envp(data, envp); //There is leaks from here. But I am not sure why. See clean_up.c
+	parse_envp(data, envp);
 	while (1)
 	{
 		g_sign = 0;
@@ -50,7 +50,6 @@ void	parsing(t_data *data, char **envp)
 			ft_free_string(data->line);
 		ms_signals(INTERACTIVE);
 		data->line = readline("minishell:~$ ");
-		// printf("data->line:%s\n", data->line);
 		if (data->line == NULL)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
@@ -61,14 +60,10 @@ void	parsing(t_data *data, char **envp)
 			continue ;
 		if (data->line[0])
 			add_history(data->line);
-		// parse_envp(data, envp); //This is resulting in segfault.
 		if (input_checker(data) == 0 && !only_spaces(data))
 		{
-			// printf("B = This is data.line: %s\n", data->line);
 			expansion(data);
-			// printf("A = This is data.line: %s\n", data->line);
 			token_list = tokenization(data, token_list);
-			// printf("HOLA!\n");
 			/*----------------------------------TEMP----------------------------------------------*/
 			// t_token *current = token_list;
 			// while (current)
@@ -115,7 +110,7 @@ void	parsing(t_data *data, char **envp)
 			// 	printf("This is fd_out: %i\n", currentll->fd_out);
 			// 	printf("This is infile: %s\n", currentll->infile);
 			// 	printf("This is outfile: %s\n\n\n", currentll->outfile);
-			// 	printf("Nbr pipes: %i\n", data->nbr_pipes);
+			// 	// printf("Nbr pipes: %i\n", data->nbr_pipes);
 			// 	currentll = currentll->pipe;
 			// }
 			/*----------------------------------TEMP----------------------------------------------*/
@@ -139,5 +134,3 @@ void	parsing(t_data *data, char **envp)
 		}
 	}
 }
-
-//Bash Input: ">file"  - **Does nothing.** STDERROR = 0;

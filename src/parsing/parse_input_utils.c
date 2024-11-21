@@ -6,29 +6,34 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 11:03:54 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 11:26:52 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_close_fd(char *file, int fd)
+t_token	*p_pipe(t_token *current_t, t_data *data)
 {
-	if (file)
-	{
-		free(file);
-		file = NULL;
-	}
-	close_fd(&fd);
+	current_t = current_t->next;
+	data->nbr_pipes++;
+	return (current_t);
 }
 
-void	free_null(void **input)
+t_token	*p_redirections(t_token *current_t, t_cmd *c_cmd, t_data *data)
 {
-	if (input && *input)
+	if (current_t->type == T_REIN)
+		current_t = p_rein(current_t, c_cmd, data);
+	else if (current_t->type == T_REOUT)
+		current_t = p_reout(current_t, c_cmd, data);
+	else if (current_t->type == T_APPEND)
+		current_t = p_append(current_t, c_cmd, data);
+	else if (current_t->type == T_HEREDOC)
 	{
-		free(*input);
-		*input = NULL;
+		current_t = p_heredoc(current_t, c_cmd, data);
+		if (current_t == NULL && data->exit_code == 130)
+			return (NULL);
 	}
+	return (current_t);
 }
 
 char	**ft_realloc(t_data *data, int number_of_times, char **old_array)
@@ -39,27 +44,23 @@ char	**ft_realloc(t_data *data, int number_of_times, char **old_array)
 	i = 0;
 	new = (char **)ft_calloc(number_of_times, sizeof(char *));
 	if (!new)
-		error_exit(data, NULL, "Memory calloc failed!\n", 1); //fix
-	if (old_array && old_array[i])
+		error_exit(data, NULL, "Memory calloc failed!\n", 1);
+	if (old_array)
 	{
 		while (old_array[i])
 		{
 			new[i] = ft_strdup(old_array[i]);
 			if (!new[i])
-				error_exit(data, NULL, "Memory allocation failed in ft_strdup - ft_realloc\n", 1);
+				error_exit(data, NULL, "Mem alloc failed - ft_realloc\n", 1);
 			i++;
 		}
-		while (i > 0)
+		while (i >= 0)
 		{
-			free(old_array[i]);
-			old_array[i] = NULL;
+			free_null_array(old_array[i]);
 			i--;
 		}
 		if (old_array)
-		{
-			free(old_array);
-			old_array = NULL;
-		}
+			free_null_2d_array(old_array);
 	}
 	return (new);
 }
@@ -78,8 +79,6 @@ t_cmd	*create_new_node_cmd(t_data *data)
 	node->outfile = NULL;
 	node->pipe = NULL;
 	node->heredoc = false;
-	// if (node->pipe == NULL)
-	// 	printf("HERE\n");
 	return (node);
 }
 
@@ -96,9 +95,9 @@ void	add_new_node(t_cmd **head, t_cmd *newnode, t_cmd **current_cmd)
 	else
 	{
 		temp = *head;
-		while (temp->pipe != NULL) // Traverse to the end of the list
+		while (temp->pipe != NULL)
 			temp = temp->pipe;
-		temp->pipe = newnode; // Link the new node to the end
-		*current_cmd = temp->pipe; // Update current_cmd to point to the new node
+		temp->pipe = newnode;
+		*current_cmd = temp->pipe;
 	}
 }

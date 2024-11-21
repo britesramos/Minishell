@@ -12,47 +12,25 @@
 
 #include "../../include/minishell.h"
 
-static int	next_quote_mark(char *str, char c, int end)
-{
-	int	len;
-
-	len = 0;
-	end++;
-	while (str[end] != c)
-	{
-		end++;
-		len++;
-	}
-	return (len);
-}
-
-static int	token_word(t_data *data, int end, t_token **token_list)
+static int	token_word(t_data *data, int start, t_token **token_list)
 {
 	int		len;
 	char	*new;
 
 	len = 0;
 	new = NULL;
-	if (data->line[end + len] != '"' && data->line[end + len] != '\'')
-	{
-		while (ms_isword(data->line[end + len])
-			&& !ms_isspace(data->line[end + len]))
-			len++;
-	}
-	else if (data->line[end] == '\'' || data->line[end] == '"')
-	{
-		len = next_quote_mark(data->line, data->line[end], end);
-		end++;
-	}
-	new = ft_substr(data->line, end, len);
+	while (ms_isword(data->line[start + len])
+		&& !ms_isspace(data->line[start + len]))
+		len++;
+	new = ft_substr(data->line, start, len);
 	if (!new)
 		error_exit(data, NULL, "New str does not exist!\n", 1);
-	else
-	{
-		create_t_list(data, token_list, new, T_WORD);
-		free(new);
-	}
-	return (end + len);
+	if (ft_strchr(new, '"') || ft_strchr(new, '\''))
+		new = token_word_remove_extra_quotes(new, data);
+	create_t_list(data, token_list, new, T_WORD);
+	free(new);
+	len--;
+	return (start + len);
 }
 
 static int	token_append(t_data *data, int i, t_token **token_list, char *str)
@@ -76,7 +54,6 @@ t_token	*tokenization(t_data *data, t_token *token_list)
 		return (NULL);
 	while (data->line[i])
 	{
-		// printf("This is data->line[%i]: %c\n", i, data->line[i]);
 		while (ms_isspace(data->line[i]))
 			i++;
 		if (data->line[i] == '>' && data->line[i + 1] == '>')
@@ -91,7 +68,8 @@ t_token	*tokenization(t_data *data, t_token *token_list)
 			create_t_list(data, &token_list, "|", T_PIPE);
 		else if (ms_isword(data->line[i]))
 			i = token_word(data, i, &token_list);
-		i++;
+		if (data->line[i])
+			i++;
 	}
 	return (token_list);
 }

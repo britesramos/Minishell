@@ -6,56 +6,55 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/20 08:44:03 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 11:28:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static t_token	*parse_rein(t_token *current_token, t_cmd *current_cmd, t_data *data)
+t_token	*p_rein(t_token *current_t, t_cmd *current_cmd, t_data *data)
 {
-	current_token = current_token->next;
-	// if(current_token->type == T_WORD) //Fix tokenization first.
+	current_t = current_t->next;
 	if (current_cmd->infile)
 		free_close_fd(current_cmd->infile, current_cmd->fd_in);
-	current_cmd->fd_in = open(current_token->str, O_RDONLY);
+	current_cmd->fd_in = open(current_t->str, O_RDONLY);
 	if (current_cmd->fd_in == -1)
-		error_exit_system(data, current_token->str, 1);
-	current_cmd->infile = ft_strdup(current_token->str);
+		error_exit_system(data, current_t->str, 1);
+	current_cmd->infile = ft_strdup(current_t->str);
 	if (!current_cmd->infile)
-		error_exit(data, NULL, "Infile red allocation failed!\n", 1); //Free memory.
-	return (current_token);
+		error_exit(data, NULL, "Infile red allocation failed!\n", 1);
+	return (current_t);
 }
 
-static t_token	*parse_reout(t_token *current_token, t_cmd *current_cmd, t_data *data)
+t_token	*p_reout(t_token *current_t, t_cmd *c_cmd, t_data *data)
 {
-	current_token = current_token->next;
+	current_t = current_t->next;
+	if (c_cmd->outfile)
+		free_close_fd(c_cmd->outfile, c_cmd->fd_out);
+	c_cmd->fd_out = open(current_t->str, O_CREAT | O_TRUNC | O_RDWR, 0660);
+	if (c_cmd->fd_out == -1)
+		error_exit_system(data, current_t->str, 1);
+	c_cmd->outfile = ft_strdup(current_t->str);
+	if (!c_cmd->outfile)
+		error_exit(data, NULL, "Outfile red allocation failed!\n", 1);
+	return (current_t);
+}
+
+t_token	*p_append(t_token *current_t, t_cmd *current_cmd, t_data *data)
+{
+	current_t = current_t->next;
 	if (current_cmd->outfile)
 		free_close_fd(current_cmd->outfile, current_cmd->fd_out);
-	current_cmd->fd_out = open(current_token->str, O_CREAT | O_TRUNC | O_RDWR, 0660);
+	current_cmd->fd_out = open(current_t->str, O_CREAT | O_APPEND | O_RDWR);
 	if (current_cmd->fd_out == -1)
-		error_exit_system(data, current_token->str, 1);
-	current_cmd->outfile = ft_strdup(current_token->str);
+		error_exit_system(data, current_t->str, 1);
+	current_cmd->outfile = ft_strdup(current_t->str);
 	if (!current_cmd->outfile)
-		error_exit(data, NULL, "Outfile red allocation failed!\n", 1); //Free memory.
-	return (current_token);
+		error_exit(data, NULL, "Outfile Append allocation failed!\n", 1);
+	return (current_t);
 }
 
-static t_token	*parse_append(t_token *current_token, t_cmd *current_cmd, t_data *data)
-{
-	current_token = current_token->next;
-	if (current_cmd->outfile)
-		free_close_fd(current_cmd->outfile, current_cmd->fd_out);
-	current_cmd->fd_out = open(current_token->str, O_CREAT | O_APPEND | O_RDWR);
-	if (current_cmd->fd_out == -1)
-		error_exit_system(data, current_token->str, 1);
-	current_cmd->outfile = ft_strdup(current_token->str);
-	if (!current_cmd->outfile)
-		error_exit(data, NULL, "Outfile Append allocation failed!\n", 1); //Free memory.
-	return (current_token);
-}
-
-static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, int i)
+static int	p_word(t_token *current_t, t_cmd *current_cmd, t_data *data, int i)
 {
 	int	alloc_times;
 
@@ -71,7 +70,9 @@ static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, 
 	}
 	if (alloc_times > 0)
 	{
-		current_cmd->cmd[i] = ft_strdup(current_token->str);
+		current_cmd->cmd[i] = ft_strdup(current_t->str);
+		if (!current_cmd->cmd[i])
+			error_exit(data, NULL, "Fail alloc new cmd array in parsing.\n", 1);
 		alloc_times--;
 		i++;
 	}
@@ -81,40 +82,31 @@ static int	parse_word(t_token *current_token, t_cmd *current_cmd, t_data *data, 
 int	parse_input(t_data *data, t_token *token_list)
 {
 	int		i;
-	t_token	*current_token;
+	t_token	*current_t;
 	t_cmd	*current_cmd;
 	t_cmd	*newnode;
 
-	current_token = token_list;
+	current_t = token_list;
 	current_cmd = data->cmd_head;
-	while (current_token && current_token->lenght > 0)
+	while (current_t && current_t->lenght > 0)
 	{
 		i = 0;
 		newnode = create_new_node_cmd(data);
 		add_new_node(&data->cmd_head, newnode, &current_cmd);
-		while (current_token && current_token->type != T_PIPE && current_token->lenght > 0)
+		while (current_t && current_t->type != T_PIPE && current_t->lenght > 0)
 		{
-			if (current_token->type == T_REIN)
-				current_token = parse_rein(current_token, current_cmd, data);
-			else if (current_token->type == T_REOUT)
-				current_token = parse_reout(current_token, current_cmd, data);
-			else if (current_token->type == T_APPEND)
-				current_token = parse_append(current_token, current_cmd, data);
-			else if (current_token->type == T_HEREDOC)
+			if (current_t->type != T_WORD && current_t->type != T_PIPE)
 			{
-				current_token = parse_heredoc(current_token, current_cmd, data);
-				if (current_token == NULL && data->exit_code == 130)
+				current_t = p_redirections(current_t, current_cmd, data);
+				if (current_t == NULL)
 					return (9);
 			}
-			else if (current_token->type == T_WORD)
-				i = parse_word(current_token, current_cmd, data, i);
-			current_token = current_token->next;
+			else if (current_t->type == T_WORD && current_t->type != T_PIPE)
+				i = p_word(current_t, current_cmd, data, i);
+			current_t = current_t->next;
 		}
-		if (current_token && current_token->type == T_PIPE)
-		{
-			current_token = current_token->next;
-			data->nbr_pipes++;
-		}
+		if (current_t && current_t->type == T_PIPE)
+			current_t = p_pipe(current_t, data);
 	}
 	return (0);
 }

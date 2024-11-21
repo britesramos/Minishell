@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 10:51:44 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 11:22:17 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 			data->exit_code = 0;
 			break ;
 		}
+		*heredoc_line = expansion_heredoc(data, *heredoc_line);
 		if (ft_strncmp(*heredoc_line, del, ft_strlen(del) + 1) == 0)
 			break;
 		*str = ft_strjoin(*str, *heredoc_line); //TODO add malloc check
@@ -41,7 +42,7 @@ static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 	return (*str);
 }
 
-t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
+t_token	*p_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 {
 	char	*heredoc_line;
 	char	*delimiter;
@@ -67,4 +68,3 @@ t_token	*parse_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 	ft_free_string(delimiter);
 	return (current_token);
 }
-

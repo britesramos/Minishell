@@ -6,11 +6,30 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/15 09:19:12 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/19 18:16:02 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char	*convert_exit_code(t_data *data)
+{
+	int		exit_code;
+	char	*exit;
+
+	exit_code = 0;
+	if (data->exit_code > 255)
+	{
+		exit_code = data->exit_code / 256;
+		data->exit_code = exit_code;
+	}
+	else if (data->exit_code < -255)
+		data->exit_code = data->exit_code % -256;
+	else if (data->exit_code < 0)
+		data->exit_code = data->exit_code + 256;
+	exit = ft_itoa(data->exit_code);
+	return (exit);
+}
 
 static void	expand_error(t_data *data, int i)
 {
@@ -20,7 +39,7 @@ static void	expand_error(t_data *data, int i)
 	int		new_line_len;
 	int		sstr_len;
 
-	exit = ft_itoa(data->exit_code);
+	exit = convert_exit_code(data);
 	substr = ft_substr(data->line, i + 2, ft_strlen(&data->line[i + 1]));
 	temp = ft_substr(data->line, 0, i);
 	new_line_len = ft_strlen(data->line) - 2 + ft_strlen(exit);
@@ -31,6 +50,7 @@ static void	expand_error(t_data *data, int i)
 	ft_strlcpy(data->line, temp, ft_strlen(temp) + 1);
 	free (temp);
 	ft_strlcat(data->line, exit, ft_strlen(data->line) + ft_strlen(exit) + 1);
+	free(exit);
 	sstr_len = ft_strlen(substr);
 	ft_strlcat(data->line, substr, ft_strlen(data->line) + sstr_len + 1);
 	free(substr);
@@ -43,7 +63,8 @@ static void	alloc_newline(t_data *data, char *temp, char *value, char *leftover)
 	int	lo_i;
 
 	temp_i = ft_strlen(temp);
-	value_i = ft_strlen(value);
+	if (value)
+		value_i = ft_strlen(value);
 	if (leftover)
 		lo_i = ft_strlen(leftover);
 	if (value)
@@ -85,12 +106,15 @@ static void	expand_path(t_data *data, int i)
 		leftover = ft_substr(data->line, i + j, ft_strlen(data->line) - ft_strlen(substr) - ft_strlen(temp));
 	free(data->line);
 	value = find_value(data, substr);
+	free(substr);
 	alloc_newline(data, temp, value, leftover);
 	ft_strlcpy(data->line, temp, ft_strlen(temp) + 1);
+	free(temp);
 	if (value)
 		ft_strlcat(data->line, value, ft_strlen(data->line) + ft_strlen(value) + 1);
 	if (leftover)
 		ft_strlcat(data->line, leftover, ft_strlen(data->line) + ft_strlen(leftover) + 1);
+	free(leftover);
 }
 
 void	expansion(t_data *data)
