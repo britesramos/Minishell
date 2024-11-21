@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 11:11:22 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 12:14:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,14 @@ void	parsing(t_data *data, char **envp)
 				free_token_list(token_list);
 				token_list = NULL;
 			}
-			if (exec(data) == 9)
-				return ;
+			if (data->cmd_head->cmd)
+			{
+				if (exec(data) == 9)
+					return ;
+			}
 			if (data->cmd_head)
 			{
+				printf("Am i cleaning?\n");
 				free_cmd_list(data->cmd_head);
 				data->cmd_head = NULL;
 			}

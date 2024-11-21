@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 11:22:17 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 11:41:15 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 		*str = ft_strjoin(*str, *heredoc_line); //TODO add malloc check
 		ft_free_string(*heredoc_line);
 	}
+	if (!(*str))
+		return (NULL);
 	return (*str);
 }
 
