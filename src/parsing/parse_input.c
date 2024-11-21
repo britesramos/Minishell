@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 14:13:00 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/21 18:03:46 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_token	*p_append(t_token *current_t, t_cmd *current_cmd, t_data *data)
 	current_t = current_t->next;
 	if (current_cmd->outfile)
 		free_close_fd(current_cmd->outfile, current_cmd->fd_out);
-	current_cmd->fd_out = open(current_t->str, O_CREAT | O_APPEND | O_RDWR);
+	current_cmd->fd_out = open(current_t->str, O_CREAT | O_APPEND | O_RDWR, 0660);
 	if (current_cmd->fd_out == -1)
 		error_exit_system(data, current_t->str, 1);
 	current_cmd->outfile = ft_strdup(current_t->str);
@@ -93,6 +93,8 @@ int	parse_input(t_data *data, t_token *token_list)
 
 	current_t = token_list;
 	current_cmd = data->cmd_head;
+	if (current_t->lenght == 0)
+		return (9);
 	while (current_t && current_t->lenght > 0)
 	{
 		i = 0;

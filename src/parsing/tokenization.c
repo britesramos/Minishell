@@ -12,6 +12,7 @@
 
 #include "../../include/minishell.h"
 
+//This input isnot working: echo '$USER'""''"hello"
 static int	token_word(t_data *data, int start, t_token **token_list)
 {
 	int		len;
@@ -19,9 +20,22 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 
 	len = 0;
 	new = NULL;
-	while (ms_isword(data->line[start + len])
-		&& !ms_isspace(data->line[start + len]))
+	if ((data->line[start] == '\'' || data->line[start] == '"') && data->line[start + 1] == '\0')
+		return (start + 1);
+	if (data->line[start] == '\'' || data->line[start] == '"')
+	{
 		len++;
+		// if (data->line[start + len] == '\0')
+		// 	return (start + len);
+		while (data->line[start + len] != data->line[start])
+			len++;
+	}
+	else
+	{
+		while (ms_isword(data->line[start + len])
+			&& !ms_isspace(data->line[start + len]))
+			len++;
+	}
 	new = ft_substr(data->line, start, len);
 	if (!new)
 		error_exit(data, NULL, "New str does not exist!\n", 1);
@@ -29,7 +43,6 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 		new = token_word_remove_extra_quotes(new, data);
 	create_t_list(data, token_list, new, T_WORD);
 	free(new);
-	len--;
 	return (start + len);
 }
 

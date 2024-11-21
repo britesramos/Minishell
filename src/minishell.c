@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 11:31:17 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 17:52:59 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data *data;
 
+	(void)argv;
+	if (argc == 1)
+	{
 	check_tty();
-	(void)argv; //Not going to use this. Waiting for user prompt.
 	data = malloc(sizeof(t_data));
 	ms_signals(INTERACTIVE);
 	if (g_sign == SIGINT)
@@ -62,11 +64,7 @@ int	main(int argc, char **argv, char **envp)
 		data->exit_code = 130;
 	}
 	init_main_struct(data, envp);
-	if (argc < 1) //for execution testing only, to be deleted!
-	{
-		write(2, "Invalid number of arguments. Type: minishell\n", 45);
-		return(1);
-	}
 	parsing(data, envp);
 	return (bye(data));
+	}
 }
