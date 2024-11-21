@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 09:25:54 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 13:45:14 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_cd_change(char *path, t_data *data)
 		{
 			perror("minishell: cd");
 			data->exit_code = 127;
-			ft_free_string(old_cwd);
+			ft_free_string(&old_cwd);
 			return ;
 		}
 		cwd = ft_getcdw_err(data);
@@ -35,9 +35,9 @@ static void	ft_cd_change(char *path, t_data *data)
 			return ;
 		replace_value(data, "PWD", cwd);
 		replace_value(data, "OLDPWD", old_cwd);
-		ft_free_string(cwd);
+		ft_free_string(&cwd);
 	}
-	ft_free_string(old_cwd);
+	ft_free_string(&old_cwd);
 	data->exit_code = 0;
 }
 
@@ -70,16 +70,16 @@ static void	ft_chdir_error(char *path, t_data *data)
 	{
 		perror("minishell: cd");
 		data->exit_code = 1;
-		ft_free_string(cwd);
+		ft_free_string(&cwd);
 		return ;
 	}
 	replace_value(data, "OLDPWD", cwd);
-	ft_free_string(cwd);
+	ft_free_string(&cwd);
 	cwd = ft_getcdw_err(data);
 	if (cwd == NULL)
 		return ;
 	replace_value(data, "PWD", cwd);
-	ft_free_string(cwd);
+	ft_free_string(&cwd);
 	data->exit_code = 0;
 }
 

@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/22 10:46:36 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/19 12:04:51 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 15:17:02 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ static char	*ft_leftovers(char *buffer, char *line)
 		i++;
 	if (line[i] == '\n')
 		i++;
+	if ((ft_strlen(temp) - ft_strlen(line)) == 0)
+	{
+		ft_free(&temp);
+		return (NULL);
+	}
 	buffer = malloc(ft_strlen(temp) - ft_strlen(line) + 1 * sizeof(char));
 	if (!buffer)
 		return (NULL);

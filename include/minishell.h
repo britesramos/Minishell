@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 12:16:13 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 13:49:17 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int	error_exit_system(t_data *data, char *str, int type);
 /*Ending program and clean up.*/
 void	clean_up(t_data *data);
 void	free_split(char **array);
+void	free_envp(t_envp *envp_head);
 
 
 

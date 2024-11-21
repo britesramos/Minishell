@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 09:39:32 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 13:45:28 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ static char	*find_path(char **paths, char *cmd)
 		right_path = ft_strjoin(paths[i], cmd);
 		if (access(right_path, X_OK) == 0)
 			return (right_path);
-		ft_free_string(right_path);
+		ft_free_string(&right_path);
 		i++;
 	}
-	return (right_path);
+	return (NULL);
 }
 
 char	*get_path(t_data *data, char *cmd)
@@ -75,7 +75,7 @@ char	*get_path(t_data *data, char *cmd)
 		return (NULL);
 	}
 	path = find_path(all_paths, slash_cmd);
-	ft_free_string(slash_cmd);
+	ft_free_string(&slash_cmd);
 	ft_free_array(all_paths);
 	return (path);
 }

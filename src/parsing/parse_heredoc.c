@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 11:41:15 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 15:09:17 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ extern volatile sig_atomic_t	g_sign;
 
 static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 {
+	char	*tmp;
+
 	while (1)
 	{
 		ft_putstr_fd("> ", data->std[OUT]);
@@ -25,6 +27,7 @@ static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 			if (g_sign == SIGINT)
 			{
 				data->exit_code = 128 + g_sign;
+				ft_free_string(str);
 				return (NULL);
 			}
 			ft_putchar_fd('\n', data->std[OUT]);
@@ -36,9 +39,15 @@ static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 		*heredoc_line = expansion_heredoc(data, *heredoc_line);
 		if (ft_strncmp(*heredoc_line, del, ft_strlen(del) + 1) == 0)
 			break;
-		*str = ft_strjoin(*str, *heredoc_line); //TODO add malloc check
-		ft_free_string(*heredoc_line);
+		tmp = ft_strjoin(*str, *heredoc_line); //TODO add malloc check
+		ft_free_string(str);
+		ft_free_string(heredoc_line);
+		if (!(*tmp))
+			return (NULL);
+		*str = tmp;
 	}
+	if (*heredoc_line)
+		ft_free_string(heredoc_line);
 	if (!(*str))
 		return (NULL);
 	return (*str);
@@ -57,16 +66,19 @@ t_token	*p_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 	str = NULL;
 	ms_signals(HEREDOC);
 	str = heredoc(data, &heredoc_line, delimiter, &str);
+	ft_free_string(&delimiter);
 	if (str == NULL && data->exit_code == 128 + g_sign)
+	{
+		ft_free_string(&str);
 		return (NULL);
+	}
 	c_cmd->fd_in = open("/tmp/heredoc.txt", O_CREAT | O_TRUNC | O_RDWR, 0660);
 	if (str)
 		ft_putstr_fd(str, c_cmd->fd_in);
+	ft_free_string(&str);
 	c_cmd->infile = ft_strdup("/tmp/heredoc.txt");
 	close(c_cmd->fd_in);
 	c_cmd->fd_in = open("/tmp/heredoc.txt", O_RDWR, 0660);
-	ft_free_string(heredoc_line);
-	ft_free_string(str);
-	ft_free_string(delimiter);
+	ft_free_string(&heredoc_line);
 	return (current_token);
 }

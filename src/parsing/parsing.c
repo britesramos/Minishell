@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 12:14:33 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 14:40:50 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ extern volatile sig_atomic_t	g_sign;
 void	free_cmd_list(t_cmd *list)
 {
 	t_cmd	*next;
+	char	*heredoc_file;
 
+	if (list->heredoc == true)
+		heredoc_file = list->infile;
 	while (list)
 	{
 		next = list->pipe;
@@ -27,8 +30,8 @@ void	free_cmd_list(t_cmd *list)
 			free_close_fd(list->infile, list->fd_in);
 		if (list->outfile)
 			free_close_fd(list->outfile, list->fd_out);
-		if (list->heredoc == true)
-			unlink(list->infile);
+		// if (list->heredoc == true)
+		// 	unlink(heredoc_file); //This was an "Syscall param unlink(pathname) points to unaddressable byte(s)"
 		free(list);
 		list = NULL;
 		list = next;
@@ -47,7 +50,7 @@ void	parsing(t_data *data, char **envp)
 	{
 		g_sign = 0;
 		if (data->line)
-			ft_free_string(data->line);
+			ft_free_string(&data->line);
 		ms_signals(INTERACTIVE);
 		data->line = readline("minishell:~$ ");
 		if (data->line == NULL)
@@ -76,6 +79,7 @@ void	parsing(t_data *data, char **envp)
 			/*----------------------------------TEMP----------------------------------------------*/
 			if (parse_input(data, token_list) == 9)
 			{
+				//Replace with clean_up.Twick clean_up. To include token_list.
 				if (token_list)
 				{
 					free_token_list(token_list);
@@ -126,7 +130,7 @@ void	parsing(t_data *data, char **envp)
 			}
 			if (data->cmd_head)
 			{
-				printf("Am i cleaning?\n");
+				// printf("Am i cleaning?\n");
 				free_cmd_list(data->cmd_head);
 				data->cmd_head = NULL;
 			}
