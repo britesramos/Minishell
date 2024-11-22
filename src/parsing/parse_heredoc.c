@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 15:09:17 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/22 18:37:46 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 		}
 		*heredoc_line = expansion_heredoc(data, *heredoc_line);
 		if (ft_strncmp(*heredoc_line, del, ft_strlen(del) + 1) == 0)
-			break;
-		tmp = ft_strjoin(*str, *heredoc_line); //TODO add malloc check
+			break ;
+		tmp = ft_strjoin(*str, *heredoc_line);
+		if (!tmp)
+			error_exit(data, NULL, "Fail to alloc in heredoc\n", 1);
 		ft_free_string(str);
 		ft_free_string(heredoc_line);
 		if (!(*tmp))
@@ -55,17 +57,16 @@ static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 
 t_token	*p_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 {
-	char	*heredoc_line;
 	char	*delimiter;
 	char	*str;
 
 	c_cmd->heredoc = true;
 	current_token = current_token->next;
 	delimiter = ft_strjoin(current_token->str, "\n");
-	heredoc_line = NULL;
+	data->hd_line = NULL;
 	str = NULL;
 	ms_signals(HEREDOC);
-	str = heredoc(data, &heredoc_line, delimiter, &str);
+	str = heredoc(data, &data->hd_line, delimiter, &str);
 	ft_free_string(&delimiter);
 	if (str == NULL && data->exit_code == 128 + g_sign)
 	{
@@ -79,6 +80,6 @@ t_token	*p_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 	c_cmd->infile = ft_strdup("/tmp/heredoc.txt");
 	close(c_cmd->fd_in);
 	c_cmd->fd_in = open("/tmp/heredoc.txt", O_RDWR, 0660);
-	ft_free_string(&heredoc_line);
+	ft_free_string(&data->hd_line);
 	return (current_token);
 }

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishell.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 17:52:59 by sramos        ########   odam.nl         */
+/*   Created: 2024/11/22 16:00:40 by sramos        #+#    #+#                 */
+/*   Updated: 2024/11/22 18:38:51 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,21 @@ static void	check_tty(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data *data;
+	t_data	*data;
 
 	(void)argv;
 	if (argc == 1)
 	{
-	check_tty();
-	data = malloc(sizeof(t_data));
-	ms_signals(INTERACTIVE);
-	if (g_sign == SIGINT)
-	{
-		ft_putstr_fd("in main?\n", STDOUT_FILENO);
-		data->exit_code = 130;
-	}
-	init_main_struct(data, envp);
-	parsing(data, envp);
-	return (bye(data));
+		check_tty();
+		data = malloc(sizeof(t_data));
+		ms_signals(INTERACTIVE);
+		if (g_sign == SIGINT)
+		{
+			ft_putstr_fd("in main?\n", STDOUT_FILENO);
+			data->exit_code = 130;
+		}
+		init_main_struct(data, envp);
+		parsing(data, envp);
+		return (bye(data));
 	}
 }

@@ -16,11 +16,11 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 {
 	int		len;
 	char	*new;
-	bool	sq = false;
-	bool	dq = false;
 
 	len = 0;
 	new = NULL;
+	sq = false;
+	dq = false;
 	if (start == 0)
 	{
 		while (ms_isword(data->line[start + len]) && !ms_isspace(data->line[start + len]))
@@ -39,6 +39,8 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 				if (data->line[start + len] == '"' && sq == false)
 					dq = !dq;
 				if (ms_isspace(data->line[start + len]) && sq == false && dq == false)
+					break ;
+				if (data->line[start + len] == '|' && sq == false && dq == false)
 					break ;
 				len++;
 			}

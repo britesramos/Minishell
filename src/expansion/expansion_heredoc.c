@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 11:14:34 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/22 18:21:20 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*expand_error(t_data *data, char *line, int i)
 	return (line);
 }
 
-static char	*alloc_newline(t_data *data, char *line, char *temp, char *value, char *leftover)
+static char	*alloc_newline_heredoc(t_data *data, char *line, char *temp, char *value, char *leftover)
 {
 	int	temp_i;
 	int	value_i;
@@ -55,8 +55,6 @@ static char	*alloc_newline(t_data *data, char *line, char *temp, char *value, ch
 			line = ft_calloc(sizeof(char), temp_i + value_i + lo_i + 1);
 		else if (!leftover)
 			line = ft_calloc(sizeof(char), temp_i + value_i + 1);
-		if (!line)
-			error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", 1);
 	}
 	if (!value)
 	{
@@ -64,9 +62,9 @@ static char	*alloc_newline(t_data *data, char *line, char *temp, char *value, ch
 			line = ft_calloc(sizeof(char), temp_i + lo_i + 1);
 		else if (!leftover)
 			line = ft_calloc(sizeof(char), temp_i + 1);
-		if (!line)
-			error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", 1);
 	}
+	if (!line)
+		error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", 1);
 	return (line);
 }
 
@@ -90,7 +88,7 @@ static char	*expand_path(t_data *data, char *line, int i)
 	free(line);
 	value = find_value(data, substr);
 	free(substr);
-	line = alloc_newline(data, line, temp, value, leftover);
+	line = alloc_newline_heredoc(data, line, temp, value, leftover);
 	ft_strlcpy(line, temp, ft_strlen(temp) + 1);
 	free(temp);
 	if (value)

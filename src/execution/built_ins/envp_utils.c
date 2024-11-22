@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 13:45:18 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/22 15:25:38 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	add_node(t_data *data, char *cmd, t_envp **env)
 {
 	t_envp	*current;
 	t_envp	*new_node;
+	char	*key;
+	char	*value;
 
 	current = (*env);
 	while (current->next != NULL)
@@ -76,7 +78,12 @@ void	add_node(t_data *data, char *cmd, t_envp **env)
 	if (ft_strchr(cmd, '=') == NULL)
 		new_node = create_node_export(data, cmd, NULL);
 	else
-		new_node = create_node_export(data, init_key_export(cmd, data), \
-		init_value_export(cmd, data));
+	{
+		key = init_key_export(cmd, data);
+		value = init_value_export(cmd, data);
+		new_node = create_node_export(data, key, value);
+		ft_free_string(&key);
+		ft_free_string(&value);
+	}
 	current->next = new_node;
 }

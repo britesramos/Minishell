@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 13:45:22 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/22 15:26:00 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,28 @@ char	*init_value_export(char *cmd, t_data *data)
 {
 	int		i;
 	size_t	key_len;
+	size_t	cmd_len;
 	char	*value;
 
 	i = 0;
 	key_len = 0;
 	value = NULL;
+	cmd_len = ft_strlen(cmd);
 	while (cmd[key_len] != '=')
 		key_len++;
-	key_len++;
-	value = ft_calloc(strlen(cmd) - key_len + 1, 1);
+	if (key_len + 1 == cmd_len)
+		key_len++;
+	if (cmd_len - key_len == 0)
+		return (value);
+	value = ft_calloc(cmd_len - key_len + 1, 1);
 	if (!value)
 	{
 		perror("export - value creation");
 		data->exit_code = 1;
 		return (NULL);
 	}
-	while ((i + key_len) < ft_strlen(cmd))
-	{
-		value[i] = cmd[key_len + i];
-		i++;
-	}
-	value[i] = '\0';
+	else
+		ft_strlcpy(value, cmd + key_len, (size_t)cmd - key_len);
 	return (value);
 }
 

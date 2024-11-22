@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/19 14:17:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/19 14:59:19 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/22 16:53:46 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,18 @@ int	lonely_redirection(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '>' && str[i + 1] == '\0')
+	if (str[i] == '>' && !str[i + 1])
 		return (1);
 	while (str[i])
 		i++;
+	if (ms_isspace(str[i - 1]))
+	{
+		while (ms_isspace(str[i - 1]))
+			i--;
+	}
 	if ((str[i - 1] == '>' && str[i - 2] == '$'))
+		return (1);
+	if (str[i - 1] == '>' || str[i - 1] == '<')
 		return (1);
 	i = 0;
 	if (str[i] == '$' && str[i + 1] == '>')

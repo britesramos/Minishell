@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/18 11:00:32 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/19 12:04:19 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/22 15:24:03 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	newstr = NULL;
 	if (!s1)
 		s1 = "";
+	if (!s2)
+		s2 = "";
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	tot_len = s1_len + s2_len + 1;

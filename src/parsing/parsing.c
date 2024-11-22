@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 15:07:01 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/22 18:56:16 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	free_cmd_list(t_cmd *list)
 			free_close_fd(list->infile, list->fd_in);
 		if (list->outfile)
 			free_close_fd(list->outfile, list->fd_out);
-		// if (list->heredoc == true)
-		// 	unlink(heredoc_file); //This was an "Syscall param unlink(pathname) points to unaddressable byte(s)"
 		free(list);
 		list = NULL;
 		list = next;
@@ -66,7 +64,6 @@ void	parsing(t_data *data, char **envp)
 		if (input_checker(data) == 0 && !only_spaces(data))
 		{
 			expansion(data);
-			// printf("This is data line(AFTER EXPANSION): %s\n", data->line);
 			token_list = tokenization(data, token_list);
 			/*----------------------------------TEMP----------------------------------------------*/
 			// t_token *current = token_list;
