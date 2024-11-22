@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 13:49:17 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/22 12:31:50 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_token	*p_pipe(t_token *current_t, t_data *data);
 t_token *tokenization(t_data *data, t_token *token_list);
 int		ms_isspace(char c);
 char	*token_word_remove_extra_quotes(char *new, t_data *data);
+char	*token_word_remove_extra_spaces(char *new, t_data *data);
 t_token *create_new_node(t_data *data, t_token_t type, char *str);
 void	create_t_list(t_data *data, t_token **token_list, char *str, t_token_t type);
 void 	free_token_list(t_token *token_list);

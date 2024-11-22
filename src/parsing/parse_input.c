@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 18:03:46 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/22 12:18:28 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	parse_input(t_data *data, t_token *token_list)
 
 	current_t = token_list;
 	current_cmd = data->cmd_head;
-	if (current_t->lenght == 0)
+	if ((current_t && current_t->lenght == 0) || !token_list)
 		return (9);
 	while (current_t && current_t->lenght > 0)
 	{

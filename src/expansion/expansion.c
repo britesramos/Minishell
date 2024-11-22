@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/19 18:16:02 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/22 14:57:01 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void	alloc_newline(t_data *data, char *temp, char *value, char *leftover)
 	}
 }
 
-static void	expand_path(t_data *data, int i)
+static int	expand_path(t_data *data, int i)
 {
 	char	*temp;
 	char	*substr;
@@ -115,19 +115,37 @@ static void	expand_path(t_data *data, int i)
 	if (leftover)
 		ft_strlcat(data->line, leftover, ft_strlen(data->line) + ft_strlen(leftover) + 1);
 	free(leftover);
+	return (0);
 }
 
 void	expansion(t_data *data)
 {
 	int	i;
+	bool	dq;
+	bool	sq;
 
 	i = 0;
+	dq = false;
+	sq = false;
 	while (data->line[i])
 	{
+		if (data->line[i] == '\'' && dq == false)
+			sq = !sq;
+		else if (data->line[i] == '"' && sq == false)
+			dq = !dq;
+		if (data->line[i] == '\'' && dq == false)
+		{
+			i++;
+			while (data->line[i] != '\'')
+				i++;
+		}
 		if (data->line[i] == '$' && data->line[i + 1] == '?')
 			expand_error(data, i);
 		else if (data->line[i] == '$' && data->line[i + 1])
+		{
 			expand_path(data, i);
+			 i--;
+		}
 		i++;
 	}
 }
