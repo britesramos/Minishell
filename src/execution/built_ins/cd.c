@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 14:50:49 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/23 07:29:36 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	ft_cd(char **cmd, t_data *data)
 		ft_putendl_fd("minishell: cd: too many arguments", STDERR_FILENO);
 		data->exit_code = 1;
 	}
-	if (!cmd[1] || ft_strncmp(cmd[1], "~", 2) == 0 \		data->exit_code = 1;= 0)
+	if (!cmd[1] || ft_strncmp(cmd[1], "~", 2) == 0)
 		ft_cd_key(data, "HOME");
 	else if (ft_strncmp(cmd[1], "-", 2) == 0)
 		ft_cd_key(data, "OLDPWD");

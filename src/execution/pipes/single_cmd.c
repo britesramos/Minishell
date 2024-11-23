@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 13:39:40 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/23 07:31:39 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ static void	ft_single_child(t_data *data)
 	}
 	ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
 	ft_putendl_fd(": Command not found", STDERR_FILENO);
+	clean_up(data);
 	if (path != NULL)
 	{
 		ft_free_string(&path);
 		path = NULL;
 	}
-	data->exit_code = 127;
-	exit (data->exit_code);
+	exit (127);
 }
 
 void	single_cmd(t_data *data)

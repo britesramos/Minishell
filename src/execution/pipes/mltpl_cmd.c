@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 14:36:40 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/23 07:30:31 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	child_fd_handling(data, ex);
 	bi_check = builtin_check(data, ex);
 	if (bi_check == EXIT_SUCCESS)
-		exit (data->exit_code);
+	{
+		clean_up(data);
+		exit (EXIT_SUCCESS);
+	}
 	if (access(data->cmd_current->cmd[0], F_OK | X_OK) == 0)
 		path = ft_strdup(data->cmd_current->cmd[0]);
 	else
@@ -58,11 +61,11 @@ static	int	ft_child(t_data *data, t_ex *ex)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
 	ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
 	ft_putendl_fd(": Command not found", STDERR_FILENO);
+	clean_up(data);
 	if (path)
 		free(path);
 	path = NULL;
-	data->exit_code = 127;
-	exit (data->exit_code);
+	exit (127);
 }
 
 static int	do_pipex(t_data *data, t_ex *ex)

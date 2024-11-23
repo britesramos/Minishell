@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishell.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.42.fr>            +#+                     */
+/*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/09/23 11:59:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 11:31:17 by mstencel      ########   odam.nl         */
+/*   Created: 2024/11/22 16:00:40 by sramos        #+#    #+#                 */
+/*   Updated: 2024/11/22 18:38:51 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,21 @@ static void	check_tty(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data *data;
+	t_data	*data;
 
-	check_tty();
-	(void)argv; //Not going to use this. Waiting for user prompt.
-	data = malloc(sizeof(t_data));
-	ms_signals(INTERACTIVE);
-	if (g_sign == SIGINT)
+	(void)argv;
+	if (argc == 1)
 	{
-		ft_putstr_fd("in main?\n", STDOUT_FILENO);
-		data->exit_code = 130;
+		check_tty();
+		data = malloc(sizeof(t_data));
+		ms_signals(INTERACTIVE);
+		if (g_sign == SIGINT)
+		{
+			ft_putstr_fd("in main?\n", STDOUT_FILENO);
+			data->exit_code = 130;
+		}
+		init_main_struct(data, envp);
+		parsing(data, envp);
+		return (bye(data));
 	}
-	init_main_struct(data, envp);
-	if (argc < 1) //for execution testing only, to be deleted!
-	{
-		write(2, "Invalid number of arguments. Type: minishell\n", 45);
-		return(1);
-	}
-	parsing(data, envp);
-	return (bye(data));
 }

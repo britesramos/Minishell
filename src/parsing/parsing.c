@@ -1,22 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-<<<<<<< HEAD
 /*                                                        ::::::::            */
 /*   parsing.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 14:32:50 by mstencel      ########   odam.nl         */
-=======
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gosia <gosia@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 11:59:18 by sramos            #+#    #+#             */
-/*   Updated: 2024/11/21 21:02:24 by gosia            ###   ########.fr       */
->>>>>>> f7acdb31381e8d7b6e93cb0725d341f2f262343a
+/*   Updated: 2024/11/23 07:34:51 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +17,10 @@ extern volatile sig_atomic_t	g_sign;
 void	free_cmd_list(t_cmd *list)
 {
 	t_cmd	*next;
+	char	*heredoc_file;
 
+	if (list->heredoc == true)
+		heredoc_file = list->infile;
 	while (list)
 	{
 		next = list->pipe;
@@ -37,8 +30,6 @@ void	free_cmd_list(t_cmd *list)
 			free_close_fd(list->infile, list->fd_in);
 		if (list->outfile)
 			free_close_fd(list->outfile, list->fd_out);
-		if (list->heredoc == true)
-			unlink(list->infile);
 		free(list);
 		list = NULL;
 		list = next;
@@ -86,6 +77,7 @@ void	parsing(t_data *data, char **envp)
 			/*----------------------------------TEMP----------------------------------------------*/
 			if (parse_input(data, token_list) == 9)
 			{
+				//Replace with clean_up.Twick clean_up. To include token_list.
 				if (token_list)
 				{
 					free_token_list(token_list);

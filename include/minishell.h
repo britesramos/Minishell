@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/21 12:16:13 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/22 18:52:48 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <linux/limits.h>
- 
+
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
 {
@@ -50,6 +50,7 @@ typedef struct s_envp
 typedef struct s_data
 {
 	char	*line; /*Line from Readline function - user input from the terminal. - to be parsed*/
+	char	*hd_line;
 	char	**envp;
 	int		exit_code;
 	int		nbr_pipes;
@@ -73,6 +74,10 @@ void	init_main_struct(t_data *data, char **envp);
 
 /*EXPANSIONS*/
 void	expansion(t_data *data);
+int		expansion_quotes(t_data *data, int i);
+void	concatenate_newline(t_data *data, char *value, char *leftover);
+char	*convert_exit_code(t_data *data);
+void	alloc_newline(t_data *data, char *temp, char *value, char *leftover);
 char 	*expansion_heredoc(t_data *data, char *heredoc_line);
 
 /*-----------------------------------PARSING-----------------------------------*/
@@ -80,6 +85,7 @@ char 	*expansion_heredoc(t_data *data, char *heredoc_line);
 /*Parsing input*/
 void	parsing(t_data *data, char **envp);
 int		parse_input(t_data *data, t_token *token_list);
+void	create_add_node(t_data *data, t_cmd *current_cmd);
 t_token	*p_redirections(t_token *current_t, t_cmd *c_cmd, t_data *data);
 t_token	*p_rein(t_token *current_t, t_cmd *current_cmd, t_data *data);
 t_token	*p_reout(t_token *current_t, t_cmd *c_cmd, t_data *data);
@@ -91,6 +97,7 @@ t_token	*p_pipe(t_token *current_t, t_data *data);
 t_token *tokenization(t_data *data, t_token *token_list);
 int		ms_isspace(char c);
 char	*token_word_remove_extra_quotes(char *new, t_data *data);
+char	*token_word_remove_extra_spaces(char *new, t_data *data);
 t_token *create_new_node(t_data *data, t_token_t type, char *str);
 void	create_t_list(t_data *data, t_token **token_list, char *str, t_token_t type);
 void 	free_token_list(t_token *token_list);
@@ -137,13 +144,13 @@ int	error_exit_system(t_data *data, char *str, int type);
 /*Ending program and clean up.*/
 void	clean_up(t_data *data);
 void	free_split(char **array);
+void	free_envp(t_envp *envp_head);
 
 
 
 
 //COMMON FUNCTIONS
 t_envp	*create_node_envp(t_data *data, char *envp);
-
 
 // EXECUTION
 

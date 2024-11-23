@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 13:41:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/23 07:31:11 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ static char	*find_path(char **paths, char *cmd)
 		ft_free_string(&right_path);
 		i++;
 	}
-	// printf("right_path = %s\n", right_path);
-	return (right_path);
+	return (NULL);
 }
 
 char	*get_path(t_data *data, char *cmd)
