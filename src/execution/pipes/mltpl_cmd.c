@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 10:20:36 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 14:36:40 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	mltpl_cmd(t_data *data)
 		ex.i++;
 		data->cmd_current = data->cmd_current->pipe;
 	}
+	ms_signals(NONINTERACTIVE);
 	children_wait(data, &ex);
 	waitpid(ex.pid, &data->exit_code, 0);
 	if (WIFSIGNALED(data->exit_code))

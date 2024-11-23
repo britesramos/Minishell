@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/12 17:55:59 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 11:32:21 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 14:38:55 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	signal_p(int signal, siginfo_t *info, void *x)
 	(void)x;
 	if (signal == SIGINT)
 	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putstr_fd("in non-interactive\n", STDOUT_FILENO);
+		// ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		g_sign = signal;
@@ -48,7 +49,8 @@ static void	signal_int(int signal, siginfo_t *info, void *x)
 	(void)x;
 	if (signal == SIGINT)
 	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putstr_fd("in interactive\n", STDOUT_FILENO);
+		// ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();

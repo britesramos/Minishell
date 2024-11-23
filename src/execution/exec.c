@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/20 09:24:32 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 14:36:18 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	exec(t_data *data)
 			single_cmd(data);
 	}
 	else
+	{
+		ms_signals(NONINTERACTIVE);
 		mltpl_cmd(data);
+	}
 	return (EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mstencel <marvin@42.fr>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 17:12:13 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/19 11:38:26 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 13:38:55 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_free_array(char **str);
-void	ft_free_string(char *str);
+void	ft_free_string(char **str);
 
 void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);

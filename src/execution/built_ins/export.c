@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 09:29:24 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 13:39:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ static void	replace_export(t_data *data, char *cmd)
 	key = init_key_export(cmd, data);
 	value = init_value_export(cmd, data);
 	replace_value(data, key, value);
-	ft_free_string(key);
-	ft_free_string(value);
+	ft_free_string(&key);
+	ft_free_string(&value);
 }
 
 /// @brief prints the env, adds the key & value, changes the value 

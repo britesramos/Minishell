@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 11:13:27 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/21 13:39:40 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ static void	ft_dup_all(t_cmd *current, t_data *data)
 	}
 }
 
-static void	ft_single_child(t_data *data, char *path)
+static void	ft_single_child(t_data *data)
 {
+	char	*path;
+
+	path = NULL;
 	if (access(data->cmd_current->cmd[0], F_OK | X_OK) == 0)
 		path = ft_strdup(data->cmd_current->cmd[0]);
 	else
@@ -52,7 +55,7 @@ static void	ft_single_child(t_data *data, char *path)
 	ft_putendl_fd(": Command not found", STDERR_FILENO);
 	if (path != NULL)
 	{
-		free(path);
+		ft_free_string(&path);
 		path = NULL;
 	}
 	data->exit_code = 127;
@@ -74,7 +77,7 @@ void	single_cmd(t_data *data)
 	if (pid == 0)
 	{
 		ft_dup_all(data->cmd_current, data);
-		ft_single_child(data, path);
+		ft_single_child(data);
 	}
 	ms_signals(NONINTERACTIVE);
 	waitpid(pid, &data->exit_code, 0);
