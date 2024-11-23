@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/12 17:55:59 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 14:38:55 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/23 10:30:30 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,15 @@ static void	signal_p(int signal, siginfo_t *info, void *x)
 	(void)x;
 	if (signal == SIGINT)
 	{
-		ft_putstr_fd("in non-interactive\n", STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		// ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		g_sign = signal;
+	}
+	else if (signal == SIGQUIT)
+	{
+		ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
 		// ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -49,7 +57,7 @@ static void	signal_int(int signal, siginfo_t *info, void *x)
 	(void)x;
 	if (signal == SIGINT)
 	{
-		ft_putstr_fd("in interactive\n", STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		// ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -62,13 +70,14 @@ static void	signal_help(int process, struct sigaction *sa)
 {
 	if (process == NONINTERACTIVE)
 	{
+		sigaddset(&sa->sa_mask, SIGQUIT);
 		sa->sa_sigaction = &signal_p;
-		if (sigaction(SIGINT, sa, NULL) == -1)
+		if (sigaction(SIGINT, sa, NULL) == -1 || 
+			sigaction(SIGQUIT, sa , NULL) == -1)
 		{
 			perror("SIGINT error");
 			return ;
 		}
-		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (process == INTERACTIVE)
 	{

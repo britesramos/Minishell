@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 12:10:27 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/22 13:53:28 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/23 07:45:02 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_echo_print(int i, char **cmd, int fd)
 {
+	if (cmd[i] == NULL)
+		return ;
 	while (cmd[i])
 	{
 		ft_putstr_fd(cmd[i], fd);
@@ -32,6 +34,8 @@ static int	has_new_line(char *cmd)
 
 	i = 1;
 	check = 0;
+	if (cmd == NULL)
+		return (1);
 	if (cmd[0] == '-' && cmd[1] == 'n')
 	{
 		while (cmd[i] && cmd[i] == 'n')

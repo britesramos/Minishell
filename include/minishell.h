@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:52:48 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/23 09:51:01 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void	ft_unset(char **cmd, t_data *data);
 // pipes functions:
 void	single_cmd(t_data *data);
 int		mltpl_cmd(t_data *data);
+char	*get_path_error(t_data *data, char **path);
 char	*get_path(t_data *data, char *cmd);
 
 // fd_utils

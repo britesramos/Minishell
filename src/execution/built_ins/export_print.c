@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 09:09:23 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 09:29:33 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/23 10:48:28 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	ft_print_key_value(char *key, char *value, t_data *data, int fd)
 {
 	ft_putstr_fd("declare -x ", fd);
 	ft_putstr_fd(key, fd);
-	if (ft_strncmp(value, "=", 2) == 0)
+	if (ft_strncmp(value, "= ", 3) == 0)
 		ft_putendl_fd("=\"\"", fd);
 	else if (ft_strchr(value, '=') == NULL)
 		ft_putchar_fd('\n', fd);

@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/23 07:30:31 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/23 10:20:01 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ static	int	ft_child(t_data *data, t_ex *ex)
 		clean_up(data);
 		exit (EXIT_SUCCESS);
 	}
-	if (access(data->cmd_current->cmd[0], F_OK | X_OK) == 0)
-		path = ft_strdup(data->cmd_current->cmd[0]);
-	else
-		path = get_path(data, data->cmd_current->cmd[0]);
+	path = NULL;
+	path = get_path_error(data, &path);
 	if (path != NULL)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
-	ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
+	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
+		ft_putnbr_fd(127, STDERR_FILENO);
+	else
+		ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
 	ft_putendl_fd(": Command not found", STDERR_FILENO);
 	clean_up(data);
 	if (path)
-		free(path);
-	path = NULL;
+		ft_free_string(&path);
 	exit (127);
 }
 
@@ -99,7 +99,8 @@ int	mltpl_cmd(t_data *data)
 	ft_bzero(&ex, sizeof(ex));
 	ex.i = 0;
 	ex.fd_in = data->std[IN];
-	while (data->cmd_current != NULL)
+	// while (data->cmd_current != NULL)
+	while (ex.i <= data->nbr_pipes)
 	{
 		if (do_pipex(data, &ex) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -110,12 +111,10 @@ int	mltpl_cmd(t_data *data)
 	children_wait(data, &ex);
 	waitpid(ex.pid, &data->exit_code, 0);
 	if (WIFSIGNALED(data->exit_code))
-	{
-		if (WTERMSIG(data->exit_code) == SIGQUIT)
-			data->exit_code = WTERMSIG(data->exit_code) + 128;
-	}
+		data->exit_code = WTERMSIG(data->exit_code) + 128;
 	else if (WIFEXITED(data->exit_code))
 		data->exit_code = WEXITSTATUS(data->exit_code);
+	// printf("in mltpl_cmd exit_code = %d\n", data->exit_code);
 	return (EXIT_SUCCESS);
 }
 
