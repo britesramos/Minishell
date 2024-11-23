@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parsing.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:56:16 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/23 21:12:29 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ extern volatile sig_atomic_t	g_sign;
 void	free_cmd_list(t_cmd *list)
 {
 	t_cmd	*next;
-	char	*heredoc_file;
+	// char	*heredoc_file;
 
-	if (list->heredoc == true)
-		heredoc_file = list->infile;
+	// if (list->heredoc == true)
+	// 	heredoc_file = list->infile;
 	while (list)
 	{
 		next = list->pipe;

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   export.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/22 15:26:00 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/23 20:39:25 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ char	*init_key_export(char *cmd, t_data *data)
 
 char	*init_value_export(char *cmd, t_data *data)
 {
-	int		i;
 	size_t	key_len;
 	size_t	cmd_len;
 	char	*value;
 
-	i = 0;
 	key_len = 0;
 	value = NULL;
 	cmd_len = ft_strlen(cmd);
@@ -117,11 +115,7 @@ void	ft_export(char **cmd, t_data *data, int fd)
 {
 	int		i;
 	int		check;
-	char	*key;
-	char	*value;
 
-	key = NULL;
-	value = NULL;
 	i = 1;
 	if (!cmd[i])
 		ft_print_export(data, fd);

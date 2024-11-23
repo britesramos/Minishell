@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:00:05 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/18 17:54:58 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/23 20:38:20 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	error_exit_system(t_data *data, char *str, int type)
 {
-	int	len;
+	// int	len;
 
-	len = ft_strlen(str);
+	// len = ft_strlen(str);
 	perror(str);
 	data->exit_code = type;
 	return (0);

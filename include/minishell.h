@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:52:48 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/23 21:04:09 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ int		missing_closing_q_marks(char *str);
 int		multiple_redirection(char *str);
 int		lonely_redirection(char *str);
 int		input_checker(t_data *data);
+
+int		pipe_at_end(t_data *data);
+void	keep_reading_line(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);

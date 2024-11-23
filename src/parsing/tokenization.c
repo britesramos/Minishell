@@ -16,6 +16,8 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 {
 	int		len;
 	char	*new;
+	bool	sq;
+	bool	dq;
 
 	len = 0;
 	new = NULL;
