@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   init.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.42.fr>                +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/24 10:29:43 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/10 14:41:21 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/24 20:15:31 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_main_struct(t_data *data, char **envp)
 {
 	data->cmd_current = NULL;
 	data->cmd_head = NULL;
+	data->token_list = NULL;
 	data->envp = envp;
 	data->envp_head = NULL;
 	data->exit_code = 0;
@@ -24,4 +25,6 @@ void	init_main_struct(t_data *data, char **envp)
 	data->nbr_pipes = 0;
 	data->std[IN] = STDIN_FILENO;
 	data->std[OUT] = STDOUT_FILENO;
+	data->invalid_fd = false;
+	data->hd_line = NULL;
 }

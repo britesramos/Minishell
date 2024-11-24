@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:55:19 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/24 20:08:27 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ t_token	*p_rein(t_token *current_t, t_cmd *current_c, t_data *data)
 	if (current_c->infile)
 		free_close_fd(current_c->infile, current_c->fd_in);
 	current_c->fd_in = open(current_t->str, O_RDONLY);
-	if (current_c->fd_in == -1)
+	if (current_c->fd_in == -1 && data->invalid_fd == false)
+	{
+		data->invalid_fd = true;
 		error_exit_system(data, current_t->str, 1);
+	}
 	current_c->infile = ft_strdup(current_t->str);
 	if (!current_c->infile)
 		error_exit(data, NULL, "Infile red allocation failed!\n", 1);
@@ -114,5 +117,6 @@ int	parse_input(t_data *data, t_token *token_list)
 		if (current_t && current_t->type == T_PIPE)
 			current_t = p_pipe(current_t, data);
 	}
+	data->cmd_current = data->cmd_head;
 	return (0);
 }

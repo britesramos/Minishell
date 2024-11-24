@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.c                                        :+:    :+:            */
+/*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.codam.nl>             +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/22 16:00:40 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:38:51 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/24 20:04:40 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,12 @@ int	main(int argc, char **argv, char **envp)
 		ms_signals(INTERACTIVE);
 		if (g_sign == SIGINT)
 		{
-			ft_putstr_fd("in main?\n", STDOUT_FILENO);
+			ft_putstr_fd("in main?\n", STDOUT_FILENO); //Delete?
 			data->exit_code = 130;
 		}
 		init_main_struct(data, envp);
-		parsing(data, envp);
+		parse_envp(data, envp);
+		parsing(data);
 		return (bye(data));
 	}
 }

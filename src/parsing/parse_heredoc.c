@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parse_heredoc.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.codam.nl>             +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:37:46 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/24 20:24:11 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

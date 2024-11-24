@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   expansion_heredoc.c                                :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: sramos <sramos@student.codam.nl>             +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:21:20 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/24 20:24:20 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

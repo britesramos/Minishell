@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:16 by sramos        #+#    #+#                 */
-/*   Updated: 2024/10/31 12:35:05 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/24 13:35:43 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef enum e_tokens
 	T_REOUT,
 	T_APPEND,
 	T_HEREDOC,
-	// T_EOF, ???
 	T_ERROR,
 }	t_token_t;
 
