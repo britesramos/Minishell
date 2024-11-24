@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/23 10:20:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/24 13:23:54 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ static void	children_wait(t_data *data, t_ex *ex)
 	i = 0;
 	while (i < ex->i)
 	{
-		waitpid(ex->pid_store[i], &data->exit_code, 0);
+		waitpid(ex->pid_store[i], &ex->status, 0);
+		if (WIFSIGNALED(ex->status))
+			data->exit_code = WTERMSIG(ex->status) + 128;
+		else if (WIFEXITED(ex->status))
+			data->exit_code = WEXITSTATUS(ex->status);
 		i++;
 	}
 }
@@ -46,7 +50,11 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	char	*path;
 	int		bi_check;
 
-	child_fd_handling(data, ex);
+	if (child_fd_handling(data, ex) == EXIT_FAILURE)
+	{
+		clean_up(data);
+		exit (EXIT_FAILURE);
+	}
 	bi_check = builtin_check(data, ex);
 	if (bi_check == EXIT_SUCCESS)
 	{
@@ -54,7 +62,7 @@ static	int	ft_child(t_data *data, t_ex *ex)
 		exit (EXIT_SUCCESS);
 	}
 	path = NULL;
-	path = get_path_error(data, &path);
+	get_path_error(data, &path);
 	if (path != NULL)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
 	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
@@ -86,6 +94,7 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		close_fd(&data->cmd_current->fd_in);
 	if (ex->i != data->nbr_pipes)
 		close_fd(&ex->p_fd[WRITE]);
+	signal(SIGUSR1, SIG_IGN);
 	return (EXIT_SUCCESS);
 }
 
@@ -99,8 +108,7 @@ int	mltpl_cmd(t_data *data)
 	ft_bzero(&ex, sizeof(ex));
 	ex.i = 0;
 	ex.fd_in = data->std[IN];
-	// while (data->cmd_current != NULL)
-	while (ex.i <= data->nbr_pipes)
+	while (data->cmd_current != NULL)
 	{
 		if (do_pipex(data, &ex) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -109,12 +117,8 @@ int	mltpl_cmd(t_data *data)
 	}
 	ms_signals(NONINTERACTIVE);
 	children_wait(data, &ex);
-	waitpid(ex.pid, &data->exit_code, 0);
-	if (WIFSIGNALED(data->exit_code))
-		data->exit_code = WTERMSIG(data->exit_code) + 128;
-	else if (WIFEXITED(data->exit_code))
-		data->exit_code = WEXITSTATUS(data->exit_code);
-	// printf("in mltpl_cmd exit_code = %d\n", data->exit_code);
+	while (waitpid(-1, &ex.status, WNOHANG) > 0)
+		;
 	return (EXIT_SUCCESS);
 }
 

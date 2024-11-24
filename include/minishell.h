@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/23 09:51:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/24 13:23:43 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_ex
 	int		i;
 	int		pid_store[1024];
 	int		fd_in;
+	int		status;
 }	t_ex;
 
 /*Initialize main struct t_data data.*/
@@ -184,11 +185,15 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 #define NONINTERACTIVE 2
 #define HEREDOC 3
 
+#define NO_PATH 0
+#define NO_COMMAND 1
+
 int		exec(t_data *data);
 int		ft_builtin_manager(t_data *data, int fd);
 
 // built-in funtions:
 void	ft_cd(char **cmd, t_data *data);
+void	cd_errno_error(t_data *data, char *path);
 char	*ft_getcdw_err(t_data *data);
 char	*ft_getcwd_parent_err(t_data *data);
 void	ft_echo(char **cmd, t_data *data, int fd);
@@ -203,11 +208,10 @@ void	ft_unset(char **cmd, t_data *data);
 // pipes functions:
 void	single_cmd(t_data *data);
 int		mltpl_cmd(t_data *data);
-char	*get_path_error(t_data *data, char **path);
-char	*get_path(t_data *data, char *cmd);
+void	get_path_error(t_data *data, char **path);
 
 // fd_utils
-void	child_fd_handling(t_data *data, t_ex *ex);
+int		child_fd_handling(t_data *data, t_ex *ex);
 
 //envp utils
 void	add_node(t_data *data, char *cmd, t_envp **env);

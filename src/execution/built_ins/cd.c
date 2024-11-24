@@ -6,11 +6,21 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/23 07:29:36 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/24 08:47:18 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+static int ft_cd_open_check(t_data *data, char *path)
+{
+	if (opendir(path) == NULL)
+	{
+		cd_errno_error(data, path);
+		return (-1);
+	}
+	return (0);
+}
 
 static void	ft_cd_change(char *path, t_data *data)
 {
@@ -23,36 +33,22 @@ static void	ft_cd_change(char *path, t_data *data)
 		return ;
 	if (chdir(path) != 0)
 	{
-		if (opendir(path) == NULL)
+		if (ft_cd_open_check(data, path) == -1)
 		{
-			perror("minishell: cd");
-			data->exit_code = 127;
 			ft_free_string(&old_cwd);
 			return ;
 		}
 		cwd = ft_getcdw_err(data);
 		if (cwd == NULL)
+		{
+			ft_free_string(&old_cwd);
 			return ;
+		}
 		replace_value(data, "PWD", cwd);
 		replace_value(data, "OLDPWD", old_cwd);
 		ft_free_string(&cwd);
 	}
 	ft_free_string(&old_cwd);
-	data->exit_code = 0;
-}
-
-/// @brief changes the path to the given directory
-/// @param path destination path
-static void	ft_cd_dir(char *path, t_data *data)
-{
-	if (access(path, F_OK) == 0)
-		ft_cd_change(path, data);
-	else
-	{
-		perror("minishell: cd");
-		data->exit_code = 127;
-		return ;
-	}
 }
 
 /// @brief changes the current directory to path
@@ -122,7 +118,12 @@ void	ft_cd(char **cmd, t_data *data)
 	else if (ft_strncmp(cmd[1], "/", 2) == 0)
 		ft_chdir_error("/", data);
 	else
-		ft_cd_dir(cmd[1], data);
+	{
+		if (access(cmd[1], F_OK) == 0)
+			ft_cd_change(cmd[1], data);
+		else
+			cd_errno_error(data, cmd[1]);
+	}
 }
 
 /*

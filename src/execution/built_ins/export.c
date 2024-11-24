@@ -6,87 +6,19 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/23 10:52:30 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/24 12:44:05 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-char	*init_key_export(char *cmd, t_data *data)
-{
-	int		i;
-	int		key_len;
-	char	*key;
-
-	i = 0;
-	key_len = 0;
-	key = NULL;
-	while (cmd[key_len] != '=')
-		key_len++;
-	key = malloc(key_len + 1);
-	if (!key)
-	{
-		perror("export - key creation");
-		data->exit_code = 1;
-		return (NULL);
-	}
-	while (i < key_len)
-	{
-		key[i] = cmd[i];
-		i++;
-	}
-	key[i] = '\0';
-	return (key);
-}
-
-char	*init_value_export(char *cmd, t_data *data)
-{
-	size_t	key_len;
-	size_t	cmd_len;
-	char	*value;
-
-	key_len = 0;
-	value = NULL;
-	cmd_len = ft_strlen(cmd);
-	while (cmd[key_len] != '=')
-		key_len++;
-	if (key_len + 1 == cmd_len)
-		key_len++;
-	if (cmd_len == key_len)
-		value = ft_strdup("= ");
-	else
-	{
-		value = ft_calloc(cmd_len - key_len + 1, 1);
-		if (!value)
-		{
-			perror("export - value creation");
-			data->exit_code = 1;
-			return (NULL);
-		}
-		ft_strlcpy(value, cmd + key_len, (size_t)cmd - key_len);
-	}
-	return (value);
-}
-
-/// @brief checks if the cmd has correct input
-/// @return -1 on error, 0 if the key doesn't exist, 1 if the value needs to be
-///		updated, 2 when no action is required
-static int	ft_export_check(char *cmd, t_data *data)
-{
-	t_envp	*env;
-	int		len;
-
-	len = 0;
-	if (!ft_isalpha(cmd[0]))
-		return (-1);
-	env = data->envp_head;
+static int	ft_check_help(char *cmd, t_envp *env, int len)
+{	
 	if (ft_strchr(cmd, '=') != NULL)
 	{
-		while (cmd[len] != '=')
-			len++;
 		while (env != NULL)
 		{
-			if (ft_strncmp(env->key, cmd, len - 1) == 0)
+			if (ft_strncmp(env->key, cmd, len) == 0)
 				return (1);
 			env = env->next;
 		}
@@ -97,6 +29,33 @@ static int	ft_export_check(char *cmd, t_data *data)
 			return (2);
 		env = env->next;
 	}
+	return (0);
+}
+
+/// @brief checks if the cmd has correct input
+/// @return -1 on error, 0 if the key doesn't exist, 1 if the value needs to be
+///		updated, 2 when no action is required
+static int	ft_export_check(char *cmd, t_data *data)
+{
+	t_envp	*env;
+	int		len;
+	int		check;
+
+	len = 0;
+	if (cmd[len] == '=')
+		return (-1);
+	while (cmd[len] && cmd[len] != '=')
+	{
+		if (!ft_isalpha(cmd[len]) && cmd[len] != '_')
+			return (-1);
+		len++;
+	}
+	env = data->envp_head;
+	check = ft_check_help(cmd, env, len);
+	if (check == 1)
+		return (1);
+	else if (check == 2)
+		return (2);
 	return (0);
 }
 

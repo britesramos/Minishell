@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/23 07:27:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/24 12:59:21 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ void	replace_value(t_data *data, char *key, char *new_value)
 		if (ft_strncmp(env->key, key, len) == 0)
 		{
 			ft_free_string(&env->value);
-			env->value = ft_strjoin("=", new_value);
+			if (ft_strncmp(new_value, "= ", ft_strlen(new_value) + 1) == 0)
+				env->value = ft_strdup(new_value);
+			else
+				env->value = ft_strjoin("=", new_value);
 		}
 		env = env->next;
 	}

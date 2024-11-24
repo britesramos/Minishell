@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/23 11:04:06 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/24 11:06:51 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	ft_single_child(t_data *data)
 	char	*path;
 
 	path = NULL;
-	path = get_path_error(data, &path);
+	get_path_error(data, &path);
 	if (path != NULL)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
 	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
@@ -75,7 +75,7 @@ void	single_cmd(t_data *data)
 	ms_signals(NONINTERACTIVE);
 	waitpid(pid, &data->exit_code, 0);
 	if (WIFSIGNALED(data->exit_code))
-	data->exit_code = WTERMSIG(data->exit_code) + 128;
+		data->exit_code = WTERMSIG(data->exit_code) + 128;
 	else if (WIFEXITED(data->exit_code))
 		data->exit_code = WEXITSTATUS(data->exit_code);
 }
