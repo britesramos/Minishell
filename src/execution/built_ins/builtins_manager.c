@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:05:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 09:07:54 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/23 07:47:26 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	ft_builtin_manager(t_data *data, int fd)
 	char	**cmd;
 
 	cmd = data->cmd_current->cmd;
+	if (!cmd)
+		return (EXIT_FAILURE);
 	if (ft_strncmp(cmd[0], "cd", 3) == 0)
 		return (ft_cd(cmd, data), 0);
 	else if (ft_strncmp(cmd[0], "echo", 5) == 0)

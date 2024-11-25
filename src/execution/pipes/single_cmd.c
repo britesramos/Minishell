@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 15:31:38 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 09:03:18 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 /// @brief dup2() for redirection, does nothing if in/out are STD IN/OUT.
 /// From man dup2: If oldfd is a valid file descriptor, and newfd has the same
 /// value as oldfd, then dup2() does nothing, and returns newfd.
-static void	ft_dup_all(t_cmd *current, t_data *data)
+static int	ft_dup_all(t_cmd *current, t_data *data)
 {
+	if (current->fd_in == -1 || current->fd_out == -1)
+		return (EXIT_FAILURE);
 	if (current->fd_in != data->std[IN])
 	{
 		if (dup2(current->fd_in, data->std[IN]) == -1)
 		{
 			perror("dup2 fd_in in single cmd");
-			return ;
+			return (EXIT_FAILURE);
 		}
 		close_fd(&current->fd_in);
 	}
@@ -31,31 +33,28 @@ static void	ft_dup_all(t_cmd *current, t_data *data)
 		if (dup2(current->fd_out, data->std[OUT]) == -1)
 		{
 			perror("dup2 fd_out in single cmd");
-			return ;
+			return (EXIT_FAILURE);
 		}
 		close_fd(&current->fd_out);
 	}
+	return (EXIT_SUCCESS);
 }
 
-static void	ft_single_child(t_data *data, char *path)
+static void	ft_single_child(t_data *data)
 {
-	if (access(data->cmd_current->cmd[0], F_OK | X_OK) == 0)
-		path = ft_strdup(data->cmd_current->cmd[0]);
-	else
-		path = get_path(data, data->cmd_current->cmd[0]);
+	char	*path;
+
+	path = NULL;
+	get_path_error(data, &path);
 	if (path != NULL)
-	{
-		data->exit_code = 0;
-		execve(path, data->cmd_current->cmd, data->envp);
-	}
-	ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
+		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
+	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
+		ft_putnbr_fd(127, STDERR_FILENO);
+	else
+		ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
 	ft_putendl_fd(": Command not found", STDERR_FILENO);
 	clean_up(data);
-	if (path != NULL)
-	{
-		free(path);
-		path = NULL;
-	}
+	ft_free_string(&path);
 	exit (127);
 }
 
@@ -73,16 +72,17 @@ void	single_cmd(t_data *data)
 	}
 	if (pid == 0)
 	{
-		ft_dup_all(data->cmd_current, data);
-		ft_single_child(data, path);
+		if (ft_dup_all(data->cmd_current, data) == EXIT_FAILURE)
+		{
+			clean_up(data);
+			exit (EXIT_FAILURE);
+		}
+		ft_single_child(data);
 	}
 	ms_signals(NONINTERACTIVE);
 	waitpid(pid, &data->exit_code, 0);
 	if (WIFSIGNALED(data->exit_code))
-	{
-		if (WTERMSIG(data->exit_code) == SIGQUIT)
-			data->exit_code = WTERMSIG(data->exit_code) + 128;
-	}
+		data->exit_code = WTERMSIG(data->exit_code) + 128;
 	else if (WIFEXITED(data->exit_code))
 		data->exit_code = WEXITSTATUS(data->exit_code);
 }

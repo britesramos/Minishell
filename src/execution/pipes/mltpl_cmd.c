@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 15:31:28 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 06:58:08 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ static void	children_wait(t_data *data, t_ex *ex)
 	i = 0;
 	while (i < ex->i)
 	{
-		waitpid(ex->pid_store[i], &data->exit_code, 0);
+		waitpid(ex->pid_store[i], &ex->status, 0);
+		if (WIFSIGNALED(ex->status))
+			data->exit_code = WTERMSIG(ex->status) + 128;
+		else if (WIFEXITED(ex->status))
+			data->exit_code = WEXITSTATUS(ex->status);
 		i++;
 	}
 }
@@ -53,18 +57,18 @@ static	int	ft_child(t_data *data, t_ex *ex)
 		clean_up(data);
 		exit (EXIT_SUCCESS);
 	}
-	if (access(data->cmd_current->cmd[0], F_OK | X_OK) == 0)
-		path = ft_strdup(data->cmd_current->cmd[0]);
-	else
-		path = get_path(data, data->cmd_current->cmd[0]);
+	path = NULL;
+	get_path_error(data, &path);
 	if (path != NULL)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
-	ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
+	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
+		ft_putnbr_fd(127, STDERR_FILENO);
+	else
+		ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
 	ft_putendl_fd(": Command not found", STDERR_FILENO);
 	clean_up(data);
 	if (path)
-		free(path);
-	path = NULL;
+		ft_free_string(&path);
 	exit (127);
 }
 
@@ -86,6 +90,7 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		close_fd(&data->cmd_current->fd_in);
 	if (ex->i != data->nbr_pipes)
 		close_fd(&ex->p_fd[WRITE]);
+	signal(SIGUSR1, SIG_IGN);
 	return (EXIT_SUCCESS);
 }
 
@@ -106,15 +111,10 @@ int	mltpl_cmd(t_data *data)
 		ex.i++;
 		data->cmd_current = data->cmd_current->pipe;
 	}
+	ms_signals(NONINTERACTIVE);
 	children_wait(data, &ex);
-	waitpid(ex.pid, &data->exit_code, 0);
-	if (WIFSIGNALED(data->exit_code))
-	{
-		if (WTERMSIG(data->exit_code) == SIGQUIT)
-			data->exit_code = WTERMSIG(data->exit_code) + 128;
-	}
-	else if (WIFEXITED(data->exit_code))
-		data->exit_code = WEXITSTATUS(data->exit_code);
+	while (waitpid(-1, &ex.status, WNOHANG) > 0)
+		;
 	return (EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/11/24 20:01:16 by anonymous     ########   odam.nl          #
+#    Updated: 2024/11/25 11:11:39 by sramos        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRC_FILES = src/delete_me.c\
 			src/execution/built_ins/exit.c\
 			src/execution/built_ins/export.c\
 			src/execution/built_ins/export_print.c\
+			src/execution/built_ins/export_utils.c\
 			src/execution/built_ins/pwd.c\
 			src/execution/built_ins/unset.c\
 			src/execution/pipes/fd_utils.c\

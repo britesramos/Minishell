@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:41:06 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/24 19:48:05 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/11/25 11:07:49 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	error_input_checker(t_data *data, char *str, int type)
 	int	len;
 
 	len = ft_strlen(str);
-	write(1, str, len);
+	write(STDERR_FILENO, str, len);
 	data->exit_code = type;
 	return (1);
 }

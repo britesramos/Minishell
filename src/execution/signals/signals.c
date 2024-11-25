@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/12 17:55:59 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 11:32:21 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/24 08:00:24 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ static void	signal_p(int signal, siginfo_t *info, void *x)
 		rl_on_new_line();
 		g_sign = signal;
 	}
+	else if (signal == SIGQUIT)
+	{
+		ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		g_sign = signal;
+	}
 }
 
 /// @brief this is for the interactive mode (input from the terminal)
@@ -60,13 +67,14 @@ static void	signal_help(int process, struct sigaction *sa)
 {
 	if (process == NONINTERACTIVE)
 	{
+		sigaddset(&sa->sa_mask, SIGQUIT);
 		sa->sa_sigaction = &signal_p;
-		if (sigaction(SIGINT, sa, NULL) == -1)
+		if (sigaction(SIGINT, sa, NULL) == -1
+			|| sigaction(SIGQUIT, sa, NULL) == -1)
 		{
 			perror("SIGINT error");
 			return ;
 		}
-		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (process == INTERACTIVE)
 	{

@@ -3,12 +3,13 @@
 /*                                                        ::::::::            */
 /*   libft.h                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <marvin@42.fr>                      +#+                     */
+/*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/09 17:12:13 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 13:44:43 by sramos        ########   odam.nl         */
+/*   Created: 2024/11/23 07:24:51 by mstencel      #+#    #+#                 */
+/*   Updated: 2024/11/23 07:26:07 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef LIBFT_H
 # define LIBFT_H

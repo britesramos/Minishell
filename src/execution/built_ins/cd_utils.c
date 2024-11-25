@@ -6,11 +6,20 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:08:54 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 09:31:34 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/24 08:41:23 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
+
+void	cd_errno_error(t_data *data, char *path)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(path, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	data->exit_code = 1;
+}
 
 char	*ft_getcdw_err(t_data *data)
 {
