@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   export.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
+/*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/25 06:56:36 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 11:02:20 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,7 @@ void	ft_export(char **cmd, t_data *data, int fd)
 {
 	int		i;
 	int		check;
-	char	*key;
-	char	*value;
 
-	key = NULL;
-	value = NULL;
 	i = 1;
 	if (!cmd[i])
 		ft_print_export(data, fd);

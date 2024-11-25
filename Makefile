@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/11/24 12:38:34 by mstencel      ########   odam.nl          #
+#    Updated: 2024/11/25 11:11:39 by sramos        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = minishell
 
 SRC_PATH = src
 
-SRC_FILES = src/minishell.c\
+SRC_FILES = src/delete_me.c\
+			src/main.c\
 			src/clean_up.c\
 			src/init.c\
 			src/expansion/expansion.c\
@@ -23,11 +24,13 @@ SRC_FILES = src/minishell.c\
 			src/parsing/parsing.c\
 			src/parsing/input_checker.c\
 			src/parsing/input_checker_utils.c\
+			src/parsing/input_checker_pipes.c\
 			src/parsing/parse_envp.c\
 			src/parsing/tokenization.c\
 			src/parsing/tokenization_utils.c\
 			src/parsing/token_word_remove_quotes.c\
 			src/parsing/token_word_remove_spaces.c\
+			src/parsing/token_word_utils.c\
 			src/parsing/parse_heredoc.c\
 			src/parsing/parse_input.c\
 			src/parsing/parse_input_create_list.c\

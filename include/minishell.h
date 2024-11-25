@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 10:34:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 12:28:02 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,28 @@ typedef struct s_data
 	char	*line; /*from Readline function-user input from the terminal*/
 	char	*hd_line;
 	char	**envp;
+	bool	invalid_fd;
 	int		exit_code;
 	int		nbr_pipes;
 	int		std[2];
+	t_token	*token_list;
 	t_cmd	*cmd_head;
 	t_cmd	*cmd_current;
 	t_envp	*envp_head; /*Pointer to linked list header | Parsed envp*/
 }	t_data;
+
+
+
+
+
+//DELETE ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+void	print_cmd_list(t_data *data);
+void	print_token_list(t_token *token_list);
+//DELETE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
 
 typedef struct s_ex
 {
@@ -100,21 +115,24 @@ char	*expansion_heredoc(t_data *data, char *heredoc_line);
 /*-----------------------------------PARSING-----------------------------*/
 
 /*Parsing input*/
-void	parsing(t_data *data, char **envp);
+void	parsing(t_data *data);
 int		parse_input(t_data *data, t_token *token_list);
-void	create_add_node(t_data *data, t_cmd *current_cmd);
+int		parse_input_help(t_data *data, t_token **c_t, t_cmd **c_cmd, int *i);
 t_token	*p_redirections(t_token *current_t, t_cmd *c_cmd, t_data *data);
 t_token	*p_rein(t_token *current_t, t_cmd *current_cmd, t_data *data);
 t_token	*p_reout(t_token *current_t, t_cmd *c_cmd, t_data *data);
 t_token	*p_append(t_token *current_t, t_cmd *current_cmd, t_data *data);
 t_token	*p_pipe(t_token *current_t, t_data *data);
+int		p_word(t_token *current_t, t_cmd *current_c, t_data *data, int i);
+
 
 /*Tokenization*/
-t_token	*tokenization(t_data *data, t_token *token_list);
+void	tokenization(t_data *data);
 int		ms_isspace(char c);
 char	*token_word_remove_extra_quotes(char *new, t_data *data);
 char	*token_word_remove_extra_spaces(char *new, t_data *data);
-t_token	*create_new_node(t_data *data, t_token_t type, char *str);
+int		len_result(t_data *data, int start);
+t_token *create_new_node(t_data *data, t_token_t type, char *str);
 void	create_t_list(t_data *data, t_token **token_list, char *str, t_token_t type);
 void	free_token_list(t_token *token_list);
 
@@ -124,10 +142,18 @@ t_token	*p_heredoc(t_token *current_token, t_cmd *current_cmd, t_data *data);
 /*Invalid input checker*/
 int		start_with_pipe(char *str);
 int		multiple_pipes(char *str);
+int		redin_to_pipe(char *str);
 int		missing_closing_q_marks(char *str);
-int		multiple_redirection(char *str);
-int		lonely_redirection(char *str);
-int		input_checker(t_data *data);
+int		multiple_redirections(char *str);
+int		unexpected_new_line(char *str);
+// int		lonely_redirection(char *str);
+int		input_checker(t_data *data, char *line);
+int		input_checker_keep_reading_line(t_data *data, char *line);
+int		error_input_checker(t_data *data, char *str, int type);
+int		error_unexpected_token(t_data *data, char *str, int type);
+
+int		pipe_at_end(char *line);
+int		keep_reading_line(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
@@ -158,6 +184,8 @@ int		error_exit_system(t_data *data, char *str, int type);
 
 /*Ending program and clean up.*/
 void	clean_up(t_data *data);
+void	clean_up_parse_input(t_data *data, t_token *token_list);
+void	clean_up_token_list(t_token	*token_list);
 void	free_split(char **array);
 void	free_envp(t_envp *envp_head);
 

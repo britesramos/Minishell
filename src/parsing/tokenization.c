@@ -17,35 +17,8 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 	int		len;
 	char	*new;
 
-	len = 0;
 	new = NULL;
-	bool sq = false;
-	bool dq = false;
-	if (start == 0)
-	{
-		while (ms_isword(data->line[start + len]) && !ms_isspace(data->line[start + len]))
-			len++;
-	}
-	else
-	{
-		if ((data->line[start] == '\'' || data->line[start] == '"') && data->line[start + 1] == '\0')
-			return (start + 1);
-		else
-		{
-			while (data->line[start + len])
-			{
-				if (data->line[start + len] == '\'' && dq == false)
-					sq = !sq;
-				if (data->line[start + len] == '"' && sq == false)
-					dq = !dq;
-				if (ms_isspace(data->line[start + len]) && sq == false && dq == false)
-					break ;
-				if (data->line[start + len] == '|' && sq == false && dq == false)
-					break ;
-				len++;
-			}
-		}
-	}
+	len = len_result(data, start);
 	new = ft_substr(data->line, start, len);
 	if (!new)
 		error_exit(data, NULL, "New str does not exist!\n", 1);
@@ -76,31 +49,30 @@ static int	token_heredoc(t_data *data, int i, t_token **token_list, char *str)
 	return (i + 1);
 }
 
-t_token	*tokenization(t_data *data, t_token *token_list)
+void	tokenization(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	if (!data->line || !data->line[i])
-		return (NULL);
+		return ;
 	while (data->line[i])
 	{
 		while (ms_isspace(data->line[i]))
 			i++;
 		if (data->line[i] == '>' && data->line[i + 1] == '>')
-			i = token_append(data, i, &token_list, ">>");
+			i = token_append(data, i, &data->token_list, ">>");
 		else if (data->line[i] == '<' && data->line[i + 1] == '<')
-			i = token_heredoc(data, i, &token_list, "<<");
+			i = token_heredoc(data, i, &data->token_list, "<<");
 		else if (data->line[i] == '>' && data->line[i + 1])
-			create_t_list(data, &token_list, ">", T_REOUT);
+			create_t_list(data, &data->token_list, ">", T_REOUT);
 		else if (data->line[i] == '<' && data->line[i + 1])
-			create_t_list(data, &token_list, "<", T_REIN);
+			create_t_list(data, &data->token_list, "<", T_REIN);
 		else if (data->line[i] == '|')
-			create_t_list(data, &token_list, "|", T_PIPE);
+			create_t_list(data, &data->token_list, "|", T_PIPE);
 		else if (ms_isword(data->line[i]))
-			i = token_word(data, i, &token_list);
+			i = token_word(data, i, &data->token_list);
 		if (data->line[i] && (data->line[i] != '"' || data->line[i] != '\''))
 			i++;
 	}
-	return (token_list);
 }
