@@ -70,14 +70,19 @@ int	pipe_at_end(char *line)
 	return (0);
 }
 
-void	keep_reading_line(t_data *data)
+int	keep_reading_line(t_data *data)
 {
 	char	*temp;
+	int		len;
 
 	temp = NULL;
 	temp = readline("> ");
+	len = ft_strlen(temp) + ft_strlen(data->line) + 1;
+	ft_strlcat(data->line, temp, len);
+	if (input_checker_keep_reading_line(data, temp) != 0)
+		return (9);
 	// if (input_checker(data, temp) != 0)
 	// 	return ;
 	// ms_signals(HEREDOC); //Needs to be fixed.
-	ft_strlcat(data->line, temp, ft_strlen(temp) + ft_strlen(data->line) + 1);
+	return (0);
 }

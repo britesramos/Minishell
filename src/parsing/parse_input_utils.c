@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:57:14 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 11:59:44 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,21 @@ char	**ft_realloc(t_data *data, int number_of_times, char **old_array)
 			free_null_2d_array(old_array);
 	}
 	return (new);
+}
+
+int	parse_input_help(t_data *data, t_token **c_t, t_cmd **c_cmd, int *i)
+{
+	while (*c_t && (*c_t)->type != T_PIPE && (*c_t)->lenght > 0)
+	{
+		if ((*c_t)->type != T_WORD && (*c_t)->type != T_PIPE)
+		{
+			*c_t = p_redirections(*c_t, *c_cmd, data);
+			if (*c_t == NULL)
+				return (9);
+		}
+		else if ((*c_t)->type == T_WORD && (*c_t)->type != T_PIPE)
+			*i = p_word(*c_t, *c_cmd, data, *i);
+		*c_t = (*c_t)->next;
+	}
+	return (0);
 }

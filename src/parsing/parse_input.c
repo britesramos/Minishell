@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 11:08:33 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 12:00:31 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_token	*p_append(t_token *current_t, t_cmd *current_c, t_data *data)
 	return (current_t);
 }
 
-static int	p_word(t_token *current_t, t_cmd *current_c, t_data *data, int i)
+int	p_word(t_token *current_t, t_cmd *current_c, t_data *data, int i)
 {
 	int	alloc_times;
 
@@ -102,18 +102,8 @@ int	parse_input(t_data *data, t_token *token_list)
 		i = 0;
 		newnode = create_new_node_cmd(data);
 		add_new_node(&data->cmd_head, newnode, &current_cmd);
-		while (current_t && current_t->type != T_PIPE && current_t->lenght > 0)
-		{
-			if (current_t->type != T_WORD && current_t->type != T_PIPE)
-			{
-				current_t = p_redirections(current_t, current_cmd, data);
-				if (current_t == NULL)
-					return (9);
-			}
-			else if (current_t->type == T_WORD && current_t->type != T_PIPE)
-				i = p_word(current_t, current_cmd, data, i);
-			current_t = current_t->next;
-		}
+		if (parse_input_help(data, &current_t, &current_cmd, &i) == 9)
+			return (9);
 		if (current_t && current_t->type == T_PIPE)
 			current_t = p_pipe(current_t, data);
 	}

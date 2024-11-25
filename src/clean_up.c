@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 15:18:51 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 11:10:12 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 11:26:38 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	clean_up(t_data *data)
 	if (data->cmd_head)
 		free_cmd_list(data->cmd_head);
 	if (data->line)
-		free(data->line); /*This might have to be changed if readline is a loop, so it will alocate multiple times for line.*/
+		ft_free_string(&data->line);
 	if (data->hd_line)
-		free(data->hd_line);
+		ft_free_string(&data->hd_line);
 	if (data)
 		free(data);
 	rl_clear_history();

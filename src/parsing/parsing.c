@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 11:09:16 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 12:19:27 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	parsing(t_data *data)
 		}
 		if (!data->line[0])
 			continue ;
-		if (data->line[0])
-			add_history(data->line);
 		if (input_checker(data, data->line) == 0 && !only_spaces(data))
 		{
 			expansion(data);
@@ -63,5 +61,7 @@ void	parsing(t_data *data)
 			if (g_sign == SIGINT)
 				data->exit_code = g_sign + 128;
 		}
+		if (data->line[0])
+			add_history(data->line);
 	}
 }

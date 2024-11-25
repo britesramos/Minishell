@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 11:01:40 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 12:15:21 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,13 @@ char 	*expansion_heredoc(t_data *data, char *heredoc_line);
 /*Parsing input*/
 void	parsing(t_data *data);
 int		parse_input(t_data *data, t_token *token_list);
+int		parse_input_help(t_data *data, t_token **c_t, t_cmd **c_cmd, int *i);
 t_token	*p_redirections(t_token *current_t, t_cmd *c_cmd, t_data *data);
 t_token	*p_rein(t_token *current_t, t_cmd *current_cmd, t_data *data);
 t_token	*p_reout(t_token *current_t, t_cmd *c_cmd, t_data *data);
 t_token	*p_append(t_token *current_t, t_cmd *current_cmd, t_data *data);
 t_token	*p_pipe(t_token *current_t, t_data *data);
+int		p_word(t_token *current_t, t_cmd *current_c, t_data *data, int i);
 
 
 /*Tokenization*/
@@ -130,9 +132,12 @@ int		multiple_redirections(char *str);
 int		unexpected_new_line(char *str);
 // int		lonely_redirection(char *str);
 int		input_checker(t_data *data, char *line);
+int		input_checker_keep_reading_line(t_data *data, char *line);
+int		error_input_checker(t_data *data, char *str, int type);
+int		error_unexpected_token(t_data *data, char *str, int type);
 
 int		pipe_at_end(char *line);
-void	keep_reading_line(t_data *data);
+int		keep_reading_line(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
