@@ -6,10 +6,9 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/23 07:24:51 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/23 07:26:07 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 17:37:21 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef LIBFT_H
 # define LIBFT_H
@@ -68,6 +67,7 @@ void	*ft_memset(void *s, int c, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_free_array(char **str);
 void	ft_free_string(char **str);
+void	ft_free(char **ptr);
 
 void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);

@@ -6,20 +6,11 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/22 10:46:36 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 15:17:02 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 17:40:11 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static void	ft_free(char **ptr)
-{
-	if (*ptr)
-	{
-		free(*ptr);
-		*ptr = NULL;
-	}
-}
 
 static char	*ft_extline(char *buffer)
 {
@@ -47,6 +38,18 @@ static char	*ft_extline(char *buffer)
 	return (line);
 }
 
+static char	*get_buffer(char *buffer, char *temp, int i, int j)
+{
+	while (temp[i])
+	{
+		buffer[j] = temp [i];
+		i++;
+		j++;
+	}
+	buffer[j] = '\0';
+	return (buffer);
+}
+
 static char	*ft_leftovers(char *buffer, char *line)
 {
 	char	*temp;
@@ -70,13 +73,7 @@ static char	*ft_leftovers(char *buffer, char *line)
 	buffer = malloc(ft_strlen(temp) - ft_strlen(line) + 1 * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	while (temp[i])
-	{
-		buffer[j] = temp [i];
-		i++;
-		j++;
-	}
-	buffer[j] = '\0';
+	buffer = get_buffer(buffer, temp, i, j);
 	ft_free(&temp);
 	return (buffer);
 }

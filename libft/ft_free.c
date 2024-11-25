@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 11:21:27 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 07:33:08 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 17:37:15 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,14 @@ void	ft_free_string(char **str)
 	{
 		free(*str);
 		*str = NULL;
+	}
+}
+
+void	ft_free(char **ptr)
+{
+	if (*ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
 	}
 }

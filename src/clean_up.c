@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 15:18:51 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 11:26:38 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 17:30:20 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,4 @@ void	clean_up_parse_input(t_data *data, t_token *token_list)
 	data->nbr_pipes = 0;
 	data->std[IN] = STDIN_FILENO;
 	data->std[OUT] = STDOUT_FILENO;
-}
-
-void	free_split(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free (array[i]);
-		i++;
-	}
-	free(array);
 }

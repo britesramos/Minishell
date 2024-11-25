@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 13:29:33 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 15:15:43 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,10 @@ typedef struct s_data
 	t_envp	*envp_head; /*Pointer to linked list header | Parsed envp*/
 }	t_data;
 
-
-
-
-
-//DELETE ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//DELETE ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 void	print_cmd_list(t_data *data);
 void	print_token_list(t_token *token_list);
-//DELETE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
+//DELETE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 typedef struct s_ex
 {
@@ -111,7 +103,7 @@ int		expansion_quotes(t_data *data, int i);
 void	concatenate_newline(t_data *data, char *value, char *leftover);
 char	*convert_exit_code(t_data *data);
 void	alloc_newline(t_data *data, char *temp, char *value, char *leftover);
-char	*expansion_heredoc(t_data *data, char *heredoc_line);
+char	*expansion_heredoc(t_data *data);
 
 /*-----------------------------------PARSING-----------------------------*/
 
@@ -126,15 +118,14 @@ t_token	*p_append(t_token *current_t, t_cmd *current_cmd, t_data *data);
 t_token	*p_pipe(t_token *current_t, t_data *data);
 int		p_word(t_token *current_t, t_cmd *current_c, t_data *data, int i);
 
-
 /*Tokenization*/
 void	tokenization(t_data *data);
 int		ms_isspace(char c);
 char	*token_word_remove_extra_quotes(char *new, t_data *data);
 char	*token_word_remove_extra_spaces(char *new, t_data *data);
 int		len_result(t_data *data, int start);
-t_token *create_new_node(t_data *data, t_token_t type, char *str);
-void	create_t_list(t_data *data, t_token **token_list, char *str, t_token_t type);
+t_token	*create_new_node(t_data *data, t_token_t type, char *str);
+void	create_list(t_data *data, t_token **t_list, char *str, t_token_t type);
 void	free_token_list(t_token *token_list);
 
 /*HEREDOC parsing*/
@@ -179,7 +170,7 @@ void	parse_envp(t_data *data, char **envp);
 
 /*Error handling and exit error std.*/
 int		error_exit(t_data *data, char *file, char *str, int type);
-int	error_exit_system(t_data *data, char *str, t_cmd *current_cmd, int type);
+int		error_exit_system(t_data *data, char *str, t_cmd *cmd, int type);
 
 /*-----------------------------------PARSING------------------------------*/
 

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 11:08:14 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 15:15:58 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	hd_signal(t_data *data, char **heredoc_line, char **str)
 	return (0);
 }
 
-static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
+static char	*heredoc(t_data *data, char *del, char **str)
 {
 	char	*tmp;
 	int		check;
@@ -52,22 +52,22 @@ static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 	while (1)
 	{
 		ft_putstr_fd("> ", data->std[OUT]);
-		*heredoc_line = get_next_line(data->std[IN]);
-		check = hd_signal(data, heredoc_line, str);
+		data->hd_line = get_next_line(data->std[IN]);
+		check = hd_signal(data, &data->hd_line, str);
 		if (check == 1)
 			return (NULL);
 		else if (check == 2)
 			break ;
-		*heredoc_line = expansion_heredoc(data, *heredoc_line);
-		if (ft_strncmp(*heredoc_line, del, ft_strlen(del) + 1) == 0)
+		data->hd_line = expansion_heredoc(data);
+		if (ft_strncmp(data->hd_line, del, ft_strlen(del) + 1) == 0)
 			break ;
-		tmp = ft_strjoin(*str, *heredoc_line);
-		if (tmp_help(data, heredoc_line, str, &tmp) == 1)
+		tmp = ft_strjoin(*str, data->hd_line);
+		if (tmp_help(data, &data->hd_line, str, &tmp) == 1)
 			return (NULL);
 		*str = tmp;
 	}
-	if (*heredoc_line)
-		ft_free_string(heredoc_line);
+	if (data->hd_line)
+		ft_free_string(&data->hd_line);
 	if (!(*str))
 		return (NULL);
 	return (*str);
@@ -81,10 +81,9 @@ t_token	*p_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 	c_cmd->heredoc = true;
 	current_token = current_token->next;
 	delimiter = ft_strjoin(current_token->str, "\n");
-	data->hd_line = NULL;
 	str = NULL;
 	ms_signals(HEREDOC);
-	str = heredoc(data, &data->hd_line, delimiter, &str);
+	str = heredoc(data, delimiter, &str);
 	ft_free_string(&delimiter);
 	if (str == NULL && data->exit_code == 128 + g_sign)
 	{

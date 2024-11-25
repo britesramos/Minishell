@@ -25,7 +25,8 @@ void	print_cmd_list(t_data *data)
 		{
 			while (currentll->cmd[i])
 			{
-				printf("This is cmd[%i]: %s - %p\n", i, currentll->cmd[i], currentll->cmd[i]);
+				printf("This is cmd[%i]: %s - %p\n", i,
+					currentll->cmd[i], currentll->cmd[i]);
 				i++;
 			}
 		}
@@ -47,7 +48,8 @@ void	print_token_list(t_token *token_list)
 	{
 		if (current->type == T_PIPE)
 			printf("\n");
-		printf("LEN: %i - TYPE: %i - STR: %s\n", current->lenght, current->type, current->str);
+		printf("LEN: %i - TYPE: %i - STR: %s\n",
+			current->lenght, current->type, current->str);
 		current = current->next;
 	}
 }
