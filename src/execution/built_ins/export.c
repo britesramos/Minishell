@@ -6,14 +6,14 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 07:48:37 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 12:44:05 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 06:56:36 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
 static int	ft_check_help(char *cmd, t_envp *env, int len)
-{	
+{
 	if (ft_strchr(cmd, '=') != NULL)
 	{
 		while (env != NULL)

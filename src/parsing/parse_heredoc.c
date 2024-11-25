@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/23 07:32:30 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 07:07:48 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,55 @@
 
 extern volatile sig_atomic_t	g_sign;
 
+static int	tmp_help(t_data *data, char **heredoc_line, char **str, char **tmp)
+{
+	if (!*tmp)
+		error_exit(data, NULL, "Fail to alloc in heredoc\n", 1);
+	ft_free_string(str);
+	ft_free_string(heredoc_line);
+	if (!(**tmp))
+		return (1);
+	return (0);
+}
+
+static int	hd_signal(t_data *data, char **heredoc_line, char **str)
+{
+	if (*heredoc_line == NULL)
+	{
+		if (g_sign == SIGINT)
+		{
+			data->exit_code = 128 + g_sign;
+			ft_free_string(str);
+			return (1);
+		}
+		ft_putchar_fd('\n', data->std[OUT]);
+		ft_putstr_fd("minishell: warning: here-document ", STDERR_FILENO);
+		ft_putendl_fd("delimited by end-of-file (wanted `EOF')", 2);
+		data->exit_code = 0;
+		return (2);
+	}
+	return (0);
+}
+
 static char	*heredoc(t_data *data, char **heredoc_line, char *del, char **str)
 {
 	char	*tmp;
+	int		check;
 
 	while (1)
 	{
 		ft_putstr_fd("> ", data->std[OUT]);
 		*heredoc_line = get_next_line(data->std[IN]);
-		if (*heredoc_line == NULL)
-		{
-			if (g_sign == SIGINT)
-			{
-				data->exit_code = 128 + g_sign;
-				ft_free_string(str);
-				return (NULL);
-			}
-			ft_putchar_fd('\n', data->std[OUT]);
-			ft_putstr_fd("minishell: warning: here-document ", STDERR_FILENO);
-			ft_putendl_fd("delimited by end-of-file (wanted `EOF')", 2);
-			data->exit_code = 0;
+		check = hd_signal(data, heredoc_line, str);
+		if (check == 1)
+			return (NULL);
+		else if (check == 2)
 			break ;
-		}
 		*heredoc_line = expansion_heredoc(data, *heredoc_line);
 		if (ft_strncmp(*heredoc_line, del, ft_strlen(del) + 1) == 0)
 			break ;
 		tmp = ft_strjoin(*str, *heredoc_line);
-		if (!tmp)
-			error_exit(data, NULL, "Fail to alloc in heredoc\n", 1);
-		ft_free_string(str);
-		ft_free_string(heredoc_line);
-		if (!(*tmp))
+		if (tmp_help(data, heredoc_line, str, &tmp) == 1)
 			return (NULL);
 		*str = tmp;
 	}

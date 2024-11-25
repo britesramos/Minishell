@@ -6,13 +6,13 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 08:47:18 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 06:55:58 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-static int ft_cd_open_check(t_data *data, char *path)
+static int	ft_cd_open_check(t_data *data, char *path)
 {
 	if (opendir(path) == NULL)
 	{

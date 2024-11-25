@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 09:14:19 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 13:24:24 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 06:58:13 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,17 @@ static int	fds_last_cmd(t_cmd *current, t_data *data, t_ex *ex)
 	return (EXIT_SUCCESS);
 }
 
-int	child_fd_handling(t_data *data, t_ex *ex)
+void	child_fd_handling(t_data *data, t_ex *ex)
 {
 	if (data->cmd_current->fd_in == -1 || data->cmd_current->fd_out == -1)
-		return (EXIT_FAILURE);
+	{
+		clean_up(data);
+		exit (EXIT_FAILURE);
+	}
 	if (ex->i == 0)
 		fds_first_cmd(data->cmd_current, ex, data);
 	else if (ex->i == data->nbr_pipes)
 		fds_last_cmd(data->cmd_current, data, ex);
 	else
 		fds_in_between_cmd(data->cmd_current, ex, data);
-	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 13:38:56 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 07:54:47 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static void	ft_single_child(t_data *data)
 	get_path_error(data, &path);
 	if (path != NULL)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
+	int	error = errno;
+	printf("in cmd error: %d\n", error);
 	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
 		ft_putnbr_fd(127, STDERR_FILENO);
 	else

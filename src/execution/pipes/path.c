@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 07:56:36 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 08:45:16 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,29 @@
 
 static void	path_error(t_data *data, char *cmd, int flag)
 {
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	clean_up(data);
+	
 	if (flag == NO_PATH)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(cmd, STDERR_FILENO);
 		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
-		clean_up(data);
 		exit(127);
 	}
 	else if (flag == NO_COMMAND)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putendl_fd(": Command not found", STDERR_FILENO);
-		clean_up(data);
+		ft_putendl_fd(": command not found", STDERR_FILENO);
 		exit(127);
+	}
+	else if (flag == IS_DIR)
+	{
+		ft_putendl_fd(": Is a directory", STDERR_FILENO);
+		exit(126);
+	}
+	else if (flag == NO_PERM)
+	{
+		ft_putendl_fd(": Permission denied", STDERR_FILENO);
+		exit(126);
 	}
 }
 
@@ -101,13 +109,28 @@ static void	get_path(t_data *data, char *cmd, char **path)
 
 void	get_path_error(t_data *data, char **path)
 {
+	struct stat	dir_check;
+
 	if (ft_strchr(data->cmd_current->cmd[0], '/') != NULL)
 	{
-		if (access(data->cmd_current->cmd[0], F_OK | X_OK) == 0)
-			*path = ft_strdup(data->cmd_current->cmd[0]);
-		else
+		if (access(data->cmd_current->cmd[0], F_OK) != 0)
 			path_error(data, data->cmd_current->cmd[0], NO_PATH);
+		else if (access(data->cmd_current->cmd[0], X_OK) != 0)
+			path_error(data, data->cmd_current->cmd[0], NO_PERM);
+		else
+			*path = ft_strdup(data->cmd_current->cmd[0]);
 	}
 	else
 		get_path(data, data->cmd_current->cmd[0], path);
+	stat(*path, &dir_check);
+	if (S_ISDIR(dir_check.st_mode) == 1)
+	{
+		ft_free_string(path);
+		path_error(data, data->cmd_current->cmd[0], IS_DIR);
+	}
+	if (!(dir_check.st_mode & S_IXUSR))
+	{
+		ft_free_string(path);
+		path_error(data, data->cmd_current->cmd[0], NO_PERM);
+	}
 }

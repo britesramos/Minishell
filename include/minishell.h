@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/24 13:23:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 07:59:55 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,9 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 //for signals
 # include <signal.h>
 
+//for the stat() ->checking if path is a directory
+# include <sys/stat.h>
+
 #define READ 0
 #define WRITE 1
 
@@ -187,6 +190,8 @@ t_envp	*create_node_envp(t_data *data, char *envp);
 
 #define NO_PATH 0
 #define NO_COMMAND 1
+#define IS_DIR 2
+#define	NO_PERM 3
 
 int		exec(t_data *data);
 int		ft_builtin_manager(t_data *data, int fd);
@@ -211,7 +216,7 @@ int		mltpl_cmd(t_data *data);
 void	get_path_error(t_data *data, char **path);
 
 // fd_utils
-int		child_fd_handling(t_data *data, t_ex *ex);
+void	child_fd_handling(t_data *data, t_ex *ex);
 
 //envp utils
 void	add_node(t_data *data, char *cmd, t_envp **env);

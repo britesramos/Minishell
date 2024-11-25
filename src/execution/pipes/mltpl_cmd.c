@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 13:23:54 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 06:58:08 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,7 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	char	*path;
 	int		bi_check;
 
-	if (child_fd_handling(data, ex) == EXIT_FAILURE)
-	{
-		clean_up(data);
-		exit (EXIT_FAILURE);
-	}
+	child_fd_handling(data, ex);
 	bi_check = builtin_check(data, ex);
 	if (bi_check == EXIT_SUCCESS)
 	{
