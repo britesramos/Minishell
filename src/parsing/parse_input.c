@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 12:00:31 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 13:32:16 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_token	*p_rein(t_token *current_t, t_cmd *current_c, t_data *data)
 	if (current_c->fd_in == -1 && data->invalid_fd == false)
 	{
 		data->invalid_fd = true;
-		error_exit_system(data, current_t->str, 1);
+		error_exit_system(data, current_t->str, current_c, 1);
 	}
 	current_c->infile = ft_strdup(current_t->str);
 	if (!current_c->infile)
@@ -36,7 +36,7 @@ t_token	*p_reout(t_token *current_t, t_cmd *current_c, t_data *data)
 		free_close_fd(current_c->outfile, current_c->fd_out);
 	current_c->fd_out = open(current_t->str, O_CREAT | O_TRUNC | O_RDWR, 0660);
 	if (current_c->fd_out == -1)
-		error_exit_system(data, current_t->str, 1);
+		error_exit_system(data, current_t->str, current_c, 1);
 	current_c->outfile = ft_strdup(current_t->str);
 	if (!current_c->outfile)
 		error_exit(data, NULL, "Outfile red allocation failed!\n", 1);
@@ -50,7 +50,7 @@ t_token	*p_append(t_token *current_t, t_cmd *current_c, t_data *data)
 		free_close_fd(current_c->outfile, current_c->fd_out);
 	current_c->fd_out = open(current_t->str, O_CREAT | O_APPEND | O_RDWR, 0660);
 	if (current_c->fd_out == -1)
-		error_exit_system(data, current_t->str, 1);
+		error_exit_system(data, current_t->str, current_c, 1);
 	current_c->outfile = ft_strdup(current_t->str);
 	if (!current_c->outfile)
 		error_exit(data, NULL, "Outfile Append allocation failed!\n", 1);

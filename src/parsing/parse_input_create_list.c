@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/22 18:47:56 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:54:19 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 13:29:10 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_cmd	*create_new_node_cmd(t_data *data)
 	node->outfile = NULL;
 	node->pipe = NULL;
 	node->heredoc = false;
+	node->error = NULL;
 	return (node);
 }
 

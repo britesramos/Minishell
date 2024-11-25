@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 12:28:02 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 13:29:33 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_cmd
 	int				fd_out; /*STOUT*/
 	char			*infile; /*Init as NULL if not exists. Or name of file.*/
 	char			*outfile; /*Init as NULL if not exists. Or name of file.*/
+	char			*error;
 	struct s_cmd	*pipe; /*Pointer to the next node*/
 }	t_cmd;
 
@@ -178,7 +179,7 @@ void	parse_envp(t_data *data, char **envp);
 
 /*Error handling and exit error std.*/
 int		error_exit(t_data *data, char *file, char *str, int type);
-int		error_exit_system(t_data *data, char *str, int type);
+int	error_exit_system(t_data *data, char *str, t_cmd *current_cmd, int type);
 
 /*-----------------------------------PARSING------------------------------*/
 

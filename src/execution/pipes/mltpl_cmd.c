@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/25 06:58:08 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 13:34:36 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ static	int	ft_child(t_data *data, t_ex *ex)
 		ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
 	ft_putendl_fd(": Command not found", STDERR_FILENO);
 	clean_up(data);
-	if (path)
-		ft_free_string(&path);
+	ft_free_string(&path);
 	exit (127);
 }
 
@@ -81,6 +80,9 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		return (perror("error: child"), EXIT_FAILURE);
 	if (ex->pid == 0)
 		ft_child(data, ex);
+	if (data->cmd_current->error != NULL)
+		ft_putendl_fd(data->cmd_current->error, STDERR_FILENO);
+	ft_free_string(&data->cmd_current->error);
 	ms_signals(NONINTERACTIVE);
 	if (ex->fd_in != data->std[IN])
 		close_fd(&ex->fd_in);

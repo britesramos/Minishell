@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/25 09:03:18 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 13:34:52 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ void	single_cmd(t_data *data)
 		}
 		ft_single_child(data);
 	}
+	if (data->cmd_current->error != NULL)
+		ft_putendl_fd(data->cmd_current->error, STDERR_FILENO);
+	ft_free_string(&data->cmd_current->error);
 	ms_signals(NONINTERACTIVE);
 	waitpid(pid, &data->exit_code, 0);
 	if (WIFSIGNALED(data->exit_code))

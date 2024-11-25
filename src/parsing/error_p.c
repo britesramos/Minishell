@@ -6,16 +6,25 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:00:05 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 11:03:22 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 13:27:32 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	error_exit_system(t_data *data, char *str, int type)
+int	error_exit_system(t_data *data, char *str, t_cmd *current_cmd, int type)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	perror(str);
+	char	*tmp;
+
+	tmp = NULL;
+	if (current_cmd->error == NULL)
+	{
+		current_cmd->error = ft_strjoin(str, ": ");
+		tmp = ft_strjoin("minishell: ", current_cmd->error);
+		ft_free_string(&current_cmd->error);
+		current_cmd->error = ft_strjoin(tmp, strerror(errno));
+		ft_free_string(&tmp);
+	}
 	data->exit_code = type;
 	return (0);
 }
