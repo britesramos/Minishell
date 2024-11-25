@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/23 08:00:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 10:35:49 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	parsing(t_data *data, char **envp)
 			/*----------------------------------TEMP----------------------------------------------*/
 			if (parse_input(data, token_list) == 9)
 			{
-				//Replace with clean_up.Twick clean_up. To include token_list.
 				if (token_list)
 				{
 					free_token_list(token_list);
