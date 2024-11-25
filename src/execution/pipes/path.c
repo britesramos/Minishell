@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/25 08:45:16 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/25 09:02:46 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	path_error(t_data *data, char *cmd, int flag)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
 	clean_up(data);
-	
 	if (flag == NO_PATH)
 	{
 		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
