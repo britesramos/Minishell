@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:38:18 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 18:21:38 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static void	ft_dup_all(t_cmd *current, t_data *data)
 
 static void	ft_single_child(t_data *data)
 {
-	// char	*path;
+	char	*path;
 
-	// path = NULL;
+	path = data->cmd_current->cmd_path;
 	// get_path_error(data, &path);
 	ft_free_string(&data->cmd_current->error);
 	if (path != NULL)

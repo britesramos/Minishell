@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:44:31 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 18:20:24 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ int	mltpl_cmd(t_data *data)
 	ex.fd_in = data->std[IN];
 	while (data->cmd_current != NULL)
 	{
-		if (data->cmd_current->cmd)
-			cmd_valid_check(data, data->cmd_current->cmd);
 		ms_signals(NONINTERACTIVE);
 		if (do_pipex(data, &ex, data->cmd_current) == EXIT_FAILURE)
 			return (EXIT_FAILURE);

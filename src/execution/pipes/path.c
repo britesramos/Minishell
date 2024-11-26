@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 18:13:07 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 18:15:46 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ void	get_path_error(t_data *data, char **path)
 	if (ft_strchr(data->cmd_current->cmd[0], '/') != NULL)
 	{
 		if (access(data->cmd_current->cmd[0], F_OK) != 0)
-		{
-			//the path doesn't exist
 			path_error(data, data->cmd_current->cmd[0], NO_PATH);
-		}
 		else if (access(data->cmd_current->cmd[0], X_OK) != 0)
 			path_error(data, data->cmd_current->cmd[0], NO_PERM);
 		else

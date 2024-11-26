@@ -6,14 +6,14 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:46:38 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 18:20:02 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 
-static int	bi_valid_check(t_cmd **cmd)
+static int	bi_valid_check(char **cmd)
 {
 
 	if (ft_strncmp(cmd[0], "cd", 3) == 0)
@@ -66,7 +66,6 @@ static int	bi_check(t_data *data)
 int	exec(t_data *data)
 {
 	int		check;
-	char	*path;
 
 	check = 0;
 	while (data->cmd_current)
