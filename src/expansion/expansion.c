@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 17:33:51 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 18:25:00 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	expansion_helper(t_data *data, int i)
 		i = i + 3;
 	else if (data->line[i] == '$' && data->line[i + 1] == '?')
 		expand_error(data, i);
-	else if (data->line[i] == '$' && data->line[i + 1])
+	else if (data->line[i] == '$' && (ft_isalnum(data->line[i + 1]) || data->line[i + 1] == '_'))
 	{
 		expand_path(data, i);
 		i--;
