@@ -6,11 +6,22 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:00:05 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 14:57:52 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/25 18:11:48 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	error_exit_clean_up(t_data *data)
+{
+	if (data->cmd_head)
+		free_cmd_list(data->cmd_head);
+	if (data->token_list)
+	{
+		free_token_list(data->token_list);
+		data->token_list = NULL;
+	}
+}
 
 int	error_exit_system(t_data *data, char *str, t_cmd *cmd, int type)
 {
@@ -43,6 +54,7 @@ int	error_exit(t_data *data, char *file, char *str, int type)
 		write(STDERR_FILENO, file, lenfile);
 	}
 	write(STDERR_FILENO, str, len);
+	error_exit_clean_up(data);
 	data->exit_code = type;
 	return (0);
 }

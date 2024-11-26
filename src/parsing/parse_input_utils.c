@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 17:10:50 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 10:51:32 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_token	*p_redirections(t_token *current_t, t_cmd *c_cmd, t_data *data)
 		current_t = p_append(current_t, c_cmd, data);
 	else if (current_t->type == T_HEREDOC)
 	{
+		if (c_cmd->infile)
+			free_close_fd(c_cmd->infile, c_cmd->fd_in);
 		current_t = p_heredoc(current_t, c_cmd, data);
 		if (current_t == NULL && data->exit_code == 130)
 			return (NULL);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 17:24:31 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 10:48:24 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,8 @@ static int	parsing_helper(t_data *data)
 
 static int	parsing_helper_execution(t_data *data)
 {
-	if (data->cmd_head->cmd)
-	{
-		if (exec(data) == 9)
-			return (9);
-	}
+	if (exec(data) == 9)
+		return (9);
 	clean_up_parse_input(data, NULL);
 	if (g_sign == SIGINT)
 		data->exit_code = g_sign + 128;
