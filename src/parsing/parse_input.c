@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 10:36:08 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 11:03:27 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,8 @@ int	parse_input(t_data *data, t_token *token_list)
 		i = 0;
 		newnode = create_new_node_cmd(data);
 		add_new_node(&data->cmd_head, newnode, &current_cmd);
-		if (parse_input_help(data, &current_t, &current_cmd, &i) == 9)
-		{
-			printf("am I getting out of the parse input?\n");
-			return (9);
-		}
+		if (parse_input_help(data, &current_t, &current_cmd, &i) == 8)
+			return (8);
 		if (current_t && current_t->type == T_PIPE)
 			current_t = p_pipe(current_t, data);
 	}

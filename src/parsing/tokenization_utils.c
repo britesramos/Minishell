@@ -56,7 +56,7 @@ t_token	*create_new_node(t_data *data, t_token_t type, char *str)
 	return (node);
 }
 
-void	create_t_list(t_data *data, t_token **t_list, char *str, t_token_t type)
+void	create_list(t_data *data, t_token **t_list, char *str, t_token_t type)
 {
 	t_token	*newnode;
 	t_token	*current;

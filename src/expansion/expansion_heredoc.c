@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/24 20:24:20 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/11/25 17:05:07 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,37 @@ static char	*expand_error(t_data *data, char *line, int i)
 	return (line);
 }
 
-static char	*alloc_newline_heredoc(t_data *data, char *line, char *temp, char *value, char *leftover)
+static char	*alloc_hd(t_data *data, char *temp, char *value, char *leftover)
 {
 	int	temp_i;
 	int	value_i;
 	int	lo_i;
+	int	total;
 
+	value_i = 0;
+	lo_i = 0;
+	total = 0;
 	temp_i = ft_strlen(temp);
 	if (value)
 		value_i = ft_strlen(value);
 	if (leftover)
 		lo_i = ft_strlen(leftover);
-	if (value)
-	{
-		if (leftover)
-			line = ft_calloc(sizeof(char), temp_i + value_i + lo_i + 1);
-		else if (!leftover)
-			line = ft_calloc(sizeof(char), temp_i + value_i + 1);
-	}
-	if (!value)
-	{
-		if (leftover)
-			line = ft_calloc(sizeof(char), temp_i + lo_i + 1);
-		else if (!leftover)
-			line = ft_calloc(sizeof(char), temp_i + 1);
-	}
-	if (!line)
+	total = temp_i + value_i + lo_i;
+	data->hd_line = ft_calloc(sizeof(char), total + 1);
+	if (!data->hd_line)
 		error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", 1);
+	return (data->hd_line);
+}
+
+static char	*cat_line(char *line, char *value, char *leftover)
+{
+	if (value)
+		ft_strlcat(line, value, ft_strlen(line) + ft_strlen(value) + 1);
+	if (leftover)
+	{
+		ft_strlcat(line, leftover, ft_strlen(line) + ft_strlen(leftover) + 1);
+		free(leftover);
+	}
 	return (line);
 }
 
@@ -83,36 +87,31 @@ static char	*expand_path(t_data *data, char *line, int i)
 	while (ft_isalnum(line[i + j]))
 		j++;
 	substr = ft_substr(line, i, j);
-	if (line[i + j])
-		leftover = ft_substr(line, i + j, ft_strlen(line) - ft_strlen(substr) - ft_strlen(temp));
-	free(line);
 	value = find_value(data, substr);
 	free(substr);
-	line = alloc_newline_heredoc(data, line, temp, value, leftover);
+	if (line[i + j])
+		leftover = ft_substr(line, i + j,
+				ft_strlen(line) - ft_strlen(substr) - ft_strlen(temp));
+	free(line);
+	line = alloc_hd(data, temp, value, leftover);
 	ft_strlcpy(line, temp, ft_strlen(temp) + 1);
 	free(temp);
-	if (value)
-		ft_strlcat(line, value, ft_strlen(line) + ft_strlen(value) + 1);
-	if (leftover)
-	{
-		ft_strlcat(line, leftover, ft_strlen(line) + ft_strlen(leftover) + 1);
-		free(leftover);
-	}
+	line = cat_line(line, value, leftover);
 	return (line);
 }
 
-char	*expansion_heredoc(t_data *data, char *line)
+char	*expansion_heredoc(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (line[i])
+	while (data->hd_line[i])
 	{
-		if (line[i] == '$' && line[i + 1] == '?')
-			line = expand_error(data, line, i);
-		else if (line[i] == '$' && line[i + 1])
-			line = expand_path(data, line, i);
+		if (data->hd_line[i] == '$' && data->hd_line[i + 1] == '?')
+			data->hd_line = expand_error(data, data->hd_line, i);
+		else if (data->hd_line[i] == '$' && data->hd_line[i + 1])
+			data->hd_line = expand_path(data, data->hd_line, i);
 		i++;
 	}
-	return (line);
+	return (data->hd_line);
 }

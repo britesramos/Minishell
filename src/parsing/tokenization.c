@@ -31,7 +31,7 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 		free(new);
 		return (start + len);
 	}
-	create_t_list(data, token_list, new, T_WORD);
+	create_list(data, token_list, new, T_WORD);
 	free(new);
 	len--;
 	return (start + len);
@@ -39,13 +39,13 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 
 static int	token_append(t_data *data, int i, t_token **token_list, char *str)
 {
-	create_t_list(data, token_list, str, T_APPEND);
+	create_list(data, token_list, str, T_APPEND);
 	return (i + 1);
 }
 
 static int	token_heredoc(t_data *data, int i, t_token **token_list, char *str)
 {
-	create_t_list(data, token_list, str, T_HEREDOC);
+	create_list(data, token_list, str, T_HEREDOC);
 	return (i + 1);
 }
 
@@ -65,11 +65,11 @@ void	tokenization(t_data *data)
 		else if (data->line[i] == '<' && data->line[i + 1] == '<')
 			i = token_heredoc(data, i, &data->token_list, "<<");
 		else if (data->line[i] == '>' && data->line[i + 1])
-			create_t_list(data, &data->token_list, ">", T_REOUT);
+			create_list(data, &data->token_list, ">", T_REOUT);
 		else if (data->line[i] == '<' && data->line[i + 1])
-			create_t_list(data, &data->token_list, "<", T_REIN);
+			create_list(data, &data->token_list, "<", T_REIN);
 		else if (data->line[i] == '|')
-			create_t_list(data, &data->token_list, "|", T_PIPE);
+			create_list(data, &data->token_list, "|", T_PIPE);
 		else if (ms_isword(data->line[i]))
 			i = token_word(data, i, &data->token_list);
 		if (data->line[i] && (data->line[i] != '"' || data->line[i] != '\''))
