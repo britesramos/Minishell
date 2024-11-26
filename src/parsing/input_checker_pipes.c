@@ -46,12 +46,20 @@ int	redin_to_pipe(char *str)
 
 int	multiple_pipes(char *str)
 {
-	int	i;
+	int		i;
+	bool	sq;
+	bool	dq;
 
 	i = 0;
+	sq = false;
+	dq = false;
 	while (str[i])
 	{
-		if (str[i] == '|' && str[i + 1] == '|')
+		if (str[i] == '\'' && dq == false)
+			sq = !sq;
+		if (str[i] == '"' && sq == false)
+			dq = !dq;
+		if (str[i] == '|' && str[i + 1] == '|' && sq == false && dq == false)
 			return (1);
 		i++;
 	}

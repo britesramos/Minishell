@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:41:06 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 14:52:04 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:07:27 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ int	error_input_checker(t_data *data, char *str, int type)
 
 int	error_unexpected_token(t_data *data, char *str, int type)
 {
-	printf("minishell: syntax error near unexpected token `%s'\n", str);
+	int len;
+
+	len = ft_strlen(str);
+	write(STDERR_FILENO, "minishell: syntax error near unexpected token `", 48);
+	write(STDERR_FILENO, str, len);
+	write(STDERR_FILENO, "'\n", 3);
 	data->exit_code = type;
 	return (1);
 }

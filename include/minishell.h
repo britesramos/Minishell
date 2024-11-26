@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 13:14:19 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:32:15 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_cmd
 	char			*infile; /*Init as NULL if not exists. Or name of file.*/
 	char			*outfile; /*Init as NULL if not exists. Or name of file.*/
 	char			*error;
+	bool			invalid_fd;
 	struct s_cmd	*pipe; /*Pointer to the next node*/
 }	t_cmd;
 
@@ -99,7 +100,6 @@ void	init_main_struct(t_data *data, char **envp);
 
 /*EXPANSIONS*/
 void	expansion(t_data *data);
-int		expansion_quotes(t_data *data, int i);
 void	concatenate_newline(t_data *data, char *value, char *leftover);
 char	*convert_exit_code(t_data *data);
 void	alloc_newline(t_data *data, char *temp, char *value, char *leftover);
@@ -138,7 +138,6 @@ int		redin_to_pipe(char *str);
 int		missing_closing_q_marks(char *str);
 int		multiple_redirections(char *str);
 int		unexpected_new_line(char *str);
-// int		lonely_redirection(char *str);
 int		input_checker(t_data *data, char *line);
 int		error_input_checker(t_data *data, char *str, int type);
 int		error_unexpected_token(t_data *data, char *str, int type);

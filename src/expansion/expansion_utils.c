@@ -6,31 +6,11 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/22 16:58:24 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 17:58:27 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 16:59:12 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	expansion_quotes(t_data *data, int i)
-{
-	bool	sq;
-	bool	dq;
-
-	sq = false;
-	dq = false;
-	if (data->line[i] == '\'' && dq == false)
-		sq = !sq;
-	else if (data->line[i] == '"' && sq == false)
-		dq = !dq;
-	if (data->line[i] == '\'' && dq == false)
-	{
-		i++;
-		while (data->line[i] != '\'')
-			i++;
-	}
-	return (i);
-}
 
 void	concatenate_newline(t_data *data, char *value, char *leftover)
 {
