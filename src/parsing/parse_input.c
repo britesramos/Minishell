@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 11:03:27 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 13:39:45 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_token	*p_rein(t_token *current_t, t_cmd *current_c, t_data *data)
 t_token	*p_reout(t_token *current_t, t_cmd *current_c, t_data *data)
 {
 	current_t = current_t->next;
+	if (current_t->type == T_PIPE)
+		current_t = current_t->next;
 	if (current_c->outfile)
 		free_close_fd(current_c->outfile, current_c->fd_out);
 	current_c->fd_out = open(current_t->str, O_CREAT | O_TRUNC | O_RDWR, 0660);

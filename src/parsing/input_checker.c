@@ -6,11 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:41:06 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 12:15:24 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 14:52:04 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+extern volatile sig_atomic_t	g_sign;
 
 int	error_input_checker(t_data *data, char *str, int type)
 {
@@ -29,25 +31,25 @@ int	error_unexpected_token(t_data *data, char *str, int type)
 	return (1);
 }
 
-int	input_checker_keep_reading_line(t_data *data, char *line)
+static int	special_redin_to_pipe(char *str)
 {
-	char	*str1;
+	int	i;
 
-	str1 = "minishell: missing closing quotation marks\n";
-	if (start_with_pipe(line) == 1 || redin_to_pipe(line) == 1)
-		return (error_unexpected_token(data, "|", 2));
-	if (redin_to_pipe(line) == 2)
-		return (error_unexpected_token(data, "newline", 2));
-	if (multiple_pipes(line) == 1)
-		return (error_unexpected_token(data, "||", 2));
-	if (missing_closing_q_marks(line) == 1)
-		return (error_input_checker(data, str1, -1));
-	if (multiple_redirections(line) == 1)
-		return (error_unexpected_token(data, ">", 2));
-	if (multiple_redirections(line) == 2)
-		return (error_unexpected_token(data, "<", 2));
-	if (unexpected_new_line(line) == 1)
-		return (error_unexpected_token(data, "newline", 2));
+	i = 0;
+	if (ft_strlen(str) > 1)
+	{
+		while (str[i])
+			i++;
+		i--;
+		while (ms_isspace(str[i]))
+			i--;
+		while (i > 0)
+		{
+			if (str[i] == '|' && str[i - 1] == '<')
+				return (1);
+			i--;
+		}
+	}
 	return (0);
 }
 
@@ -58,6 +60,10 @@ int	input_checker(t_data *data, char *line)
 	str1 = "minishell: missing closing quotation marks\n";
 	if (start_with_pipe(line) == 1 || redin_to_pipe(line) == 1)
 		return (error_unexpected_token(data, "|", 2));
+	if (special_redin_to_pipe(line) == 1)
+		return (error_unexpected_token(data, "|", 2));
+	if (pipe_at_end(line) == 1)
+		return (error_unexpected_token(data, "newline", 2));
 	if (redin_to_pipe(line) == 2)
 		return (error_unexpected_token(data, "newline", 2));
 	if (multiple_pipes(line) == 1)
@@ -70,10 +76,5 @@ int	input_checker(t_data *data, char *line)
 		return (error_unexpected_token(data, "<", 2));
 	if (unexpected_new_line(data->line) == 1)
 		return (error_unexpected_token(data, "newline", 2));
-	while (pipe_at_end(line))
-	{
-		if (keep_reading_line(data) == 9)
-			break ;
-	}
 	return (0);
 }

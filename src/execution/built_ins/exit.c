@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 08:27:23 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 14:50:12 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static int	digit_check(char *cmd)
 /// @brief goes to digit_check() to check chars in cmd and 
 /// displays error msg if there is a non-digit char
 /// @return 0 when exit should work; 1 when it shouldn't; 
-/// 2 when it should (but there is an error), so it shouldn't display the last exit
+/// 2 when it should (but there is an error), so it shouldn't 
+/// display the last exit
 static int	is_digit_only(char *cmd, t_data *data)
 {
 	int	check;

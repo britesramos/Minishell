@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 10:59:31 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 13:25:51 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	hd_signal(t_data *data, char **heredoc_line, char **str)
 	{
 		if (g_sign == SIGINT)
 		{
-			printf("in hd_signal getting SIGINT\n");
 			data->exit_code = 128 + g_sign;
 			ft_free_string(str);
 			return (1);
@@ -88,8 +87,6 @@ t_token	*p_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 	ft_free_string(&delimiter);
 	if (str == NULL && data->exit_code == 128 + g_sign)
 	{
-		printf("data->exit_code = %d\n", data->exit_code);
-		printf("did I get here after SIGINT?\n");
 		ft_free_string(&str);
 		return (NULL);
 	}

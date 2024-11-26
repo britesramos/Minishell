@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 10:00:11 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 15:10:49 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	exec(t_data *data)
 	int	check;
 
 	check = 0;
-	ms_signals(NONINTERACTIVE);
 	if (data->nbr_pipes == 0)
 	{
 		if (data->cmd_current->cmd)

@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/12 17:55:59 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 08:00:24 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 15:15:16 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	signal_p(int signal, siginfo_t *info, void *x)
 	}
 	else if (signal == SIGQUIT)
 	{
-		ft_putstr_fd("Quit (core dumped)\n", STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		g_sign = signal;

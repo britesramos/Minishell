@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 08:51:55 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 15:15:49 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	single_cmd(t_data *data)
 	pid_t	pid;
 	char	*path;
 
+	ms_signals(NONINTERACTIVE);
 	path = NULL;
 	pid = fork();
 	if (pid == -1)
@@ -79,7 +80,6 @@ void	single_cmd(t_data *data)
 		ft_dup_all(data->cmd_current, data);
 		ft_single_child(data);
 	}
-	ms_signals(NONINTERACTIVE);
 	waitpid(pid, &data->exit_code, 0);
 	if (WIFSIGNALED(data->exit_code))
 		data->exit_code = WTERMSIG(data->exit_code) + 128;

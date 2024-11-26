@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 11:03:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 13:32:18 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ t_token	*p_redirections(t_token *current_t, t_cmd *c_cmd, t_data *data)
 		current_t = p_append(current_t, c_cmd, data);
 	else if (current_t->type == T_HEREDOC)
 	{
+		if (c_cmd->infile)
+			free_close_fd(c_cmd->infile, c_cmd->fd_in);
 		current_t = p_heredoc(current_t, c_cmd, data);
 		if (current_t == NULL && data->exit_code == 130)
-		{
-			printf("getting out from p_redirections with NULL\n");
 			return (NULL);
-		}
 	}
 	return (current_t);
 }
@@ -76,7 +75,7 @@ int	parse_input_help(t_data *data, t_token **c_t, t_cmd **c_cmd, int *i)
 		{
 			*c_t = p_redirections(*c_t, *c_cmd, data);
 			if (*c_t == NULL)
-				return (8);
+				return (9);
 		}
 		else if ((*c_t)->type == T_WORD && (*c_t)->type != T_PIPE)
 			*i = p_word(*c_t, *c_cmd, data, *i);

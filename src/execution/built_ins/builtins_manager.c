@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:05:25 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 08:34:49 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 14:49:52 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	exit_help(char **cmd, t_data *data)
 {
-	int status;
+	int	status;
 
 	status = ft_exit(cmd, data);
 	if (status == 0)
@@ -52,7 +52,7 @@ int	ft_builtin_manager(t_data *data, int fd)
 	else if (ft_strncmp(cmd[0], "env", 4) == 0)
 		return (ft_env(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "exit", 5) == 0)
-			return (exit_help(cmd, data));
+		return (exit_help(cmd, data));
 	else if (ft_strncmp(cmd[0], "export", 7) == 0)
 		return (ft_export(cmd, data, fd), 0);
 	else if (ft_strncmp(cmd[0], "pwd", 4) == 0)
