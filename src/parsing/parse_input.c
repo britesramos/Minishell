@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 17:31:50 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 17:34:18 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*p_rein(t_token *current_t, t_cmd *current_c, t_data *data)
 	current_c->fd_in = open(current_t->str, O_RDONLY);
 	if (current_c->fd_in == -1 && current_c->invalid_fd == false)
 	{
-		current_c->invalid_fd == false;
+		current_c->invalid_fd = false;
 		error_exit_system(data, current_t->str, current_c, 1);
 	}
 	current_c->infile = ft_strdup(current_t->str);

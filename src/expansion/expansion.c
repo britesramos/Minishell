@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 17:09:35 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 17:33:51 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ static int	expand_path(t_data *data, int i)
 
 static int	expansion_helper(t_data *data, int i)
 {
-	if (data->line[i] == '"' && data->line[i + 1] == '$' && data->line[i + 2] == '"')
+	if (data->line[i] == '"' && data->line[i + 1] == '$'
+		&& data->line[i + 2] == '"')
 		i = i + 3;
 	else if (data->line[i] == '$' && data->line[i + 1] == '?')
 		expand_error(data, i);
@@ -90,7 +91,7 @@ void	expansion(t_data *data)
 	sq = false;
 	dq = false;
 	while (data->line[i])
-	{;
+	{
 		if (data->line[i] == '\'' && dq == false)
 			sq = !sq;
 		else if (data->line[i] == '"' && sq == false)
