@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 15:15:43 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 13:14:19 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,10 @@ int		multiple_redirections(char *str);
 int		unexpected_new_line(char *str);
 // int		lonely_redirection(char *str);
 int		input_checker(t_data *data, char *line);
-int		input_checker_keep_reading_line(t_data *data, char *line);
 int		error_input_checker(t_data *data, char *str, int type);
 int		error_unexpected_token(t_data *data, char *str, int type);
 
 int		pipe_at_end(char *line);
-int		keep_reading_line(t_data *data);
 
 /*Parsing envp*/
 void	parse_envp(t_data *data, char **envp);
@@ -156,7 +154,6 @@ int		ms_isword(char c);
 int		only_spaces(t_data *data);
 
 /*Parsing input utils*/
-void	free_null(void **input);
 void	free_null_2d_array(char **str);
 void	free_null_array(char *str);
 void	free_close_fd(char *file, int fd);

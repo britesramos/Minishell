@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 18:14:01 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 15:19:46 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	*expand_path(t_data *data, char *line, int i)
 		j++;
 	substr = ft_substr(line, i, j);
 	value = find_value(data, substr);
-	if (line[i + j])
+	if (line[i + j] && substr && temp)
 		leftover = ft_substr(line, i + j,
 				ft_strlen(line) - ft_strlen(substr) - ft_strlen(temp));
 	free(substr);

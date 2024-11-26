@@ -29,15 +29,18 @@ int	redin_to_pipe(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
-		i++;
-	i--;
-	while (ms_isspace(str[i]))
+	if (ft_strlen(str) > 1)
+	{
+		while (str[i])
+			i++;
 		i--;
-	if (str[i] == '|' && str[i - 1] == '<')
-		return (1);
-	if (str[i] == '|' && str[i - 1] == '>')
-		return (2);
+		while (ms_isspace(str[i]))
+			i--;
+		if (str[i] == '|' && str[i - 1] == '<')
+			return (1);
+		if (str[i] == '|' && str[i - 1] == '>')
+			return (2);
+	}
 	return (0);
 }
 
@@ -60,29 +63,15 @@ int	pipe_at_end(char *line)
 	int	i;
 
 	i = 0;
-	while (line[i])
-		i++;
-	i--;
-	while (is_space(line[i]))
+	if (line)
+	{
+		while (line[i])
+			i++;
 		i--;
-	if (line[i] == '|')
-		return (1);
-	return (0);
-}
-
-int	keep_reading_line(t_data *data)
-{
-	char	*temp;
-	int		len;
-
-	temp = NULL;
-	temp = readline("> ");
-	len = ft_strlen(temp) + ft_strlen(data->line) + 1;
-	ft_strlcat(data->line, temp, len);
-	if (input_checker_keep_reading_line(data, temp) != 0)
-		return (9);
-	// if (input_checker(data, temp) != 0)
-	// 	return ;
-	// ms_signals(HEREDOC); //Needs to be fixed.
+		while (is_space(line[i]))
+			i--;
+		if (line[i] == '|')
+			return (1);
+	}
 	return (0);
 }

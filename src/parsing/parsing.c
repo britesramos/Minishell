@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 10:48:24 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/26 15:19:56 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,17 @@ static int	parsing_helper(t_data *data)
 {
 	expansion(data);
 	tokenization(data);
-	/*----------------------------------TEMP-------------------------------*/
-	// print_token_list(data->token_list);
-	/*----------------------------------TEMP-------------------------------*/
 	if (parse_input(data, data->token_list) == 9)
 	{
 		clean_up_parse_input(data, data->token_list);
+		if (data->token_list)
+		{
+			free_token_list(data->token_list);
+			data->token_list = NULL;
+		}
 		g_sign = 0;
 		return (9);
 	}
-	/*----------------------------------TEMP-------------------------------*/
-	// print_cmd_list(data);
-	/*----------------------------------TEMP-------------------------------*/
 	if (data->token_list)
 	{
 		free_token_list(data->token_list);
@@ -48,31 +47,46 @@ static int	parsing_helper_execution(t_data *data)
 	return (0);
 }
 
+static int	check_line(t_data *data)
+{
+	if (data->line == NULL)
+	{
+		ft_putendl_fd("exit", STDOUT_FILENO);
+		data->exit_code = 0;
+		return (9);
+	}
+	if (!data->line[0])
+		return (1);
+	if (data->line[0])
+		add_history(data->line);
+	return (0);
+}
+
 void	parsing(t_data *data)
 {
+	int	check;
+
+	check = 0;
+	ms_signals(INTERACTIVE);
 	while (1)
 	{
 		g_sign = 0;
 		if (data->line)
 			ft_free_string(&data->line);
-		ms_signals(INTERACTIVE);
 		data->line = readline("minishell:~$ ");
-		if (data->line == NULL)
-		{
-			ft_putendl_fd("exit", STDOUT_FILENO);
-			data->exit_code = 0;
+		if (g_sign == SIGINT)
+			data->exit_code = 128 + g_sign;
+		check = check_line(data);
+		if (check == 9)
 			return ;
-		}
-		if (!data->line[0])
+		else if (check == 1)
 			continue ;
-		if (input_checker(data, data->line) == 0 && !only_spaces(data))
+		if (!only_spaces(data) && input_checker(data, data->line) == 0)
 		{
 			if (parsing_helper(data) == 9)
 				continue ;
 			if (parsing_helper_execution(data) == 9)
 				return ;
 		}
-		if (data->line[0])
-			add_history(data->line);
 	}
 }

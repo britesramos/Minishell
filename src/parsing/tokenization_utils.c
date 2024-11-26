@@ -26,16 +26,19 @@ void	free_token_list(t_token *token_list)
 {
 	t_token	*to_free;
 
-	to_free = token_list;
-	while (to_free)
+	if (token_list)
 	{
-		free(to_free->str);
-		to_free->str = NULL;
-		to_free->type = 0;
-		token_list = token_list->next;
-		free (to_free);
-		to_free = NULL;
 		to_free = token_list;
+		while (to_free)
+		{
+			free(to_free->str);
+			to_free->str = NULL;
+			to_free->type = 0;
+			token_list = token_list->next;
+			free (to_free);
+			to_free = NULL;
+			to_free = token_list;
+		}
 	}
 }
 

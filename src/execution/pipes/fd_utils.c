@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 09:14:19 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/25 06:58:13 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 14:50:25 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,11 @@ static int	fds_last_cmd(t_cmd *current, t_data *data, t_ex *ex)
 
 void	child_fd_handling(t_data *data, t_ex *ex)
 {
-	if (data->cmd_current->fd_in == -1 || data->cmd_current->fd_out == -1)
+	if (data->cmd_current->error != NULL)
 	{
+		ft_putendl_fd(data->cmd_current->error, STDERR_FILENO);
+		close_fd(&ex->p_fd[READ]);
+		close_fd(&ex->p_fd[WRITE]);
 		clean_up(data);
 		exit (EXIT_FAILURE);
 	}

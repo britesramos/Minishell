@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/25 13:34:36 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 15:14:25 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,13 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	exit (127);
 }
 
-static int	do_pipex(t_data *data, t_ex *ex)
+static int	do_pipex(t_data *data, t_ex *ex, t_cmd *current)
 {
+	if (current->heredoc == true && !current->cmd)
+	{
+		close_fd(&current->fd_in);
+		return (EXIT_SUCCESS);
+	}
 	if (ex->i != data->nbr_pipes && pipe(ex->p_fd) == -1)
 		return (perror("error: pipe"), EXIT_FAILURE);
 	ex->pid = fork();
@@ -80,10 +85,6 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		return (perror("error: child"), EXIT_FAILURE);
 	if (ex->pid == 0)
 		ft_child(data, ex);
-	if (data->cmd_current->error != NULL)
-		ft_putendl_fd(data->cmd_current->error, STDERR_FILENO);
-	ft_free_string(&data->cmd_current->error);
-	ms_signals(NONINTERACTIVE);
 	if (ex->fd_in != data->std[IN])
 		close_fd(&ex->fd_in);
 	ex->fd_in = ex->p_fd[READ];
@@ -92,7 +93,6 @@ static int	do_pipex(t_data *data, t_ex *ex)
 		close_fd(&data->cmd_current->fd_in);
 	if (ex->i != data->nbr_pipes)
 		close_fd(&ex->p_fd[WRITE]);
-	signal(SIGUSR1, SIG_IGN);
 	return (EXIT_SUCCESS);
 }
 
@@ -108,12 +108,12 @@ int	mltpl_cmd(t_data *data)
 	ex.fd_in = data->std[IN];
 	while (data->cmd_current != NULL)
 	{
-		if (do_pipex(data, &ex) == EXIT_FAILURE)
+		ms_signals(NONINTERACTIVE);
+		if (do_pipex(data, &ex, data->cmd_current) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		ex.i++;
 		data->cmd_current = data->cmd_current->pipe;
 	}
-	ms_signals(NONINTERACTIVE);
 	children_wait(data, &ex);
 	while (waitpid(-1, &ex.status, WNOHANG) > 0)
 		;

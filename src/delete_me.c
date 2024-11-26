@@ -34,6 +34,8 @@ void	print_cmd_list(t_data *data)
 		printf("This is fd_out: %i\n", currentll->fd_out);
 		printf("This is infile: %s\n", currentll->infile);
 		printf("This is outfile: %s\n", currentll->outfile);
+		if (currentll->error)
+			printf("This is error: %s\n", currentll->error);
 		printf("Nbr pipes: %i\n\n\n", data->nbr_pipes);
 		currentll = currentll->pipe;
 	}

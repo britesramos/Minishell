@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/19 14:17:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/24 19:50:36 by anonymous     ########   odam.nl         */
+/*   Updated: 2024/11/26 11:25:10 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,15 @@ int	unexpected_new_line(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
-		i++;
-	i--;
-	while (ms_isspace(str[i]))
+	if (ft_strlen(str) > 1)
+	{
+		while (str[i])
+			i++;
 		i--;
-	if (str[i] == '>' || str[i] == '<')
-		return (1);
+		while (ms_isspace(str[i]))
+			i--;
+		if (str[i] == '>' || str[i] == '<')
+			return (1);
+	}
 	return (0);
 }
