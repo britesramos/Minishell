@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 11:13:03 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 08:27:23 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	digit_check(char *cmd)
 /// @brief goes to digit_check() to check chars in cmd and 
 /// displays error msg if there is a non-digit char
 /// @return 0 when exit should work; 1 when it shouldn't; 
-/// 2 when it should (but there is an error)
+/// 2 when it should (but there is an error), so it shouldn't display the last exit
 static int	is_digit_only(char *cmd, t_data *data)
 {
 	int	check;
@@ -72,11 +72,9 @@ int	ft_exit(char **cmd, t_data *data)
 {
 	int	digit_check;
 
+	data->exit_code = 0;
 	if (!cmd[1] || cmd[1][0] == '#')
-	{
-		data->exit_code = 0;
 		return (0);
-	}
 	if (cmd[2])
 	{
 		ft_putendl_fd("exit", data->cmd_current->fd_out);
@@ -85,8 +83,10 @@ int	ft_exit(char **cmd, t_data *data)
 		return (-9);
 	}
 	digit_check = is_digit_only(cmd[1], data);
-	if (digit_check == 1 || digit_check == 2)
+	if (digit_check == 1)
 		return (0);
+	else if (digit_check == 2)
+		return (3);
 	else
 		data->exit_code = ft_atol(cmd[1]);
 	if (data->exit_code < -255)

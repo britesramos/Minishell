@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/25 09:02:46 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 07:53:15 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ static void	find_path(char **paths, char *cmd, char **path)
 			i++;
 		}
 	}
-	else
-		access(cmd, F_OK | X_OK);
+	// else
+	// 	access(cmd, F_OK | X_OK);
 }
 
 static void	get_path(t_data *data, char *cmd, char **path)
