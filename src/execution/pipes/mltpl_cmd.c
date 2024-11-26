@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 15:14:25 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:44:31 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ static	int	ft_child(t_data *data, t_ex *ex)
 		clean_up(data);
 		exit (EXIT_SUCCESS);
 	}
-	path = NULL;
-	get_path_error(data, &path);
+	path = data->cmd_current->cmd_path;
 	if (path != NULL)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
 	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
@@ -67,7 +66,6 @@ static	int	ft_child(t_data *data, t_ex *ex)
 		ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
 	ft_putendl_fd(": Command not found", STDERR_FILENO);
 	clean_up(data);
-	ft_free_string(&path);
 	exit (127);
 }
 
@@ -108,6 +106,8 @@ int	mltpl_cmd(t_data *data)
 	ex.fd_in = data->std[IN];
 	while (data->cmd_current != NULL)
 	{
+		if (data->cmd_current->cmd)
+			cmd_valid_check(data, data->cmd_current->cmd);
 		ms_signals(NONINTERACTIVE);
 		if (do_pipex(data, &ex, data->cmd_current) == EXIT_FAILURE)
 			return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 15:18:51 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 11:02:58 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:56:42 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	free_cmd_list(t_cmd *list)
 			free_close_fd(list->outfile, list->fd_out);
 		if (list->error)
 			ft_free_string(&list->error);
+		if (list->cmd_path)
+			ft_free_string(&list->cmd_path);
 		free(list);
 		list = NULL;
 		list = next;
@@ -62,6 +64,8 @@ void	clean_up(t_data *data)
 		ft_free_string(&data->line);
 	if (data->hd_line)
 		ft_free_string(&data->hd_line);
+	if (data->end_error)
+		ft_free_string(&data->end_error);
 	if (data)
 		free(data);
 	rl_clear_history();

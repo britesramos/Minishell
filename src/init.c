@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/24 10:29:43 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/25 13:28:43 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:48:38 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	init_main_struct(t_data *data, char **envp)
 	data->std[OUT] = STDOUT_FILENO;
 	data->invalid_fd = false;
 	data->hd_line = NULL;
+	data->end_error = NULL;
 }

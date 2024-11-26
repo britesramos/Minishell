@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 13:14:19 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:48:22 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ typedef struct s_cmd
 	char			*infile; /*Init as NULL if not exists. Or name of file.*/
 	char			*outfile; /*Init as NULL if not exists. Or name of file.*/
 	char			*error;
+	char			*cmd_path;
+	bool			valid_cmd;
+	bool			invalid_fd;
 	struct s_cmd	*pipe; /*Pointer to the next node*/
 }	t_cmd;
 
@@ -69,6 +72,7 @@ typedef struct s_data
 	char	*line; /*from Readline function-user input from the terminal*/
 	char	*hd_line;
 	char	**envp;
+	char	*end_error;
 	bool	invalid_fd;
 	int		exit_code;
 	int		nbr_pipes;

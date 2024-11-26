@@ -6,38 +6,11 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 14:52:58 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/26 18:13:07 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-static void	path_error(t_data *data, char *cmd, int flag)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	clean_up(data);
-	if (flag == NO_PATH)
-	{
-		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
-		exit(127);
-	}
-	else if (flag == NO_COMMAND)
-	{
-		ft_putendl_fd(": command not found", STDERR_FILENO);
-		exit(127);
-	}
-	else if (flag == IS_DIR)
-	{
-		ft_putendl_fd(": Is a directory", STDERR_FILENO);
-		exit(126);
-	}
-	else if (flag == NO_PERM)
-	{
-		ft_putendl_fd(": Permission denied", STDERR_FILENO);
-		exit(126);
-	}
-}
 
 static char	**ft_env_path(t_data *data)
 {
@@ -111,7 +84,10 @@ void	get_path_error(t_data *data, char **path)
 	if (ft_strchr(data->cmd_current->cmd[0], '/') != NULL)
 	{
 		if (access(data->cmd_current->cmd[0], F_OK) != 0)
+		{
+			//the path doesn't exist
 			path_error(data, data->cmd_current->cmd[0], NO_PATH);
+		}
 		else if (access(data->cmd_current->cmd[0], X_OK) != 0)
 			path_error(data, data->cmd_current->cmd[0], NO_PERM);
 		else
