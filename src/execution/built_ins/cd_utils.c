@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:08:54 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/28 11:20:15 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 12:36:03 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	cd_errno_error(t_data *data, char *path)
 {
 	char	*tmp;
-	
+
 	tmp = ft_strjoin(": ", strerror(errno));
 	mini_error(path, tmp);
 	ft_free_string(&tmp);

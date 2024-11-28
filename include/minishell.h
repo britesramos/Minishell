@@ -6,19 +6,19 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 11:28:37 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 14:43:47 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "minishellp.h"
 # include "../libft/libft.h"
 
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <linux/limits.h>
@@ -41,6 +41,28 @@
 //for the stat() ->checking if path is a directory
 # include <sys/stat.h>
 
+/*Tokenization structs*/
+typedef struct s_token	t_token;
+
+typedef enum e_tokens
+{
+	T_WORD,
+	T_PIPE,
+	T_REIN,
+	T_REOUT,
+	T_APPEND,
+	T_HEREDOC,
+	T_ERROR,
+}	t_token_t;
+
+typedef struct s_token
+{
+	char		*str;
+	int			lenght;
+	t_token_t	type;
+	t_token		*next;
+}	t_token;
+
 /*Nodes for linked list with parsed input for execution.*/
 typedef struct s_cmd
 {
@@ -52,6 +74,7 @@ typedef struct s_cmd
 	char			*outfile; /*Init as NULL if not exists. Or name of file.*/
 	char			*error;
 	bool			invalid_fd;
+	bool			invalid_fd_out;
 	struct s_cmd	*pipe; /*Pointer to the next node*/
 }	t_cmd;
 
@@ -100,6 +123,7 @@ void	init_main_struct(t_data *data, char **envp);
 
 /*EXPANSIONS*/
 void	expansion(t_data *data);
+void	expand_path_digit_alloc(t_data *data, char *temp, char *leftover);
 void	concatenate_newline(t_data *data, char *value, char *leftover);
 char	*convert_exit_code(t_data *data);
 void	alloc_newline(t_data *data, char *temp, char *value, char *leftover);

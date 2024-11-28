@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 14:41:06 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 11:47:20 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 13:16:17 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	input_checker(t_data *data, char *line)
 {
 	char	*str1;
 
-	str1 = "minishell: missing closing quotation marks\n";
+	str1 = "minishell: missing quotation mark\n";
 	if (start_with_pipe(line) == 1 || redin_to_pipe(line) == 1)
 		return (error_unexpected_token(data, "|", 2));
 	if (special_redin_to_pipe(line) == 1)
@@ -74,7 +74,7 @@ int	input_checker(t_data *data, char *line)
 	if (multiple_pipes(line) == 1)
 		return (error_unexpected_token(data, "||", 2));
 	if (missing_closing_q_marks(data->line) == 1)
-		return (error_input_checker(data, str1, -1));
+		return (error_input_checker(data, str1, 2));
 	if (multiple_redirections(data->line) == 1)
 		return (error_unexpected_token(data, ">", 2));
 	if (multiple_redirections(data->line) == 2)

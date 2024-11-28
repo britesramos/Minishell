@@ -6,11 +6,28 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/22 16:58:24 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 16:59:12 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/28 14:43:42 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	expand_path_digit_alloc(t_data *data, char *temp, char *leftover)
+{
+	int	temp_len;
+	int	leftover_len;
+
+	temp_len = 0;
+	leftover_len = 0;
+	temp_len = ft_strlen(temp);
+	leftover_len = ft_strlen(leftover);
+	if (leftover)
+		data->line = ft_calloc(sizeof(char), temp_len + leftover_len + 1);
+	else
+		data->line = ft_calloc(sizeof(char), temp_len + 1);
+	if (!data->line)
+		error_exit(data, NULL, "Fail alloc expand_path_digit!\n", 1);
+}
 
 void	concatenate_newline(t_data *data, char *value, char *leftover)
 {

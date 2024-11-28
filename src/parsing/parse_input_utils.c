@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:18:20 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 15:20:03 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/28 13:34:37 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	parse_input_help(t_data *data, t_token **c_t, t_cmd **c_cmd, int *i)
 		{
 			*c_t = p_redirections(*c_t, *c_cmd, data);
 			if (*c_t == NULL)
-				return (9);
+				return (8);
 		}
 		else if ((*c_t)->type == T_WORD && (*c_t)->type != T_PIPE)
 			*i = p_word(*c_t, *c_cmd, data, *i);

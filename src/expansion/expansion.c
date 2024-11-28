@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 18:25:00 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/28 14:44:07 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,32 @@ static int	expand_path(t_data *data, int i)
 	return (0);
 }
 
+static int	expand_path_digit(t_data *data, int i)
+{
+	char	*temp;
+	char	*leftover;
+	int		j;
+
+	j = 2;
+	leftover = NULL;
+	temp = ft_substr(data->line, 0, i);
+	i = i + 2;
+	if (data->line[i])
+		leftover = ft_substr(data->line, i,
+				ft_strlen(data->line) - ft_strlen(temp) - 2);
+	free(data->line);
+	expand_path_digit_alloc(data, temp, leftover);
+	ft_strlcpy(data->line, temp, ft_strlen(temp) + 1);
+	free(temp);
+	if (leftover)
+	{
+		ft_strlcat(data->line, leftover,
+			ft_strlen(data->line) + ft_strlen(leftover) + 1);
+		free(leftover);
+	}
+	return (0);
+}
+
 static int	expansion_helper(t_data *data, int i)
 {
 	if (data->line[i] == '"' && data->line[i + 1] == '$'
@@ -73,7 +99,10 @@ static int	expansion_helper(t_data *data, int i)
 		i = i + 3;
 	else if (data->line[i] == '$' && data->line[i + 1] == '?')
 		expand_error(data, i);
-	else if (data->line[i] == '$' && (ft_isalnum(data->line[i + 1]) || data->line[i + 1] == '_'))
+	else if (data->line[i] == '$' && ft_isdigit(data->line[i + 1]))
+		expand_path_digit(data, i);
+	else if (data->line[i] == '$'
+		&& (ft_isalnum(data->line[i + 1]) || data->line[i + 1] == '_'))
 	{
 		expand_path(data, i);
 		i--;
@@ -103,6 +132,8 @@ void	expansion(t_data *data)
 				i++;
 		}
 		i = expansion_helper(data, i);
+		if (!data->line[i])
+			break ;
 		i++;
 	}
 }
