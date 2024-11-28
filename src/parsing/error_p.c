@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:00:05 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 17:31:23 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/28 11:58:36 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	error_exit_system(t_data *data, char *str, t_cmd *cmd, int type)
 		ft_free_string(&cmd->error);
 		cmd->error = ft_strjoin(tmp, strerror(errno));
 		ft_free_string(&tmp);
-		ft_putstr_fd(cmd->error, STDERR_FILENO); //
 	}
 	data->exit_code = type;
 	return (0);

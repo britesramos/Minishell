@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/19 14:17:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 11:25:10 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 11:52:27 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	unexpected_new_line(char *str)
 	int	i;
 
 	i = 0;
-	if (ft_strlen(str) > 1)
+	if (str[i])
 	{
 		while (str[i])
 			i++;
