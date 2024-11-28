@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 16:07:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/02/04 13:32:56 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 10:56:28 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	while (*s)
-	{
-		ft_putchar_fd(*s, fd);
-		s++;
-	}
+	int	len;
+
+	len = ft_strlen(s);
+	write (fd, s, len);
 }
 // #include <fcntl.h>
 // int	main(void)

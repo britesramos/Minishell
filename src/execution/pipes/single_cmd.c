@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 15:15:49 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 11:04:41 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ static void	ft_single_child(t_data *data)
 	if (path != NULL)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
 	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
-		ft_putnbr_fd(127, STDERR_FILENO);
+		cmd_error("127", ": command not found");
 	else
-		ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
-	ft_putendl_fd(": Command not found", STDERR_FILENO);
+		cmd_error(data->cmd_current->cmd[0], ": command not found");
 	clean_up(data);
 	ft_free_string(&path);
 	exit (127);
@@ -65,10 +64,8 @@ static void	ft_single_child(t_data *data)
 void	single_cmd(t_data *data)
 {
 	pid_t	pid;
-	char	*path;
 
 	ms_signals(NONINTERACTIVE);
-	path = NULL;
 	pid = fork();
 	if (pid == -1)
 	{

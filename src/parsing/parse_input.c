@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 17:34:18 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/28 10:40:19 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_token	*p_rein(t_token *current_t, t_cmd *current_c, t_data *data)
 	if (current_c->infile)
 		free_close_fd(current_c->infile, current_c->fd_in);
 	current_c->fd_in = open(current_t->str, O_RDONLY);
+	if (current_c->fd_in == -1 && current_c->invalid_fd == false)
 	if (current_c->fd_in == -1 && current_c->invalid_fd == false)
 	{
 		current_c->invalid_fd = false;

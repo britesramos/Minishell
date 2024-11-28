@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/09/23 17:07:32 by sramos        #+#    #+#                  #
-#    Updated: 2024/11/26 13:14:47 by mstencel      ########   odam.nl          #
+#    Updated: 2024/11/26 18:16:32 by mstencel      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC_FILES = src/delete_me.c\
 			src/parsing/parse_input_utils.c\
 			src/parsing/parsing_utils.c\
 			src/parsing/error_p.c\
+			src/execution/error_exec.c\
 			src/execution/exec.c\
 			src/execution/built_ins/builtins_manager.c\
 			src/execution/built_ins/cd_utils.c\

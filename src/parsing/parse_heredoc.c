@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 13:25:51 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 11:35:01 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@ static int	tmp_help(t_data *data, char **heredoc_line, char **str, char **tmp)
 	return (0);
 }
 
-static int	hd_signal(t_data *data, char **heredoc_line, char **str)
+static int	hd_signal(t_data *data, char **heredoc_line, char **str, char *del)
 {
+	char	*tmp;
+	char	*tmp1;
+
+	tmp = NULL;
+	tmp1 = NULL;
 	if (*heredoc_line == NULL)
 	{
 		if (g_sign == SIGINT)
@@ -36,8 +41,12 @@ static int	hd_signal(t_data *data, char **heredoc_line, char **str)
 			return (1);
 		}
 		ft_putchar_fd('\n', data->std[OUT]);
-		ft_putstr_fd("minishell: warning: here-document ", STDERR_FILENO);
-		ft_putendl_fd("delimited by end-of-file (wanted `EOF')", 2);
+		tmp = ft_strjoin("warning: here-document delimited by end-of-file\
+			 (wanted `", del);
+		tmp1 = ft_strjoin(tmp, "')");
+		mini_error("warning: ", tmp1);
+		ft_free_string(&tmp);
+		ft_free_string(&tmp1);
 		data->exit_code = 0;
 		return (2);
 	}
@@ -53,7 +62,7 @@ static char	*heredoc(t_data *data, char *del, char **str)
 	{
 		ft_putstr_fd("> ", data->std[OUT]);
 		data->hd_line = get_next_line(data->std[IN]);
-		check = hd_signal(data, &data->hd_line, str);
+		check = hd_signal(data, &data->hd_line, str, del);
 		if (check == 1)
 			return (NULL);
 		else if (check == 2)

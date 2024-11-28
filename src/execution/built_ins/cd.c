@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/25 06:55:58 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 11:35:56 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,14 @@ static void	ft_chdir_error(char *path, t_data *data)
 static void	ft_cd_key(t_data *data, char *key)
 {
 	char	*path;
+	char	*tmp;
 
 	path = find_value(data, key);
+	tmp = NULL;
 	if (path == NULL)
 	{
-		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		ft_putstr_fd(key, STDERR_FILENO);
-		ft_putendl_fd(" not set", STDERR_FILENO);
+		tmp = ft_strjoin(key, " not set");
+		mini_error("cd", tmp);
 		data->exit_code = 1;
 		return ;
 	}
@@ -106,7 +107,7 @@ void	ft_cd(char **cmd, t_data *data)
 	data->exit_code = 0;
 	if (cmd[2])
 	{
-		ft_putendl_fd("minishell: cd: too many arguments", STDERR_FILENO);
+		mini_error("cd", ": too many arguments");
 		data->exit_code = 1;
 	}
 	if (!cmd[1] || ft_strncmp(cmd[1], "~", 2) == 0)

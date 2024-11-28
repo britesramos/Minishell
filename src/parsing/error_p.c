@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:00:05 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 11:58:36 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/28 11:59:42 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,25 @@ int	error_exit_system(t_data *data, char *str, t_cmd *cmd, int type)
 
 int	error_exit(t_data *data, char *file, char *str, int type)
 {
-	int	len;
-	int	lenfile;
+	int		len;
+	int		lenfile;
+	char	*tmp;
+	char	*tmp1;
 
 	len = ft_strlen(str);
 	lenfile = 0;
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	tmp = NULL;
+	tmp1 = NULL;
 	if (file)
 	{
-		lenfile = ft_strlen(file);
-		write(STDERR_FILENO, file, lenfile);
+		tmp1 = ft_strjoin("minishell: ", file);
+		tmp = ft_strjoin(tmp1, str);
+		ft_free_string(&tmp1);
 	}
-	write(STDERR_FILENO, str, len);
+	else
+		tmp = ft_strjoin("minishell: ", str);
+	ft_putendl_fd(tmp, STDERR_FILENO);
+	ft_free_string(&tmp);
 	error_exit_clean_up(data);
 	data->exit_code = type;
 	return (0);

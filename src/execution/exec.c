@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:28:52 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 15:10:49 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 10:44:07 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	bi_check(t_data *data)
 
 int	exec(t_data *data)
 {
-	int	check;
+	int		check;
 
 	check = 0;
 	if (data->nbr_pipes == 0)
