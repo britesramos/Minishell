@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 18:01:08 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/02/04 13:34:49 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 10:55:13 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 void	ft_putendl_fd(char *s, int fd)
 {
-	ft_putstr_fd(s, fd);
-	write(fd, "\n", 1);
+	char	*str;
+	int		len;
+
+	str = ft_strjoin(s, "\n");
+	len = ft_strlen(str);
+	ft_putstr_fd(str, fd);
+	ft_free_string(&str);
 }
 // #include <fcntl.h>
 // int	main(void)

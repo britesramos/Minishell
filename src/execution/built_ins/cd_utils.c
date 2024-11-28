@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:08:54 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 08:41:23 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/28 11:20:15 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	cd_errno_error(t_data *data, char *path)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(path, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	char	*tmp;
+	
+	tmp = ft_strjoin(": ", strerror(errno));
+	mini_error(path, tmp);
+	ft_free_string(&tmp);
 	data->exit_code = 1;
 }
 
@@ -38,15 +39,22 @@ char	*ft_getcdw_err(t_data *data)
 char	*ft_getcwd_parent_err(t_data *data)
 {
 	char	*cwd;
+	char	*tmp;
+	char	*tmp1;
 
 	cwd = NULL;
 	cwd = getcwd(NULL, 0);
+	tmp = NULL;
+	tmp1 = NULL;
 	if (cwd == NULL)
 	{
-		ft_putstr_fd("cd: error retrieving current directory: ", 2);
-		ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
-		ft_putendl_fd("No such file or directory", 2);
+		tmp = ft_strjoin("cd: error retrieving current directory: ", \
+			"getcwd: cannot access parent directories: ");
+		tmp1 = ft_strjoin(tmp, "No such file or directory");
+		ft_putendl_fd(tmp1, STDERR_FILENO);
 		data->exit_code = 2;
+		ft_free_string(&tmp);
+		ft_free_string(&tmp1);
 	}
 	return (cwd);
 }

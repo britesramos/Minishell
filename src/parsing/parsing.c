@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 15:19:56 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/28 11:41:54 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static int	check_line(t_data *data)
 	if (data->line == NULL)
 	{
 		ft_putendl_fd("exit", STDOUT_FILENO);
-		data->exit_code = 0;
 		return (9);
 	}
 	if (!data->line[0])
