@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 16:00:05 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 11:59:42 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 14:30:15 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ int	error_exit_system(t_data *data, char *str, t_cmd *cmd, int type)
 	return (0);
 }
 
+static void	error_exit_exit(t_data *data)
+{
+	clean_up(data);
+	exit (-10);
+}
+
 int	error_exit(t_data *data, char *file, char *str, int type)
 {
 	int		len;
@@ -61,6 +67,8 @@ int	error_exit(t_data *data, char *file, char *str, int type)
 		tmp = ft_strjoin("minishell: ", str);
 	ft_putendl_fd(tmp, STDERR_FILENO);
 	ft_free_string(&tmp);
+	if (type == -10)
+		error_exit_exit(data);
 	error_exit_clean_up(data);
 	data->exit_code = type;
 	return (0);

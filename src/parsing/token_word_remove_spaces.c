@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/22 18:34:47 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:35:03 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 15:24:48 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ char	*token_word_remove_extra_spaces(char *new, t_data *data)
 	int		remove_c;
 
 	temp = ft_strdup(new);
+	if (!temp)
+		error_exit(data, NULL, "Fail alloc temp in remove spaces", -10);
 	free(new);
 	new = NULL;
 	remove_c = count_spaces(temp);
 	new = ft_calloc(sizeof(char), ft_strlen(temp) - remove_c + 1);
 	if (!new)
-		error_exit(data, NULL, "Fail to alloc in remove spaces\n", 1);
+		error_exit(data, NULL, "Fail alloc in remove spaces", -10);
 	new = remove_extra_spaces(new, temp);
 	free(temp);
 	return (new);

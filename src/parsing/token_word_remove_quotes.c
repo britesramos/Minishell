@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/18 15:02:12 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/22 18:34:45 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 15:24:05 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,14 @@ char	*token_word_remove_extra_quotes(char *new, t_data *data)
 	j = 0;
 	remove_c = 0;
 	temp = ft_strdup(new);
+	if (!temp)
+		error_exit(data, NULL, "strdup fail temp in token_word", -10);
 	free(new);
 	new = NULL;
 	remove_c = count_quotes(temp);
 	new = ft_calloc(sizeof(char), ft_strlen(temp) - remove_c + 1);
 	if (!new)
-		error_exit(data, NULL, "Error alloc for new in token_word", 1);
+		error_exit(data, NULL, "Error alloc for new in token_word", -10);
 	new = remove_extra_quotes(new, temp, i, j);
 	free(temp);
 	return (new);

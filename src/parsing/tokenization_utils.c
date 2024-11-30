@@ -48,8 +48,10 @@ t_token	*create_new_node(t_data *data, t_token_t type, char *str)
 
 	node = (t_token *)malloc(sizeof(t_token));
 	if (!node)
-		error_exit(data, NULL, "Memory allocation failed!", 1);
+		error_exit(data, NULL, "Memory allocation failed!", -10);
 	node->str = ft_strdup(str);
+	if (!node->str)
+		error_exit(data, NULL, "strdup fail in create_new_node", -10);
 	node->lenght = ft_strlen(str);
 	node->type = type;
 	node->next = NULL;
