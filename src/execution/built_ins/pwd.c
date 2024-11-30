@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/25 18:37:21 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/30 15:33:07 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 15:58:37 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	ft_pwd(char **cmd, t_data *data, int fd)
 
 	if (cmd[1] && cmd[1][0] == '-')
 	{
-		mini_error(*cmd, ": invalid option: usage: pwd [no options allowed])",\
-			 data);
+		mini_error(*cmd, \
+			": invalid option: usage: pwd [no options allowed])", data);
 		data->exit_code = 2;
 		return ;
 	}

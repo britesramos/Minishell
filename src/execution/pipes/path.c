@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 13:41:18 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/30 15:11:39 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 15:59:03 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	get_path(t_data *data, char *cmd, char **path)
 static void	is_dir_check(t_data *data, char **path)
 {
 	struct stat	dir_check;
-	
+
 	stat(*path, &dir_check);
 	if (S_ISDIR(dir_check.st_mode) == 1)
 	{
