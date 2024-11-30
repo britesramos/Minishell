@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/18 15:02:12 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/30 14:22:10 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 15:24:05 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char	*token_word_remove_extra_quotes(char *new, t_data *data)
 	j = 0;
 	remove_c = 0;
 	temp = ft_strdup(new);
+	if (!temp)
+		error_exit(data, NULL, "strdup fail temp in token_word", -10);
 	free(new);
 	new = NULL;
 	remove_c = count_quotes(temp);
