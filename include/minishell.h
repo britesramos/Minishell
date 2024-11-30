@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 14:43:47 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/29 14:18:10 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_cmd
 	char			*infile; /*Init as NULL if not exists. Or name of file.*/
 	char			*outfile; /*Init as NULL if not exists. Or name of file.*/
 	char			*error;
-	bool			invalid_fd;
+	bool			invalid_fd_in;
 	bool			invalid_fd_out;
 	struct s_cmd	*pipe; /*Pointer to the next node*/
 }	t_cmd;

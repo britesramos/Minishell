@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/22 16:58:24 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 14:43:42 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/29 12:33:17 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	expand_path_digit_alloc(t_data *data, char *temp, char *leftover)
 	temp_len = 0;
 	leftover_len = 0;
 	temp_len = ft_strlen(temp);
-	leftover_len = ft_strlen(leftover);
 	if (leftover)
+	{
+		leftover_len = ft_strlen(leftover);
 		data->line = ft_calloc(sizeof(char), temp_len + leftover_len + 1);
+	}
 	else
 		data->line = ft_calloc(sizeof(char), temp_len + 1);
 	if (!data->line)

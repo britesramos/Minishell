@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 14:36:43 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/29 14:08:43 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ t_token	*p_rein(t_token *token, t_cmd *current_c, t_data *data)
 	token = token->next;
 	if (current_c->infile)
 		free_close_fd(current_c->infile, current_c->fd_in);
-	current_c->fd_in = open(token->str, O_RDONLY);
-	if (current_c->fd_in == -1 && current_c->invalid_fd == false)
+	if (current_c->invalid_fd_in == false && current_c->invalid_fd_out == false)
+		current_c->fd_in = open(token->str, O_RDONLY);
+	if (current_c->fd_in == -1 && current_c->invalid_fd_in == false)
 	{
-		current_c->invalid_fd = true;
+		current_c->invalid_fd_in = true;
 		error_exit_system(data, token->str, current_c, 1);
 	}
 	current_c->infile = ft_strdup(token->str);
@@ -36,7 +37,7 @@ t_token	*p_reout(t_token *token, t_cmd *current_c, t_data *data)
 		token = token->next;
 	if (current_c->outfile)
 		free_close_fd(current_c->outfile, current_c->fd_out);
-	if (current_c->invalid_fd_out == false)
+	if (current_c->invalid_fd_out == false && current_c->invalid_fd_in == false)
 		current_c->fd_out = open(token->str, O_CREAT | O_TRUNC | O_RDWR, 0660);
 	if (current_c->fd_out == -1)
 	{
@@ -54,9 +55,13 @@ t_token	*p_append(t_token *token, t_cmd *current_c, t_data *data)
 	token = token->next;
 	if (current_c->outfile)
 		free_close_fd(current_c->outfile, current_c->fd_out);
-	current_c->fd_out = open(token->str, O_CREAT | O_APPEND | O_RDWR, 0660);
+	if (current_c->invalid_fd_out == false)
+		current_c->fd_out = open(token->str, O_CREAT | O_APPEND | O_RDWR, 0660);
 	if (current_c->fd_out == -1)
+	{
+		current_c->invalid_fd_out = true;
 		error_exit_system(data, token->str, current_c, 1);
+	}
 	current_c->outfile = ft_strdup(token->str);
 	if (!current_c->outfile)
 		error_exit(data, NULL, "Outfile Append allocation failed!\n", 1);

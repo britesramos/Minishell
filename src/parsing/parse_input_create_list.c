@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/22 18:47:56 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 13:51:14 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/29 14:05:55 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_cmd	*create_new_node_cmd(t_data *data)
 	node->pipe = NULL;
 	node->heredoc = false;
 	node->error = NULL;
-	node->invalid_fd = false;
+	node->invalid_fd_in = false;
 	node->invalid_fd_out = false;
 	return (node);
 }
