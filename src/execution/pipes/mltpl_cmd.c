@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/25 13:25:11 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/28 10:51:02 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 15:05:06 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ static	int	ft_child(t_data *data, t_ex *ex)
 	if (path != NULL)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
 	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
-		ft_putnbr_fd(127, STDERR_FILENO);
+		cmd_error("127", ": command not found", data);
 	else
-		ft_putstr_fd(data->cmd_current->cmd[0], STDERR_FILENO);
-	ft_putendl_fd(": command not found", STDERR_FILENO);
+		cmd_error(data->cmd_current->cmd[0], ": command not found", data);
 	clean_up(data);
 	exit (127);
 }

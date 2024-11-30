@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 07:41:56 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/28 11:04:41 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 15:33:55 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static void	ft_single_child(t_data *data)
 	if (path != NULL)
 		data->exit_code = execve(path, data->cmd_current->cmd, data->envp);
 	if (ft_strncmp(data->cmd_current->cmd[0], "0", 2) == 0)
-		cmd_error("127", ": command not found");
+		cmd_error("127", ": command not found", data);
 	else
-		cmd_error(data->cmd_current->cmd[0], ": command not found");
+		cmd_error(data->cmd_current->cmd[0], ": command not found", data);
 	clean_up(data);
 	ft_free_string(&path);
 	exit (127);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 17:39:24 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/26 14:50:12 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 14:51:51 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ static int	is_digit_only(char *cmd, t_data *data)
 	else if (check == 2)
 	{
 		data->exit_code = 2;
-		ft_putstr_fd("exit\nminishell: exit: ", STDERR_FILENO);
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putendl_fd(" : numeric argument required", STDERR_FILENO);
+		cmd_extra_error("exit\nminishell: exit: ", cmd, \
+			" : numeric argument required", data);
 		return (2);
 	}
 	return (0);
@@ -78,8 +77,8 @@ int	ft_exit(char **cmd, t_data *data)
 		return (0);
 	if (cmd[2])
 	{
-		ft_putendl_fd("exit", data->cmd_current->fd_out);
-		ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
+		ft_putendl_fd("exit\nminishell: exit: too many arguments", \
+			STDERR_FILENO);
 		data->exit_code = 1;
 		return (-9);
 	}

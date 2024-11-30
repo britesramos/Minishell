@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/28 11:35:56 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 15:32:01 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ static void	ft_cd_key(t_data *data, char *key)
 	if (path == NULL)
 	{
 		tmp = ft_strjoin(key, " not set");
-		mini_error("cd", tmp);
+		if (!tmp)
+			error_exit(data, NULL, "malloc in ft_cd_key", -10);
+		mini_error("cd", tmp, data);
 		data->exit_code = 1;
 		return ;
 	}
@@ -107,7 +109,7 @@ void	ft_cd(char **cmd, t_data *data)
 	data->exit_code = 0;
 	if (cmd[2])
 	{
-		mini_error("cd", ": too many arguments");
+		mini_error("cd", ": too many arguments", data);
 		data->exit_code = 1;
 	}
 	if (!cmd[1] || ft_strncmp(cmd[1], "~", 2) == 0)

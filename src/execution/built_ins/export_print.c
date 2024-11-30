@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 09:09:23 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 13:01:45 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 15:02:42 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ void	ft_print_export(t_data *data, int fd)
 
 void	ft_export_error(char *cmd, t_data *data)
 {
-	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+	mini_error(cmd, "': not a valid identifier", data);
 	data->exit_code = 1;
 }

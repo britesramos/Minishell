@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 11:35:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 15:44:55 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,14 @@
 
 extern volatile sig_atomic_t	g_sign;
 
-static int	tmp_help(t_data *data, char **heredoc_line, char **str, char **tmp)
-{
-	if (!*tmp)
-		error_exit(data, NULL, "Fail to alloc in heredoc\n", 1);
-	ft_free_string(str);
-	ft_free_string(heredoc_line);
-	if (!(**tmp))
-		return (1);
-	return (0);
-}
-
-static int	hd_signal(t_data *data, char **heredoc_line, char **str, char *del)
+static int	hd_signal(t_data *data, char **str, char *del_str)
 {
 	char	*tmp;
 	char	*tmp1;
 
 	tmp = NULL;
 	tmp1 = NULL;
-	if (*heredoc_line == NULL)
+	if (data->hd_line == NULL)
 	{
 		if (g_sign == SIGINT)
 		{
@@ -40,20 +29,34 @@ static int	hd_signal(t_data *data, char **heredoc_line, char **str, char *del)
 			ft_free_string(str);
 			return (1);
 		}
-		ft_putchar_fd('\n', data->std[OUT]);
-		tmp = ft_strjoin("warning: here-document delimited by end-of-file\
-			 (wanted `", del);
-		tmp1 = ft_strjoin(tmp, "')");
-		mini_error("warning: ", tmp1);
+		tmp = ft_strjoin("end-of-file (wanted `", del_str);
+		tmp1 = ft_strjoin("warning: here-document delimited by ", tmp);
+		if (!tmp || !tmp1)
+			error_exit(data, NULL, "malloc in hd_signal", -10);
+		mini_error(tmp1, "')", data);
 		ft_free_string(&tmp);
-		ft_free_string(&tmp1);
 		data->exit_code = 0;
 		return (2);
 	}
 	return (0);
 }
 
-static char	*heredoc(t_data *data, char *del, char **str)
+static char	*get_tmp(t_data *data, char **str)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(*str, data->hd_line);
+	if (!tmp)
+	{
+		ft_free_string(str);
+		error_exit(data, NULL, "malloc in heredoc", -10);
+	}
+	ft_free_string(str);
+	ft_free_string(&data->hd_line);
+	return (tmp);
+}
+
+static char	*heredoc(t_data *data, char *del, char **str, char *del_str)
 {
 	char	*tmp;
 	int		check;
@@ -62,7 +65,7 @@ static char	*heredoc(t_data *data, char *del, char **str)
 	{
 		ft_putstr_fd("> ", data->std[OUT]);
 		data->hd_line = get_next_line(data->std[IN]);
-		check = hd_signal(data, &data->hd_line, str, del);
+		check = hd_signal(data, str, del_str);
 		if (check == 1)
 			return (NULL);
 		else if (check == 2)
@@ -70,9 +73,15 @@ static char	*heredoc(t_data *data, char *del, char **str)
 		data->hd_line = expansion_heredoc(data);
 		if (ft_strncmp(data->hd_line, del, ft_strlen(del) + 1) == 0)
 			break ;
-		tmp = ft_strjoin(*str, data->hd_line);
-		if (tmp_help(data, &data->hd_line, str, &tmp) == 1)
-			return (NULL);
+		tmp = get_tmp(data, str);
+		// tmp = ft_strjoin(*str, data->hd_line);
+		// if (!tmp)
+		// {
+		// 	ft_free_string(str);
+		// 	error_exit(data, NULL, "malloc in heredoc", -10);
+		// }
+		// ft_free_string(str);
+		// ft_free_string(&data->hd_line);
 		*str = tmp;
 	}
 	if (data->hd_line)
@@ -80,6 +89,20 @@ static char	*heredoc(t_data *data, char *del, char **str)
 	if (!(*str))
 		return (NULL);
 	return (*str);
+}
+
+static void	str_to_infile(t_data *data, char **str, t_cmd *c_cmd)
+{
+	c_cmd->fd_in = open("/tmp/heredoc.txt", O_CREAT | O_TRUNC | O_RDWR, 0660);
+	if (*str)
+		ft_putstr_fd(*str, c_cmd->fd_in);
+	ft_free_string(str);
+	c_cmd->infile = ft_strdup("/tmp/heredoc.txt");
+	if (!c_cmd->infile)
+		error_exit(data, NULL, "malloc in p_heredoc", -10);
+	close(c_cmd->fd_in);
+	c_cmd->fd_in = open("/tmp/heredoc.txt", O_RDWR, 0660);
+	ft_free_string(&data->hd_line);
 }
 
 t_token	*p_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
@@ -90,22 +113,27 @@ t_token	*p_heredoc(t_token *current_token, t_cmd *c_cmd, t_data *data)
 	c_cmd->heredoc = true;
 	current_token = current_token->next;
 	delimiter = ft_strjoin(current_token->str, "\n");
+	if (!delimiter)
+		error_exit(data, NULL, "malloc in p_heredoc", -10);
 	str = NULL;
 	ms_signals(HEREDOC);
-	str = heredoc(data, delimiter, &str);
+	str = heredoc(data, delimiter, &str, current_token->str);
 	ft_free_string(&delimiter);
 	if (str == NULL && data->exit_code == 128 + g_sign)
 	{
 		ft_free_string(&str);
 		return (NULL);
 	}
-	c_cmd->fd_in = open("/tmp/heredoc.txt", O_CREAT | O_TRUNC | O_RDWR, 0660);
-	if (str)
-		ft_putstr_fd(str, c_cmd->fd_in);
-	ft_free_string(&str);
-	c_cmd->infile = ft_strdup("/tmp/heredoc.txt");
-	close(c_cmd->fd_in);
-	c_cmd->fd_in = open("/tmp/heredoc.txt", O_RDWR, 0660);
-	ft_free_string(&data->hd_line);
+	str_to_infile(data, &str, c_cmd);
+	// c_cmd->fd_in = open("/tmp/heredoc.txt", O_CREAT | O_TRUNC | O_RDWR, 0660);
+	// if (str)
+	// 	ft_putstr_fd(str, c_cmd->fd_in);
+	// ft_free_string(&str);
+	// c_cmd->infile = ft_strdup("/tmp/heredoc.txt");
+	// if (!c_cmd->infile)
+	// 	error_exit(data, NULL, "malloc in p_heredoc", -10);
+	// close(c_cmd->fd_in);
+	// c_cmd->fd_in = open("/tmp/heredoc.txt", O_RDWR, 0660);
+	// ft_free_string(&data->hd_line);
 	return (current_token);
 }

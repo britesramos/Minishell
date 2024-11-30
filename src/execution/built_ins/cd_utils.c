@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/21 09:08:54 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/28 12:36:03 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 14:27:03 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	cd_errno_error(t_data *data, char *path)
 	char	*tmp;
 
 	tmp = ft_strjoin(": ", strerror(errno));
-	mini_error(path, tmp);
+	if (!tmp)
+		error_exit(data, NULL, "malloc in cd_errno_error", -10);
+	mini_error(path, tmp, data);
 	ft_free_string(&tmp);
 	data->exit_code = 1;
 }

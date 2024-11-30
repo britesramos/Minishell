@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 12:59:21 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 14:48:49 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,17 @@ void	replace_value(t_data *data, char *key, char *new_value)
 		{
 			ft_free_string(&env->value);
 			if (ft_strncmp(new_value, "= ", ft_strlen(new_value) + 1) == 0)
+			{
 				env->value = ft_strdup(new_value);
+				if (!env->value)
+					error_exit(data, NULL, "malloc in replace_value", -10);
+			}
 			else
+			{
 				env->value = ft_strjoin("=", new_value);
+				if (!env->value)
+					error_exit(data, NULL, "malloc in replace_value", -10);
+			}
 		}
 		env = env->next;
 	}
@@ -57,13 +65,22 @@ static t_envp	*create_node_export(t_data *data, char *key, char *value)
 
 	new_node = (t_envp *)malloc(sizeof(t_envp));
 	if (!new_node)
-		error_exit(data, NULL, \
-		"Memory allocation failed! [Node creation | envp_utils]\n", 1);
+		error_exit(data, NULL, "malloc in create_node_export", -10);
 	new_node->key = ft_strdup(key);
+	if (!new_node->key)
+		error_exit(data, NULL, "malloc in create_node_export", -10);
 	if (value == NULL)
+	{
 		new_node->value = ft_strdup("");
+		if (!new_node->value)
+			error_exit(data, NULL, "malloc in create_node_export", -10);
+	}
 	else
+	{
 		new_node->value = ft_strdup(value);
+		if (!new_node->value)
+			error_exit(data, NULL, "malloc in create_node_export", -10);
+	}
 	new_node->next = NULL;
 	return (new_node);
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/29 14:18:10 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 14:40:01 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,8 +243,9 @@ void	single_cmd(t_data *data);
 int		mltpl_cmd(t_data *data);
 void	get_path_error(t_data *data, char **path);
 void	path_error(t_data *data, char *cmd, int flag);
-void	cmd_error(char *cmd, char *str);
-void	mini_error(char *cmd, char *str);
+void	cmd_error(char *cmd, char *str, t_data *data);
+void	cmd_extra_error(char *cmd, char *str, char *str1, t_data *data);
+void	mini_error(char *cmd, char *str, t_data *data);
 
 // fd_utils
 void	child_fd_handling(t_data *data, t_ex *ex);

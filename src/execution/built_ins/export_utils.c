@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/24 12:37:47 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 12:38:15 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 14:56:25 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ char	*init_key_export(char *cmd, t_data *data)
 		key_len++;
 	key = malloc(key_len + 1);
 	if (!key)
-	{
-		perror("export - key creation");
-		data->exit_code = 1;
-		return (NULL);
-	}
+		error_exit(data, NULL, "malloc in init_key_export", -10);
 	while (i < key_len)
 	{
 		key[i] = cmd[i];
@@ -53,16 +49,16 @@ char	*init_value_export(char *cmd, t_data *data)
 	if (key_len + 1 == cmd_len)
 		key_len++;
 	if (cmd_len == key_len)
+	{
 		value = ft_strdup("= ");
+		if (!value)
+			error_exit(data, NULL, "malloc 1 in init_value_export", -10);
+	}
 	else
 	{
 		value = ft_calloc(cmd_len - key_len + 1, 1);
 		if (!value)
-		{
-			perror("export - value creation");
-			data->exit_code = 1;
-			return (NULL);
-		}
+			error_exit(data, NULL, "malloc 2 in init_value_export", -10);
 		ft_strlcpy(value, cmd + key_len, (size_t)cmd - key_len);
 	}
 	return (value);

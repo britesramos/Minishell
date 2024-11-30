@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/17 09:58:47 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/21 09:28:39 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 15:32:28 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,13 @@ static void	ft_env_arg_option(char *cmd, t_data *data)
 	if (cmd[0] == '-')
 	{
 		if (cmd[1] == '-')
-		{
-			ft_putstr_fd("env: unrecognised option '", STDERR_FILENO);
-			ft_putstr_fd(cmd, STDERR_FILENO);
-			ft_putendl_fd("'", STDERR_FILENO);
-		}
+			cmd_extra_error("env: unrecognised option '", cmd, "'", data);
 		else
-		{
-			ft_putstr_fd("env: invalid option --", STDERR_FILENO);
-			ft_putchar_fd(cmd[1], STDERR_FILENO);
-			ft_putendl_fd("'", STDERR_FILENO);
-		}
+			cmd_extra_error("env: invalid option --", cmd, "'", data);
 		data->exit_code = 125;
 		return ;
 	}
-	ft_putstr_fd("env: '", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd("': No such file or directory", STDERR_FILENO);
+	cmd_extra_error("env: '", cmd, "': No such file or directory", data);
 	data->exit_code = 127;
 }
 
