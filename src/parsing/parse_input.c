@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/30 14:28:06 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 14:32:12 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	p_word(t_token *token, t_cmd *current_c, t_data *data, int i)
 		{
 			if (current_c->cmd)
 				ft_free_array(current_c->cmd);
-			error_exit(data, NULL, "Fail alloc new cmd array in parsing.\n", -10);
+			error_exit(data, NULL, "Fail alloc cmd array in parsing.\n", -10);
 		}
 		alloc_times--;
 		i++;
