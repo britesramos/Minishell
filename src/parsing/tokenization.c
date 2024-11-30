@@ -21,7 +21,7 @@ static int	token_word(t_data *data, int start, t_token **token_list)
 	len = len_result(data, start);
 	new = ft_substr(data->line, start, len);
 	if (!new)
-		error_exit(data, NULL, "New str does not exist!\n", 1);
+		error_exit(data, NULL, "New str does not exist!\n", -10);
 	if ((ft_strchr(new, '"') || ft_strchr(new, '\'')) && start != 0)
 		new = token_word_remove_extra_quotes(new, data);
 	else if (!(ft_strchr(new, '"') || ft_strchr(new, '\'')))

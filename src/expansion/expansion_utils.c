@@ -6,7 +6,7 @@
 /*   By: sramos <sramos@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/22 16:58:24 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/29 12:33:17 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 14:23:38 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	expand_path_digit_alloc(t_data *data, char *temp, char *leftover)
 	else
 		data->line = ft_calloc(sizeof(char), temp_len + 1);
 	if (!data->line)
-		error_exit(data, NULL, "Fail alloc expand_path_digit!\n", 1);
+		error_exit(data, NULL, "Fail alloc expand_path_digit!\n", -10);
 }
 
 void	concatenate_newline(t_data *data, char *value, char *leftover)
@@ -96,5 +96,5 @@ void	alloc_newline(t_data *data, char *temp, char *value, char *leftover)
 			data->line = ft_calloc(sizeof(char), temp_i + 1);
 	}
 	if (!data->line)
-		error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", 1);
+		error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", -10);
 }

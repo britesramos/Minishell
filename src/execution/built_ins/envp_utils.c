@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/24 12:59:21 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 14:23:08 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_envp	*create_node_export(t_data *data, char *key, char *value)
 	new_node = (t_envp *)malloc(sizeof(t_envp));
 	if (!new_node)
 		error_exit(data, NULL, \
-		"Memory allocation failed! [Node creation | envp_utils]\n", 1);
+		"Memory allocation failed! [Node creation | envp_utils]\n", -10);
 	new_node->key = ft_strdup(key);
 	if (value == NULL)
 		new_node->value = ft_strdup("");

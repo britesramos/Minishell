@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/08 15:44:49 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/26 15:19:46 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 14:23:16 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*expand_error(t_data *data, char *line, int i)
 	free(line);
 	line = ft_calloc(sizeof(char), new_line_len + 1);
 	if (!line)
-		error_exit(data, NULL, "Failed alloc new line - expansion!\n", 1);
+		error_exit(data, NULL, "Failed alloc new line - expansion!\n", -10);
 	ft_strlcpy(line, temp, ft_strlen(temp) + 1);
 	free (temp);
 	ft_strlcat(line, exit, ft_strlen(line) + ft_strlen(exit) + 1);
@@ -56,7 +56,7 @@ static char	*alloc_hd(t_data *data, char *temp, char *value, char *leftover)
 	total = temp_i + value_i + lo_i;
 	data->hd_line = ft_calloc(sizeof(char), total + 1);
 	if (!data->hd_line)
-		error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", 1);
+		error_exit(data, NULL, "Fail alloc new_line | expand_path.\n", -10);
 	return (data->hd_line);
 }
 

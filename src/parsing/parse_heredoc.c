@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/05 14:19:13 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 11:35:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 14:25:14 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern volatile sig_atomic_t	g_sign;
 static int	tmp_help(t_data *data, char **heredoc_line, char **str, char **tmp)
 {
 	if (!*tmp)
-		error_exit(data, NULL, "Fail to alloc in heredoc\n", 1);
+		error_exit(data, NULL, "Fail to alloc in heredoc\n", -10);
 	ft_free_string(str);
 	ft_free_string(heredoc_line);
 	if (!(**tmp))

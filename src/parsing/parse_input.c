@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/15 18:23:26 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/29 14:08:43 by sramos        ########   odam.nl         */
+/*   Updated: 2024/11/30 14:28:06 by sramos        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token	*p_rein(t_token *token, t_cmd *current_c, t_data *data)
 	}
 	current_c->infile = ft_strdup(token->str);
 	if (!current_c->infile)
-		error_exit(data, NULL, "Infile red allocation failed!\n", 1);
+		error_exit(data, NULL, "Infile red allocation failed!\n", -10);
 	return (token);
 }
 
@@ -46,7 +46,7 @@ t_token	*p_reout(t_token *token, t_cmd *current_c, t_data *data)
 	}
 	current_c->outfile = ft_strdup(token->str);
 	if (!current_c->outfile)
-		error_exit(data, NULL, "Outfile red allocation failed!\n", 1);
+		error_exit(data, NULL, "Outfile red allocation failed!\n", -10);
 	return (token);
 }
 
@@ -64,7 +64,7 @@ t_token	*p_append(t_token *token, t_cmd *current_c, t_data *data)
 	}
 	current_c->outfile = ft_strdup(token->str);
 	if (!current_c->outfile)
-		error_exit(data, NULL, "Outfile Append allocation failed!\n", 1);
+		error_exit(data, NULL, "Outfile Append allocation failed!\n", -10);
 	return (token);
 }
 
@@ -76,7 +76,7 @@ int	p_word(t_token *token, t_cmd *current_c, t_data *data, int i)
 	if (current_c->cmd == NULL)
 		current_c->cmd = (char **)ft_calloc(alloc_times + 1, sizeof(char *));
 	if (!current_c->cmd)
-		error_exit(data, NULL, "Error allocating word!\n", 1);
+		error_exit(data, NULL, "Error allocating word!\n", -10);
 	if (i >= alloc_times)
 	{
 		current_c->cmd = ft_realloc(data, 2 + i, current_c->cmd);
@@ -89,7 +89,7 @@ int	p_word(t_token *token, t_cmd *current_c, t_data *data, int i)
 		{
 			if (current_c->cmd)
 				ft_free_array(current_c->cmd);
-			error_exit(data, NULL, "Fail alloc new cmd array in parsing.\n", 1);
+			error_exit(data, NULL, "Fail alloc new cmd array in parsing.\n", -10);
 		}
 		alloc_times--;
 		i++;
