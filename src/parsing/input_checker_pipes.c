@@ -44,6 +44,26 @@ int	redin_to_pipe(char *str)
 	return (0);
 }
 
+static int	pipe_next_pipe(char *str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == '|')
+		{
+			while (str[i] && ms_isspace(str[i]))
+				i++;
+			if (str[i] == '|')
+				return (1);
+		}
+		if (str[i])
+			i++;
+	}
+	return (0);
+}
+
 int	multiple_pipes(char *str)
 {
 	int		i;
@@ -59,7 +79,7 @@ int	multiple_pipes(char *str)
 			sq = !sq;
 		if (str[i] == '"' && sq == false)
 			dq = !dq;
-		if (str[i] == '|' && str[i + 1] == '|' && sq == false && dq == false)
+		if (pipe_next_pipe(str) && sq == false && dq == false)
 			return (1);
 		i++;
 	}
