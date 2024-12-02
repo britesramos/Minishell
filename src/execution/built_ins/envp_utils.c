@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/11 08:04:38 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/30 15:51:42 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/11/30 21:53:12 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*find_value(t_data *data, char *key)
 	env_current = data->envp_head;
 	while (env_current != NULL)
 	{
-		if (ft_strncmp(env_current->key, key, len) == 0)
+		if (ft_strncmp(env_current->key + 1, key + 1, len) == 0)
 			value = env_current->value + 1;
 		env_current = env_current->next;
 	}
@@ -36,10 +36,10 @@ void	replace_value(t_data *data, char *key, char *new_value)
 	long	len;
 
 	env = data->envp_head;
-	len = ft_strlen(key);
+	len = ft_strlen(key) + 1;
 	while (env != NULL)
 	{
-		if (ft_strncmp(env->key, key, len) == 0)
+		if (ft_strncmp((env->key) + 1, key + 1, len) == 0)
 		{
 			ft_free_string(&env->value);
 			if (ft_strncmp(new_value, "= ", ft_strlen(new_value) + 1) == 0)

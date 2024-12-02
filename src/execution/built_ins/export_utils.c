@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/24 12:37:47 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/30 14:56:25 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/12/02 09:16:41 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*init_key_export(char *cmd, t_data *data)
 	i = 0;
 	key_len = 0;
 	key = NULL;
-	while (cmd[key_len] != '=')
+	while (cmd[key_len] && cmd[key_len] != '=')
 		key_len++;
 	key = malloc(key_len + 1);
 	if (!key)
@@ -37,29 +37,70 @@ char	*init_key_export(char *cmd, t_data *data)
 
 char	*init_value_export(char *cmd, t_data *data)
 {
-	size_t	key_len;
-	size_t	cmd_len;
+	int		i;
+	int		j;
+	int		value_len;
 	char	*value;
 
-	key_len = 0;
-	value = NULL;
-	cmd_len = ft_strlen(cmd);
-	while (cmd[key_len] != '=')
-		key_len++;
-	if (key_len + 1 == cmd_len)
-		key_len++;
-	if (cmd_len == key_len)
-	{
+	i = 0;
+	while (cmd[i] != '=')
+		i++;
+	value_len = ft_strlen(cmd) - i;
+	if (value_len == 1)
 		value = ft_strdup("= ");
-		if (!value)
-			error_exit(data, NULL, "malloc 1 in init_value_export", -10);
-	}
 	else
 	{
-		value = ft_calloc(cmd_len - key_len + 1, 1);
+		value = malloc(sizeof(char) * value_len + 1);
 		if (!value)
-			error_exit(data, NULL, "malloc 2 in init_value_export", -10);
-		ft_strlcpy(value, cmd + key_len, (size_t)cmd - key_len);
+			error_exit(data, NULL, "malloc in init_value_export", -10);
+		j = 0;
+		while (j < value_len)
+		{
+			value[j] = cmd[i + j];
+			j++;
+		}
+		value[j] = '\0';
 	}
 	return (value);
+}
+
+char	*init_replace_value_export(char *cmd, t_data *data)
+{
+	int		i;
+	int		j;
+	int		value_len;
+	char	*value;
+
+	i = 0;
+	while (cmd[i] != '=')
+		i++;
+	i++;
+	value_len = ft_strlen(cmd) - i;
+	value = malloc(sizeof(char) * value_len + 1);
+	if (!value)
+		error_exit(data, NULL, "malloc in init_value_export", -10);
+	j = 0;
+	while (j < value_len)
+	{
+		value[j] = cmd[i + j];
+		j++;
+	}
+	value[j] = '\0';
+	return (value);
+}
+
+int	ft_export_init_check(char *cmd)
+{
+	int	len;
+
+	len = 0;
+	if (cmd[len] == '=' || ft_isdigit(cmd[len]))
+		return (-1);
+	while (cmd[len] && cmd[len] != '=')
+	{
+		if (!ft_isalnum(cmd[len]) && cmd[len] != '_')
+			return (-1);
+		len++;
+	}
+	return (len);
 }
