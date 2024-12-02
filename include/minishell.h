@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 12:16:41 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/30 14:40:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/12/02 09:14:06 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,7 @@ void	ft_echo(char **cmd, t_data *data, int fd);
 void	ft_env(char **cmd, t_data *data, int fd);
 int		ft_exit(char **cmd, t_data *data);
 void	ft_export(char **cmd, t_data *data, int fd);
+int		ft_export_init_check(char *cmd);
 void	ft_export_error(char *cmd, t_data *data);
 void	ft_print_export(t_data *data, int fd);
 void	ft_pwd(char **cmd, t_data *data, int fd);
@@ -254,6 +255,7 @@ void	child_fd_handling(t_data *data, t_ex *ex);
 void	add_node(t_data *data, char *cmd, t_envp **env);
 char	*init_key_export(char *cmd, t_data *data);
 char	*init_value_export(char *cmd, t_data *data);
+char	*init_replace_value_export(char *cmd, t_data *data);
 char	*find_value(t_data *data, char *key);
 void	replace_value(t_data *data, char *key, char *new_value);
 

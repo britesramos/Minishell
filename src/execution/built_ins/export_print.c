@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 09:09:23 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/30 15:02:42 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/12/02 09:05:37 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,22 @@ static void	ft_print_key_value(char *key, char *value, t_data *data, int fd)
 {
 	ft_putstr_fd("declare -x ", fd);
 	ft_putstr_fd(key, fd);
-	if (ft_strncmp(value, "= ", 3) == 0)
-		ft_putendl_fd("=\"\"", fd);
-	else if (ft_strchr(value, '=') == NULL)
-		ft_putchar_fd('\n', fd);
-	else
+	if (value == NULL)
 	{
-		ft_putstr_fd("=\"", fd);
-		ft_putstr_fd(value + 1, fd);
-		ft_putendl_fd("\"", fd);
+		ft_putchar_fd('\n', fd);
+		return ;
+	}
+	{
+		if (ft_strncmp(value, "= ", 3) == 0)
+			ft_putendl_fd("=\"\"", fd);
+		else if (ft_strchr(value, '=') == NULL)
+			ft_putchar_fd('\n', fd);
+		else
+		{
+			ft_putstr_fd("=\"", fd);
+			ft_putstr_fd(value + 1, fd);
+			ft_putendl_fd("\"", fd);
+		}
 	}
 	data->exit_code = 0;
 }

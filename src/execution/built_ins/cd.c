@@ -6,7 +6,7 @@
 /*   By: mstencel <mstencel@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/26 18:01:06 by mstencel      #+#    #+#                 */
-/*   Updated: 2024/11/30 15:32:01 by mstencel      ########   odam.nl         */
+/*   Updated: 2024/12/02 09:09:11 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static void	ft_cd_change(char *path, t_data *data)
 	old_cwd = ft_getcdw_err(data);
 	if (old_cwd == NULL)
 		return ;
-	if (chdir(path) != 0)
+	if (ft_cd_open_check(data, path) == -1)
 	{
-		if (ft_cd_open_check(data, path) == -1)
-		{
-			ft_free_string(&old_cwd);
-			return ;
-		}
+		ft_free_string(&old_cwd);
+		return ;
+	}
+	if (chdir(path) == 0)
+	{
 		cwd = ft_getcdw_err(data);
 		if (cwd == NULL)
 		{
