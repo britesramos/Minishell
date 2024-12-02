@@ -6,13 +6,22 @@
 /*   By: marvin <marvin@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/23 11:59:18 by sramos        #+#    #+#                 */
-/*   Updated: 2024/11/28 11:59:48 by sramos        ########   odam.nl         */
+/*   Updated: 2024/12/02 09:31:10 by mstencel      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 extern volatile sig_atomic_t	g_sign;
+
+static void	ft_sign_check(t_data *data)
+{
+	if (g_sign == SIGINT)
+	{
+		data->exit_code = g_sign + 128;
+		g_sign = 0;
+	}
+}
 
 static int	parsing_helper(t_data *data)
 {
@@ -42,8 +51,7 @@ static int	parsing_helper_execution(t_data *data)
 	if (exec(data) == 9)
 		return (9);
 	clean_up_parse_input(data, NULL);
-	if (g_sign == SIGINT)
-		data->exit_code = g_sign + 128;
+	ft_sign_check(data);
 	return (0);
 }
 
@@ -73,8 +81,7 @@ void	parsing(t_data *data)
 		if (data->line)
 			ft_free_string(&data->line);
 		data->line = readline("minishell:~$ ");
-		if (g_sign == SIGINT)
-			data->exit_code = 128 + g_sign;
+		ft_sign_check(data);
 		check = check_line(data);
 		if (check == 9)
 			return ;
